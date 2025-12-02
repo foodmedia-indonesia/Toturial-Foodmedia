@@ -63,10 +63,16 @@
         <!-- Videos Section -->
         <div id="videosSection" class="tab-content">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-gray-900">Kelola Video Tutorials</h2>
-                <button onclick="openVideoModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">
-                    <i class="fas fa-plus mr-2"></i>Tambah Video
-                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Video Tutorials</h2>
+                    <p class="text-sm text-gray-500">Data video disimpan di browser Anda (localStorage).</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="loadDefaultVideos()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition text-sm"><i class="fas fa-cloud-download-alt mr-2"></i>Muat Video Default</button>
+                    <button onclick="openVideoModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah Video
+                    </button>
+                </div>
             </div>
 
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -206,6 +212,90 @@
                 document.getElementById('pptsSection').classList.remove('hidden');
                 loadPpts();
             }
+        }
+
+        // Function to load default videos into localStorage
+        function loadDefaultVideos() {
+            if (!confirm('Apakah Anda yakin ingin memuat ulang video default? Ini akan menimpa daftar video yang ada saat ini.')) {
+                return;
+            }
+
+            const defaultVideos = [
+                // DRIVER (Food D)
+                {
+                    id: '8ZPFuu6jMks',
+                    title: 'Cara Mengatasi Lupa Sandi Food D Terbaru',
+                    desc: 'Panduan langkah demi langkah mereset kata sandi driver Food D jika Anda mengalami masalah login agar bisa kembali bekerja.',
+                    category: 'Driver'
+                },
+                {
+                    id: 'PJtx9NiHd5k',
+                    title: 'Cara Ganti Password Akun Food D Terbaru 2025',
+                    desc: 'Jaga keamanan akun driver Anda. Tutorial ini menjelaskan cara mengubah kata sandi secara berkala langsung lewat aplikasi.',
+                    category: 'Driver'
+                },
+                {
+                    id: 'KQtQZMmc0_w',
+                    title: 'Ubah Status Aktif & Edit Info Pribadi Driver',
+                    desc: 'Cara mengubah status on-bid/off-bid dan memperbarui informasi data diri profil driver Anda di Food D.',
+                    category: 'Driver'
+                },
+
+                // USER / CUSTOMER (FoodMedia)
+                {
+                    id: '6xlcjE2nn78',
+                    title: 'Cara Menggunakan Layanan Reservasi FoodMedia',
+                    desc: 'Ingin makan di tempat tanpa antre? Pelajari cara reservasi meja restoran favorit Anda melalui aplikasi FoodMedia.',
+                    category: 'User'
+                },
+                {
+                    id: 'VPQFAfLrxDo',
+                    title: 'Cara Menggunakan Layanan Pesan Antar',
+                    desc: 'Tutorial lengkap memesan makanan delivery. Dari pilih menu, masukkan alamat, hingga tracking kurir ke rumah Anda.',
+                    category: 'User'
+                },
+                {
+                    id: '7v4uLoztnFE',
+                    title: 'Cara Menggunakan Layanan Pick Up',
+                    desc: 'Hemat ongkir dan waktu! Pesan lewat aplikasi dan ambil sendiri makanan Anda di resto dengan fitur Pick Up FoodMedia.',
+                    category: 'User'
+                },
+
+                // MERCHANT (Food ON)
+                {
+                    id: 'ek02xWgZxtQ',
+                    title: 'Panduan Lengkap Terima Pesanan Food ON',
+                    desc: 'Tutorial wajib bagi Merchant! Cara menerima, memproses, dan menyerahkan pesanan kepada driver dengan benar.',
+                    category: 'Merchant'
+                },
+                {
+                    id: 'scHtsNh7qD4',
+                    title: 'Cara Mengatasi Lupa Sandi Merchant Food ON',
+                    desc: 'Solusi cepat bagi pemilik resto yang tidak bisa masuk ke aplikasi manajemen resto Food ON karena lupa password.',
+                    category: 'Merchant'
+                },
+                {
+                    id: 'ISLd_XgR1Ks',
+                    title: 'Cara Kelola Pesanan di Food ON Terbaru',
+                    desc: 'Strategi mengelola dashboard pesanan agar operasional resto berjalan lancar dan pelanggan puas.',
+                    category: 'Merchant'
+                },
+                {
+                    id: '2d9sWC-CvA0',
+                    title: 'Cara Setting Reservasi & Penarikan Saldo',
+                    desc: 'Panduan mengatur slot meja untuk reservasi dan cara withdraw penghasilan merchant ke rekening bank Anda.',
+                    category: 'Merchant'
+                },
+                {
+                    id: 'EtuJjvSwQSw',
+                    title: 'Cara Menambahkan User Pegawai/Kasir',
+                    desc: 'Delegasikan tugas resto dengan aman. Cara membuat akun akses khusus untuk staf atau kasir di Food ON.',
+                    category: 'Merchant'
+                }
+            ];
+            localStorage.setItem('tutorialVideos', JSON.stringify(defaultVideos));
+            loadVideos();
+            showNotification('Video default berhasil dimuat!');
         }
 
         // Load videos
