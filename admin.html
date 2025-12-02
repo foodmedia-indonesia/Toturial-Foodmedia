@@ -97,6 +97,14 @@
         </div>
     </div>
 
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-50">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-check-circle"></i>
+            <span id="notification-message">Data berhasil disimpan!</span>
+        </div>
+    </div>
+
     <!-- Video Modal -->
     <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
@@ -164,6 +172,16 @@
         let currentTab = 'videos';
         let editingVideoId = null;
         let editingPptId = null;
+
+        // Notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notification-message').textContent = message;
+            notification.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                notification.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
 
         // Tab switching
         document.getElementById('videosTab').addEventListener('click', () => switchTab('videos'));
@@ -337,6 +355,7 @@
             localStorage.setItem('tutorialVideos', JSON.stringify(videos));
             closeVideoModal();
             loadVideos();
+            showNotification('Video berhasil disimpan!');
         });
 
         document.getElementById('pptForm').addEventListener('submit', (e) => {
@@ -365,6 +384,7 @@
             localStorage.setItem('tutorialPpts', JSON.stringify(ppts));
             closePptModal();
             loadPpts();
+            showNotification('PPT berhasil disimpan!');
         });
 
         // Delete functions

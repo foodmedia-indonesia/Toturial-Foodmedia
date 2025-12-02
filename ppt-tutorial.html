@@ -50,7 +50,7 @@
                 </a>
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500">
                     <a href="index.html" class="hover:text-food-primary transition">Beranda</a>
-                    <a href="index.html#tutorials" class="hover:text-food-primary transition">Tutorial Video</a>
+                    <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
                     <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
                     <a href="ppt-tutorial.html" class="text-food-primary font-semibold">PPT Tutorial</a>
                     <a href="linktree.html" class="hover:text-food-primary transition">Linktree</a>
@@ -69,7 +69,7 @@
         <div class="hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-                <a href="index.html#tutorials" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
+                <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
                 <a href="faq.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
                 <a href="ppt-tutorial.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
                 <a href="linktree.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
@@ -132,7 +132,7 @@
                             <a href="index.html" class="hover:text-foodmedia-primary transition duration-150">Beranda</a>
                         </li>
                         <li>
-                            <a href="#tutorials" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
+                            <a href="tutorials.html" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
                         </li>
                         <li>
                             <a href="faq.html" class="hover:text-foodmedia-primary transition duration-150">FAQ</a>
@@ -252,6 +252,21 @@
             return storedPPTs;
         }
 
+        // Function to refresh PPTs from localStorage
+        function refreshPpts() {
+            const ppts = loadPPTsFromStorage();
+            renderPPTs(ppts);
+            // Re-initialize search if it depends on the rendered items
+            initializeSearch();
+        }
+
+        // Listen for storage changes (when admin panel updates PPTs)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'tutorialPpts') {
+                refreshPpts();
+            }
+        });
+
         // Render PPTs
         function renderPPTs(ppts) {
             const pptList = document.getElementById('ppt-list');
@@ -282,10 +297,10 @@
             });
         }
 
+        let pptItems = []; // Define globally to be accessible by search
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Load and render PPTs
-            const ppts = loadPPTsFromStorage();
-            renderPPTs(ppts);
+            refreshPpts(); // Initial load
 
             // Mobile Menu Toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -308,14 +323,10 @@
                 }
             });
 
-            // Initialize search after PPTs are loaded
-            initializeSearch();
-
             function initializeSearch() {
                 // Search functionality
                 const searchInput = document.getElementById('search-input');
-                const pptList = document.getElementById('ppt-list');
-                const pptItems = Array.from(pptList.children);
+                pptItems = Array.from(document.getElementById('ppt-list').children);
 
                 function levenshteinDistance(a, b) {
                     const matrix = [];

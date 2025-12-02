@@ -75,7 +75,7 @@
                 </div>
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500 items-center">
                     <a href="index.html" class="text-food-primary font-semibold">Beranda</a>
-                    <a href="#tutorials" class="hover:text-food-primary transition">Tutorial Video</a>
+                    <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
                     <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
                     <a href="ppt-tutorial.html" class="hover:text-food-primary transition">PPT Tutorial</a>
                     <a href="linktree.html" class="hover:text-food-primary transition">Linktree</a>
@@ -94,7 +94,7 @@
         <div class="hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-                <a href="#tutorials" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
+                <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
                 <a href="faq.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
                 <a href="ppt-tutorial.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
                 <a href="linktree.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
@@ -166,55 +166,6 @@
         </div>
     </section>
 
-    <!-- Main Content (Video Tutorials) -->
-    <main id="tutorials" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
-        
-        <div class="text-center mb-10">
-            <h2 class="text-3xl md:text-4xl font-bold">Panduan Video Tutorial</h2>
-            <p class="text-gray-500 text-lg max-w-2xl mx-auto mt-2">Temukan panduan lengkap untuk Driver, Merchant, dan Pengguna aplikasi FoodMedia dalam format video yang mudah dipahami.</p>
-             <!-- Search Bar -->
-             <div class="mt-8 max-w-xl mx-auto">
-                <div class="relative">
-                    <input type="text" id="searchInput" placeholder="Cari video (cth: lupa sandi, tambah menu)" class="w-full py-3 px-5 pr-12 rounded-full bg-gray-100 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-food-primary/30 transition duration-300 border-2 border-transparent focus:border-food-primary/50">
-                    <i class="fas fa-search absolute right-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                </div>
-            </div>
-            <!-- Refresh Button -->
-            <div class="mt-4">
-                <button onclick="refreshVideos()" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-food-primary bg-red-50 rounded-lg hover:bg-red-100 transition">
-                    <i class="fas fa-sync-alt"></i> Refresh Video
-                </button>
-            </div>
-        </div>
-
-        <!-- Filters -->
-        <div class="flex flex-wrap gap-3 justify-center mb-10" id="filterContainer">
-            <button onclick="filterVideos('all')" class="filter-btn active px-6 py-2 rounded-full text-sm font-semibold transition bg-food-primary text-white shadow-md ring-2 ring-offset-2 ring-food-primary">
-                Semua
-            </button>
-            <button onclick="filterVideos('Merchant')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 transition">
-                Mitra Merchant (Food ON)
-            </button>
-            <button onclick="filterVideos('Driver')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 transition">
-                Driver (Food D)
-            </button>
-            <button onclick="filterVideos('User')" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 transition">
-                Pelanggan
-            </button>
-        </div>
-
-        <!-- Video Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="videoGrid">
-            <!-- Content injected by JS -->
-        </div>
-
-        <!-- No Results Message -->
-        <div id="noResults" class="hidden text-center py-10">
-            <p class="text-gray-500 text-lg">Video tidak ditemukan.</p>
-        </div>
-
-    </main>
-
     <!-- Placeholder untuk Footer -->
     <footer class="bg-footer-dark text-gray-300 mt-auto shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -243,7 +194,7 @@
                             <a href="index.html" class="hover:text-foodmedia-primary transition duration-150">Beranda</a>
                         </li>
                         <li>
-                            <a href="#tutorials" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
+                            <a href="tutorials.html" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
                         </li>
                         <li>
                             <a href="faq.html" class="hover:text-foodmedia-primary transition duration-150">FAQ</a>
@@ -316,277 +267,7 @@
         </div>
     </footer>
 
-    <!-- Video Modal -->
-    <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="relative w-full max-w-4xl bg-black rounded-xl shadow-2xl overflow-hidden ring-1 ring-white/10">
-            <!-- Close Button -->
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white z-10 bg-black/50 p-2 rounded-full transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            
-            <div class="aspect-video w-full">
-                <iframe id="modalIframe" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="p-6 bg-gray-900 border-t border-gray-800">
-                <h3 id="modalTitle" class="text-xl font-bold text-white mb-2"></h3>
-                <p id="modalDesc" class="text-gray-400 text-sm"></p>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Load videos from localStorage (managed by admin panel)
-        function loadVideosFromStorage() {
-            const storedVideos = JSON.parse(localStorage.getItem('tutorialVideos') || '[]');
-            // If no videos in localStorage, use default videos
-            if (storedVideos.length === 0) {
-                return [
-                    // DRIVER (Food D)
-                    {
-                        id: '8ZPFuu6jMks',
-                        title: 'Cara Mengatasi Lupa Sandi Food D Terbaru',
-                        desc: 'Panduan langkah demi langkah mereset kata sandi driver Food D jika Anda mengalami masalah login agar bisa kembali bekerja.',
-                        category: 'Driver'
-                    },
-                    {
-                        id: 'PJtx9NiHd5k',
-                        title: 'Cara Ganti Password Akun Food D Terbaru 2025',
-                        desc: 'Jaga keamanan akun driver Anda. Tutorial ini menjelaskan cara mengubah kata sandi secara berkala langsung lewat aplikasi.',
-                        category: 'Driver'
-                    },
-                    {
-                        id: 'KQtQZMmc0_w',
-                        title: 'Ubah Status Aktif & Edit Info Pribadi Driver',
-                        desc: 'Cara mengubah status on-bid/off-bid dan memperbarui informasi data diri profil driver Anda di Food D.',
-                        category: 'Driver'
-                    },
-
-                    // USER / CUSTOMER (FoodMedia)
-                    {
-                        id: '6xlcjE2nn78',
-                        title: 'Cara Menggunakan Layanan Reservasi FoodMedia',
-                        desc: 'Ingin makan di tempat tanpa antre? Pelajari cara reservasi meja restoran favorit Anda melalui aplikasi FoodMedia.',
-                        category: 'User'
-                    },
-                    {
-                        id: 'VPQFAfLrxDo',
-                        title: 'Cara Menggunakan Layanan Pesan Antar',
-                        desc: 'Tutorial lengkap memesan makanan delivery. Dari pilih menu, masukkan alamat, hingga tracking kurir ke rumah Anda.',
-                        category: 'User'
-                    },
-                    {
-                        id: '7v4uLoztnFE',
-                        title: 'Cara Menggunakan Layanan Pick Up',
-                        desc: 'Hemat ongkir dan waktu! Pesan lewat aplikasi dan ambil sendiri makanan Anda di resto dengan fitur Pick Up FoodMedia.',
-                        category: 'User'
-                    },
-
-                    // MERCHANT (Food ON)
-                    {
-                        id: 'ek02xWgZxtQ',
-                        title: 'Panduan Lengkap Terima Pesanan Food ON',
-                        desc: 'Tutorial wajib bagi Merchant! Cara menerima, memproses, dan menyerahkan pesanan kepada driver dengan benar.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: 'scHtsNh7qD4',
-                        title: 'Cara Mengatasi Lupa Sandi Merchant Food ON',
-                        desc: 'Solusi cepat bagi pemilik resto yang tidak bisa masuk ke aplikasi manajemen resto Food ON karena lupa password.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: 'ISLd_XgR1Ks',
-                        title: 'Cara Kelola Pesanan di Food ON Terbaru',
-                        desc: 'Strategi mengelola dashboard pesanan agar operasional resto berjalan lancar dan pelanggan puas.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: '2d9sWC-CvA0',
-                        title: 'Cara Setting Reservasi & Penarikan Saldo',
-                        desc: 'Panduan mengatur slot meja untuk reservasi dan cara withdraw penghasilan merchant ke rekening bank Anda.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: 'EtuJjvSwQSw',
-                        title: 'Cara Menambahkan User Pegawai/Kasir',
-                        desc: 'Delegasikan tugas resto dengan aman. Cara membuat akun akses khusus untuk staf atau kasir di Food ON.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: 'cVQPr85er-o',
-                        title: 'Setting Buka Tutup Outlet & Info Resto',
-                        desc: 'Cara mengubah jam operasional, menutup toko sementara saat mendesak, dan edit info outlet.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: 'HgB4oLGG9xE',
-                        title: 'Setting Kurir Resto & Promo Ongkir',
-                        desc: 'Tingkatkan penjualan dengan mengatur kurir internal sendiri dan membuat strategi diskon ongkos kirim.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: '_7fWFXGppG8',
-                        title: 'Cara Registrasi Jadi Merchant Food ON',
-                        desc: 'Langkah awal mengembangkan bisnis kuliner Anda. Panduan lengkap pendaftaran menjadi mitra FoodMedia.',
-                        category: 'Merchant'
-                    },
-                    {
-                        id: 'aryJXE8T_i0',
-                        title: 'Cara Menambahkan Topping & Menu Baru',
-                        desc: 'Perkaya etalase resto Anda. Tutorial input menu baru, varian rasa, dan pilihan topping tambahan.',
-                        category: 'Merchant'
-                    }
-                ];
-            }
-            return storedVideos;
-        }
-
-        // Initialize videos from localStorage
-        let videos = loadVideosFromStorage();
-
-        // Function to refresh videos from localStorage
-        function refreshVideos() {
-            videos = loadVideosFromStorage();
-            renderVideos(currentCategory, searchInput.value);
-        }
-
-        // Listen for storage changes (when admin panel updates videos)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'tutorialVideos') {
-                refreshVideos();
-            }
-        });
-
-        // Function to determine badge color
-        function getBadgeColor(category) {
-            switch(category) {
-                case 'Driver': return 'bg-food-driver text-white';
-                case 'Merchant': return 'bg-food-merchant text-white';
-                case 'User': return 'bg-food-user text-white';
-                default: return 'bg-gray-500 text-white';
-            }
-        }
-
-        // Render Function
-        function renderVideos(categoryFilter = 'all', searchQuery = '') {
-            const grid = document.getElementById('videoGrid');
-            const noResults = document.getElementById('noResults');
-            grid.innerHTML = '';
-            searchQuery = searchQuery.toLowerCase();
-
-            const filteredVideos = videos.filter(video => {
-                const matchesCategory = categoryFilter === 'all' || video.category === categoryFilter;
-                const matchesSearch = video.title.toLowerCase().includes(searchQuery) || video.desc.toLowerCase().includes(searchQuery);
-                return matchesCategory && matchesSearch;
-            });
-
-            if (filteredVideos.length === 0) {
-                grid.classList.add('hidden');
-                noResults.classList.remove('hidden');
-            } else {
-                grid.classList.remove('hidden');
-                noResults.classList.add('hidden');
-            }
-
-            filteredVideos.forEach(video => {
-                const badgeClass = getBadgeColor(video.category);
-                
-                const card = `
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300 group flex flex-col h-full">
-                        <div class="relative aspect-video bg-gray-200 cursor-pointer overflow-hidden play-overlay" onclick="openModal('${video.id}', '${video.title.replace(/'/g, "\\'")}', '${video.desc.replace(/'/g, "\\'")}')">
-                            <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
-                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition flex items-center justify-center">
-                                <div class="play-icon w-14 h-14 bg-food-primary/90 text-white rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition duration-300">
-                                    <i class="fas fa-play ml-1 text-xl"></i>
-                                </div>
-                            </div>
-                            <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold shadow-sm ${badgeClass}">
-                                ${video.category}
-                            </span>
-                        </div>
-                        <div class="p-5 flex flex-col flex-grow">
-                            <h3 class="font-bold text-gray-900 text-lg mb-2 leading-snug group-hover:text-food-primary transition line-clamp-2">${video.title}</h3>
-                            <p class="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-grow">${video.desc}</p>
-                            <button onclick="openModal('${video.id}', '${video.title.replace(/'/g, "\\'")}', '${video.desc.replace(/'/g, "\\'")}')" class="w-full mt-auto py-2.5 px-4 rounded-lg bg-red-50 text-food-primary font-semibold text-sm hover:bg-food-primary hover:text-white transition flex items-center justify-center gap-2 group-btn">
-                                <span>Tonton Video</span>
-                                <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += card;
-            });
-        }
-
-        let currentCategory = 'all';
-        const searchInput = document.getElementById('searchInput');
-
-        // Filter Logic
-        function filterVideos(category) {
-            currentCategory = category;
-
-            // Update buttons styling
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-food-primary', 'text-white', 'shadow-md', 'ring-2', 'ring-offset-2', 'ring-food-primary');
-                btn.classList.add('bg-white', 'text-gray-600');
-            });
-
-            const clickedBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.getAttribute('onclick').includes(`'${category}'`));
-            if(clickedBtn) {
-                clickedBtn.classList.remove('bg-white', 'text-gray-600');
-                clickedBtn.classList.add('bg-food-primary', 'text-white', 'shadow-md', 'ring-2', 'ring-offset-2', 'ring-food-primary');
-            }
-
-            renderVideos(currentCategory, searchInput.value);
-        }
-
-        // Search Logic
-        searchInput.addEventListener('input', () => {
-            renderVideos(currentCategory, searchInput.value);
-        });
-
-        // Fix for single quotes in modal data
-        function escapeString(str) {
-            return str.replace(/'/g, "\\'");
-        }
-
-        // Modal Logic
-        const modal = document.getElementById('videoModal');
-        const iframe = document.getElementById('modalIframe');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDesc = document.getElementById('modalDesc');
-
-        function openModal(id, title, desc) {
-            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
-            modalTitle.innerText = title;
-            modalDesc.innerText = desc;
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        }
-
-        function closeModal() {
-            modal.classList.add('hidden');
-            iframe.src = ''; // Stop video
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal on click outside
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // Initial Render
-        renderVideos('all', '');
-
         // Mobile Menu Toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
