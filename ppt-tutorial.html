@@ -140,7 +140,7 @@
                             <a href="blog.html" class="hover:text-foodmedia-primary transition duration-150">Blog</a>
                         </li>
                         <li>
-                            <a href="efnktree.html" target="_blank" rel="noopener noreferrer" class="hover:text-foodmedia-primary transition duration-150">Linktree</a>
+                        <a href="linktree.html" target="_blank" rel="noopener noreferrer" class="hover:text-foodmedia-primary transition duration-150">Linktree</a>
                         </li>
                     </ul>
                 </div>
@@ -274,10 +274,15 @@
             ppts.forEach(ppt => {
                 // Standardize URL properties
                 const viewUrl = ppt.viewUrl || ppt.viewLink || '#';
-                const downloadUrl                        <div class="flex items-center gap-4">
-                            <i class="fas fa-file-powerpoint text-3xl text-food-primary"></i>
-                            <h3 class="font-semibold text-gray-800">${ppt.title}</h3>
-                        </div>                            </a>
+                const downloadUrl = ppt.downloadUrl || ppt.downloadLink || '#';
+ 
+                const pptItem = `
+                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <a href="${viewUrl}" target="_blank" class="flex items-center gap-4 group">
+                            <i class="fas fa-file-powerpoint text-3xl text-food-primary group-hover:text-food-dark transition"></i>
+                            <h3 class="font-semibold text-gray-800 group-hover:text-food-dark transition">${ppt.title}</h3>
+                        </a>
+                        <div class="flex-shrink-0">
                             <a href="${downloadUrl}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-food-primary rounded-md hover:bg-food-dark transition">
                                 <i class="fas fa-download"></i> Download
                             </a>
