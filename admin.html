@@ -11,7 +11,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- TinyMCE Rich Text Editor -->
-    <script src="https://cdn.tiny.cloud/1/4twgqddvpp93mu6kwtk6kpuhq0t6p5x0vvzuy8tg3p1q1tr7/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/4twgqddvpp93mu6kwtk6kpuhq0t6p5x0vvzuy8tg3p1q1tr7/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         tailwind.config = {
@@ -785,27 +785,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize TinyMCE
             tinymce.init({
-    selector: '#blogContent',
-    plugins: [
-      // Core editing features
-      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-      // Your account includes a free trial of TinyMCE premium features
-      // Try the most popular premium features until Dec 17, 2025:
-      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-    ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded',
-    tinycomments_author: 'Author name',
-    mergetags_list: [
-      { value: 'First.Name', title: 'First Name' },
-      { value: 'Email', title: 'Email' },
-    ],
-    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-    uploadcare_public_key: '4934d5aca0cf1231a81a',
-    height: 400, // Adjusted height for better editing experience
-    menubar: false, // Keep menubar hidden for a cleaner look
-    content_style: 'body { font-family:Inter,sans-serif; font-size:14px }'
-  });
+                selector: '#blogContent',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                height: 400,
+                menubar: false,
+                content_style: 'body { font-family:Inter,sans-serif; font-size:14px }',
+                images_upload_url: 'postAcceptor.php', // Placeholder for image upload handler
+            });
 
             // Initial tab load
             switchTab('videos');
