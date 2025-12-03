@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         tailwind.config = {
@@ -56,6 +58,9 @@
                     <button id="pptsTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
                         <i class="fas fa-file-powerpoint mr-2"></i>PPT Tutorials
                     </button>
+                    <button id="blogTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-blog mr-2"></i>Kelola Blog
+                    </button>
                 </nav>
             </div>
         </div>
@@ -87,10 +92,16 @@
         <!-- PPTs Section -->
         <div id="pptsSection" class="tab-content hidden">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-gray-900">Kelola PPT Tutorials</h2>
-                <button onclick="openPptModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">
-                    <i class="fas fa-plus mr-2"></i>Tambah PPT
-                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola PPT Tutorials</h2>
+                    <p class="text-sm text-gray-500">Data PPT disimpan di browser Anda (localStorage).</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="loadDefaultPpts()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition text-sm"><i class="fas fa-cloud-download-alt mr-2"></i>Muat PPT Default</button>
+                    <button onclick="openPptModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah PPT
+                    </button>
+                </div>
             </div>
 
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -98,6 +109,27 @@
                     <div id="pptsList" class="space-y-4">
                         <!-- PPTs will be loaded here -->
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Section -->
+        <div id="blogSection" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Artikel Blog</h2>
+                    <p class="text-sm text-gray-500">Tambah, edit, atau hapus artikel untuk halaman blog.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="loadDefaultBlogPosts()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition text-sm"><i class="fas fa-cloud-download-alt mr-2"></i>Muat Artikel Default</button>
+                    <button onclick="openBlogModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah Artikel
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div id="blogPostsList" class="space-y-4"></div>
                 </div>
             </div>
         </div>
@@ -174,10 +206,57 @@
         </div>
     </div>
 
+    <!-- Blog Modal -->
+    <div id="blogModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full h-[90vh] flex flex-col">
+            <div class="p-6 border-b">
+                <h3 class="text-lg font-bold text-gray-900" id="blogModalTitle">Tambah Artikel Baru</h3>
+            </div>
+            <div class="p-6 flex-grow overflow-y-auto">
+                <form id="blogForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Artikel</label>
+                            <input type="text" id="blogTitle" class="w-full input-field" placeholder="Judul yang menarik..." required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar Utama</label>
+                            <input type="url" id="blogImage" class="w-full input-field" placeholder="https://..." required>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                            <input type="text" id="blogCategory" class="w-full input-field" placeholder="Contoh: Tips & Trik, Berita, Promo" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Penulis</label>
+                            <input type="text" id="blogAuthor" class="w-full input-field" placeholder="Nama penulis" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kutipan (Excerpt)</label>
+                        <textarea id="blogExcerpt" rows="2" class="w-full input-field" placeholder="Ringkasan singkat artikel..." required></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Konten Lengkap</label>
+                        <textarea id="blogContent" class="w-full"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end gap-3">
+                <button type="button" onclick="closeBlogModal()" class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100 transition">Batal</button>
+                <button type="button" onclick="document.getElementById('blogForm').requestSubmit()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">Simpan Artikel</button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         let currentTab = 'videos';
         let editingVideoId = null;
         let editingPptId = null;
+        let editingPostId = null;
 
         // Notification function
         function showNotification(message) {
@@ -192,6 +271,7 @@
         // Tab switching
         document.getElementById('videosTab').addEventListener('click', () => switchTab('videos'));
         document.getElementById('pptsTab').addEventListener('click', () => switchTab('ppts'));
+        document.getElementById('blogTab').addEventListener('click', () => switchTab('blog'));
 
         function switchTab(tab) {
             currentTab = tab;
@@ -206,11 +286,16 @@
                 document.getElementById('videosTab').classList.add('border-food-primary', 'text-food-primary');
                 document.getElementById('videosSection').classList.remove('hidden');
                 loadVideos();
-            } else {
+            } else if (tab === 'ppts') {
                 document.getElementById('pptsTab').classList.remove('border-transparent', 'text-gray-500');
                 document.getElementById('pptsTab').classList.add('border-food-primary', 'text-food-primary');
                 document.getElementById('pptsSection').classList.remove('hidden');
                 loadPpts();
+            } else if (tab === 'blog') {
+                document.getElementById('blogTab').classList.remove('border-transparent', 'text-gray-500');
+                document.getElementById('blogTab').classList.add('border-food-primary', 'text-food-primary');
+                document.getElementById('blogSection').classList.remove('hidden');
+                loadBlogPosts();
             }
         }
 
@@ -298,6 +383,64 @@
             showNotification('Video default berhasil dimuat!');
         }
 
+        // Function to load default PPTs into localStorage
+        function loadDefaultPpts() {
+            if (!confirm('Apakah Anda yakin ingin memuat ulang PPT default? Ini akan menimpa daftar PPT yang ada saat ini.')) {
+                return;
+            }
+            const defaultPpts = [
+                { id: '1700000000001', title: 'Toturial PPT Mengunakan Layanan Pesan Antar Food D.pptx', viewUrl: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true', downloadUrl: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/export/pptx' },
+                { id: '1700000000002', title: 'Toturial PPT Mengunakan Layanan Pick Up.pptx', viewUrl: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true', downloadUrl: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/export/pptx' },
+                { id: '1700000000003', title: 'Toturial PPT Mengunakan Layanan Reservasi.pptx', viewUrl: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true', downloadUrl: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/export/pptx' },
+                { id: '1700000000004', title: 'Toturial PPT Cara Lupa Password Food D.pptx', viewUrl: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true', downloadUrl: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/export/pptx' },
+            ];
+            localStorage.setItem('tutorialPpts', JSON.stringify(defaultPpts));
+            loadPpts();
+            showNotification('PPT default berhasil dimuat!');
+        }
+
+        // Function to load default Blog Posts into localStorage
+        function loadDefaultBlogPosts() {
+            if (!confirm('Apakah Anda yakin ingin memuat ulang artikel default? Ini akan menimpa daftar artikel yang ada saat ini.')) {
+                return;
+            }
+            const defaultPosts = [
+                {
+                    id: 1,
+                    title: '5 Cara Foto Makanan Agar Terlihat Menggugah Selera',
+                    category: 'Tips & Trik',
+                    image: 'https://placehold.co/700x400/4FB094/FFFFFF?text=Blog+Post+1',
+                    excerpt: 'Dalam bisnis kuliner, visual adalah kunci. Foto yang menarik dapat meningkatkan pesanan secara signifikan. Pelajari teknik dasar fotografi makanan hanya dengan smartphone Anda.',
+                    author: 'Andi Pratama',
+                    date: '2024-05-20',
+                    content: `<p>Dalam bisnis kuliner, visual adalah kunci. Foto yang menarik dapat meningkatkan pesanan secara signifikan. Pelajari teknik dasar fotografi makanan hanya dengan smartphone Anda.</p><p>Berikut adalah 5 tips sederhana:</p><ol><li><strong>Gunakan Cahaya Alami:</strong> Hindari flash, cari cahaya dari jendela.</li><li><strong>Pilih Angle yang Tepat:</strong> Coba dari atas (flat lay) atau 45 derajat.</li><li><strong>Perhatikan Komposisi:</strong> Gunakan aturan sepertiga (rule of thirds).</li><li><strong>Gunakan Properti Sederhana:</strong> Serbet atau sendok garpu bisa menambah cerita.</li><li><strong>Edit dengan Bijak:</strong> Tingkatkan kecerahan dan kontras, jangan berlebihan.</li></ol>`
+                },
+                {
+                    id: 2,
+                    title: 'FoodMedia Rilis Fitur Reservasi, Makan di Resto Tanpa Antre!',
+                    category: 'Berita',
+                    image: 'https://placehold.co/700x400/3B82F6/FFFFFF?text=Blog+Post+2',
+                    excerpt: 'Kabar gembira untuk para pecinta kuliner! FoodMedia resmi meluncurkan fitur Reservasi yang memungkinkan pengguna untuk memesan meja di restoran favorit mereka langsung dari aplikasi.',
+                    author: 'Rina Wulandari',
+                    date: '2024-05-18',
+                    content: `<p>Kabar gembira untuk para pecinta kuliner! FoodMedia resmi meluncurkan fitur Reservasi yang memungkinkan pengguna untuk memesan meja di restoran favorit mereka langsung dari aplikasi. Fitur ini menjawab kebutuhan pelanggan yang ingin pengalaman makan yang lebih nyaman dan terencana.</p>`
+                },
+                {
+                    id: 3,
+                    title: 'Promo Gajian: Diskon 50% untuk Semua Pesanan di Atas 100rb',
+                    category: 'Promo',
+                    image: 'https://placehold.co/700x400/EF4444/FFFFFF?text=Blog+Post+3',
+                    excerpt: 'Sambut gajian bulan ini dengan promo spesial dari FoodMedia! Nikmati diskon 50% (maksimal 50rb) untuk setiap pesanan makanan melalui layanan Pesan Antar dengan minimum transaksi 100rb.',
+                    author: 'Tim Marketing',
+                    date: '2024-05-25',
+                    content: `<p>Sambut gajian bulan ini dengan promo spesial dari FoodMedia! Nikmati diskon 50% (maksimal 50rb) untuk setiap pesanan makanan melalui layanan Pesan Antar dengan minimum transaksi 100rb. Promo berlaku dari tanggal 25 hingga 30 bulan ini. Jangan sampai ketinggalan!</p>`
+                }
+            ];
+            localStorage.setItem('blogPosts', JSON.stringify(defaultPosts));
+            loadBlogPosts();
+            showNotification('Artikel default berhasil dimuat!');
+        }
+
         // Load videos
         function loadVideos() {
             const videos = JSON.parse(localStorage.getItem('tutorialVideos') || '[]');
@@ -334,6 +477,11 @@
             const pptsList = document.getElementById('pptsList');
             pptsList.innerHTML = '';
 
+            if (ppts.length === 0) {
+                pptsList.innerHTML = `<p class="text-center text-gray-500 py-4">Belum ada PPT. Silakan tambahkan PPT baru atau muat data default.</p>`;
+                return;
+            }
+
             ppts.forEach(ppt => {
                 const pptItem = `
                     <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -354,6 +502,44 @@
                     </div>
                 `;
                 pptsList.innerHTML += pptItem;
+            });
+        }
+
+        // Load Blog Posts
+        function loadBlogPosts() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const list = document.getElementById('blogPostsList');
+            list.innerHTML = '';
+
+            if (posts.length === 0) {
+                list.innerHTML = `<p class="text-center text-gray-500 py-4">Belum ada artikel. Silakan tambahkan artikel baru atau muat data default.</p>`;
+                return;
+            }
+
+            posts.forEach(post => {
+                const item = `
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <img src="${post.image}" alt="${post.title}" class="w-16 h-12 rounded object-cover bg-gray-100">
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${post.title}</h4>
+                                <p class="text-sm text-gray-600">Kategori: ${post.category} | Penulis: ${post.author}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="blog-detail.html?id=${post.id}" target="_blank" class="text-gray-500 hover:text-gray-800" title="Lihat Artikel">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button onclick="editBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteBlogPost(${post.id})" class="text-red-600 hover:text-red-800" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += item;
             });
         }
 
@@ -418,6 +604,47 @@
             editingPptId = null;
         }
 
+        // Blog modal functions
+        function openBlogModal(postId = null) {
+            editingPostId = postId;
+            const modal = document.getElementById('blogModal');
+            const form = document.getElementById('blogForm');
+            const title = document.getElementById('blogModalTitle');
+
+            form.reset(); // Selalu reset form
+
+            if (postId) {
+                title.textContent = 'Edit Artikel';
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                const post = posts.find(p => p.id == postId); // Use loose comparison
+                if (post) {
+                    document.getElementById('blogTitle').value = post.title;
+                    document.getElementById('blogImage').value = post.image;
+                    document.getElementById('blogCategory').value = post.category;
+                    document.getElementById('blogAuthor').value = post.author;
+                    document.getElementById('blogExcerpt').value = post.excerpt;
+                    // Set content for TinyMCE
+                    tinymce.get('blogContent').setContent(post.content || '');
+                }
+            } else {
+                title.textContent = 'Tambah Artikel Baru';
+                // Kosongkan editor TinyMCE
+                if(tinymce.get('blogContent')) {
+                    tinymce.get('blogContent').setContent('');
+                }
+            }
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBlogModal() {
+            document.getElementById('blogModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            editingPostId = null;
+        }
+
+
         // Form submissions
         document.getElementById('videoForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -477,6 +704,41 @@
             showNotification('PPT berhasil disimpan!');
         });
 
+        document.getElementById('blogForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const postData = {
+                id: editingPostId || Date.now(), // Use timestamp for new ID
+                title: document.getElementById('blogTitle').value,
+                image: document.getElementById('blogImage').value || 'https://placehold.co/700x400/cccccc/ffffff?text=No+Image',
+                category: document.getElementById('blogCategory').value,
+                author: document.getElementById('blogAuthor').value,
+                excerpt: document.getElementById('blogExcerpt').value,
+                content: tinymce.get('blogContent').getContent(),
+                date: new Date().toISOString().split('T')[0] // Set current date
+            };
+
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+
+            if (editingPostId) {
+                // Edit
+                const index = posts.findIndex(p => p.id == editingPostId); // Use loose comparison
+                if (index !== -1) {
+                    postData.date = posts[index].date; // Keep original date on edit
+                    posts[index] = postData;
+                }
+            } else {
+                // Add new
+                posts.unshift(postData); // Add to the beginning of the array
+            }
+
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+            closeBlogModal();
+            loadBlogPosts();
+            showNotification('Artikel berhasil disimpan!');
+        });
+
+
         // Delete functions
         function deleteVideo(id) {
             if (confirm('Apakah Anda yakin ingin menghapus video ini?')) {
@@ -496,6 +758,16 @@
             }
         }
 
+        function deleteBlogPost(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                const updatedPosts = posts.filter(post => post.id != id); // Use loose comparison
+                localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
+                loadBlogPosts();
+                showNotification('Artikel berhasil dihapus.');
+            }
+        }
+
         // Edit functions
         function editVideo(id) {
             openVideoModal(id);
@@ -505,8 +777,31 @@
             openPptModal(id);
         }
 
+        function editBlogPost(id) {
+            openBlogModal(id);
+        }
+
         // Initial load
-        loadVideos();
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize TinyMCE
+            tinymce.init({
+                selector: '#blogContent',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                height: 300,
+                menubar: false,
+                content_style: 'body { font-family:Inter,sans-serif; font-size:14px }'
+            });
+
+            // Initial tab load
+            switchTab('videos');
+        });
+
+        // Add a helper class for form inputs
+        const style = document.createElement('style');
+        style.innerHTML = `.input-field { border-radius: 0.5rem; border: 1px solid #D1D5DB; padding: 0.5rem 0.75rem; } .input-field:focus { outline: 2px solid transparent; outline-offset: 2px; --tw-ring-color: #EF0000; box-shadow: 0 0 0 2px var(--tw-ring-color); }`;
+        document.head.appendChild(style);
+
     </script>
 </body>
 </html>

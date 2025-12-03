@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - FoodMedia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        food: {
+                            primary: '#EF0000',
+                            secondary: '#FF3333',
+                            dark: '#990000',
+                            bg: '#FEF2F2',
+                            merchant: '#10B981',
+                            driver: '#3B82F6',
+                            user: '#F43F5E',
+                        },
+                        'foodmedia-primary': '#D63447',
+                        'foodmedia-secondary': '#4FB094',
+                        'footer-dark': '#1a1a1a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40 border-b border-red-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-food-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Food<span class="text-food-primary">Media</span> Help</span>
+                </a>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500 items-center">
+                    <a href="index.html" class="hover:text-food-primary transition">Beranda</a>
+                    <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
+                    <a href="blog.html" class="text-food-primary font-semibold">Blog</a>
+                    <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
+                    <a href="ppt-tutorial.html" class="hover:text-food-primary transition">PPT Tutorial</a>
+                    <a href="linktree.html" class="hover:text-food-primary transition">Linktree</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-gray-400"><i class="fas fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
+                <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
+                <a href="blog.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="faq.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+                <a href="ppt-tutorial.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
+                <a href="linktree.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-900">Blog FoodMedia</h1>
+            <p class="mt-2 text-lg text-gray-600 max-w-2xl mx-auto">Wawasan, berita, dan cerita terbaru dari dunia kuliner dan teknologi.</p>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="flex flex-col md:flex-row gap-4 justify-center items-center mb-10">
+            <div class="relative w-full md:w-1/2 lg:w-1/3">
+                <input type="text" id="searchInput" placeholder="Cari artikel..." class="w-full py-2.5 px-4 pr-10 rounded-full bg-white border border-gray-200 focus:ring-2 focus:ring-food-primary/50 focus:outline-none">
+                <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <div id="filterContainer" class="flex flex-wrap gap-2 justify-center">
+                <!-- Filter buttons will be generated here -->
+            </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Blog posts will be injected here by JS -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-10">
+            <i class="fas fa-newspaper fa-3x text-gray-300 mb-4"></i>
+            <p class="text-gray-500 text-lg">Artikel tidak ditemukan.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-footer-dark text-gray-300 mt-auto shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-sm">
+                <!-- Kolom 1: Logo & Deskripsi -->
+                <div>
+                    <img src="https://foodmedia.co.id/wp-content/uploads/2025/02/foodmedia-tagline-1536x579.png" alt="Logo FoodMedia" class="h-10 w-auto mb-4 rounded-lg" onerror="this.onerror=null; this.src='https://placehold.co/1536x579/D63447/ffffff?text=FoodMedia';">
+                    <p class="text-gray-400">Aplikasi pesan makanan dengan fitur lengkap untuk pelanggan.</p>
+                </div>
+                <!-- Kolom 2: Tautan Cepat -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Tautan Cepat</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-foodmedia-primary transition">Beranda</a></li>
+                        <li><a href="tutorials.html" class="hover:text-foodmedia-primary transition">Tutorial Video</a></li>
+                        <li><a href="blog.html" class="hover:text-foodmedia-primary transition">Blog</a></li>
+                        <li><a href="faq.html" class="hover:text-foodmedia-primary transition">FAQ</a></li>
+                        <li><a href="ppt-tutorial.html" class="hover:text-foodmedia-primary transition">PPT Tutorial</a></li>
+                    </ul>
+                </div>
+                <!-- Kolom 3: Kontak -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Hubungi Kami</h3>
+                    <p class="text-gray-400">Saphire Estate Blok A No 14<br>Tegal, Jawa Tengah</p>
+                    <p class="mt-2"><a href="mailto:foodmediateam@gmail.com" class="hover:text-foodmedia-primary">foodmediateam@gmail.com</a></p>
+                </div>
+                <!-- Kolom 4: Social Media -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Ikuti Kami</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-foodmedia-primary/50 text-center">
+                <p class="text-gray-500 text-xs">&copy; 2025 FoodMedia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA MANAGEMENT ---
+        function loadPostsFromStorage() {
+            const storedPosts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            if (storedPosts.length === 0) {
+                // Default data if localStorage is empty
+                const defaultPosts = [
+                    {
+                        id: 1,
+                        title: '5 Cara Foto Makanan Agar Terlihat Menggugah Selera',
+                        category: 'Tips & Trik',
+                        image: 'https://placehold.co/700x400/4FB094/FFFFFF?text=Blog+Post+1',
+                        excerpt: 'Dalam bisnis kuliner, visual adalah kunci. Foto yang menarik dapat meningkatkan pesanan secara signifikan. Pelajari teknik dasar fotografi makanan hanya dengan smartphone Anda.',
+                        author: 'Andi Pratama',
+                        date: '2024-05-20',
+                        content: `<p>Dalam bisnis kuliner, visual adalah kunci. Foto yang menarik dapat meningkatkan pesanan secara signifikan. Pelajari teknik dasar fotografi makanan hanya dengan smartphone Anda.</p><p>Berikut adalah 5 tips sederhana:</p><ol><li><strong>Gunakan Cahaya Alami:</strong> Hindari flash, cari cahaya dari jendela.</li><li><strong>Pilih Angle yang Tepat:</strong> Coba dari atas (flat lay) atau 45 derajat.</li><li><strong>Perhatikan Komposisi:</strong> Gunakan aturan sepertiga (rule of thirds).</li><li><strong>Gunakan Properti Sederhana:</strong> Serbet atau sendok garpu bisa menambah cerita.</li><li><strong>Edit dengan Bijak:</strong> Tingkatkan kecerahan dan kontras, jangan berlebihan.</li></ol>`
+                    },
+                    {
+                        id: 2,
+                        title: 'FoodMedia Rilis Fitur Reservasi, Makan di Resto Tanpa Antre!',
+                        category: 'Berita',
+                        image: 'https://placehold.co/700x400/3B82F6/FFFFFF?text=Blog+Post+2',
+                        excerpt: 'Kabar gembira untuk para pecinta kuliner! FoodMedia resmi meluncurkan fitur Reservasi yang memungkinkan pengguna untuk memesan meja di restoran favorit mereka langsung dari aplikasi.',
+                        author: 'Rina Wulandari',
+                        date: '2024-05-18',
+                        content: `<p>Kabar gembira untuk para pecinta kuliner! FoodMedia resmi meluncurkan fitur Reservasi yang memungkinkan pengguna untuk memesan meja di restoran favorit mereka langsung dari aplikasi. Fitur ini menjawab kebutuhan pelanggan yang ingin pengalaman makan yang lebih nyaman dan terencana.</p>`
+                    },
+                    {
+                        id: 3,
+                        title: 'Promo Gajian: Diskon 50% untuk Semua Pesanan di Atas 100rb',
+                        category: 'Promo',
+                        image: 'https://placehold.co/700x400/EF4444/FFFFFF?text=Blog+Post+3',
+                        excerpt: 'Sambut gajian bulan ini dengan promo spesial dari FoodMedia! Nikmati diskon 50% (maksimal 50rb) untuk setiap pesanan makanan melalui layanan Pesan Antar dengan minimum transaksi 100rb.',
+                        author: 'Tim Marketing',
+                        date: '2024-05-25',
+                        content: `<p>Sambut gajian bulan ini dengan promo spesial dari FoodMedia! Nikmati diskon 50% (maksimal 50rb) untuk setiap pesanan makanan melalui layanan Pesan Antar dengan minimum transaksi 100rb. Promo berlaku dari tanggal 25 hingga 30 bulan ini. Jangan sampai ketinggalan!</p>`
+                    }
+                ];
+                localStorage.setItem('blogPosts', JSON.stringify(defaultPosts));
+                return defaultPosts;
+            }
+            return storedPosts;
+        }
+
+        let allPosts = loadPostsFromStorage();
+        let currentCategory = 'all';
+
+        // --- RENDER FUNCTIONS ---
+        function renderPosts(postsToRender) {
+            const grid = document.getElementById('blogGrid');
+            const noResults = document.getElementById('noResults');
+            grid.innerHTML = '';
+
+            if (postsToRender.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+            }
+
+            postsToRender.forEach(post => {
+                const card = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                        <a href="blog-detail.html?id=${post.id}" class="block">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
+                        </a>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <p class="text-sm text-food-primary font-semibold mb-2">${post.category}</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">${post.title}</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${post.excerpt}</p>
+                            <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
+                                <span>Oleh: ${post.author}</span>
+                                <span>${new Date(post.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        function renderFilters() {
+            const filterContainer = document.getElementById('filterContainer');
+            const categories = ['all', ...new Set(allPosts.map(p => p.category))];
+            
+            filterContainer.innerHTML = categories.map(cat => `
+                <button 
+                    onclick="filterByCategory('${cat}')" 
+                    class="filter-btn capitalize px-4 py-1.5 rounded-full text-sm font-medium transition ${cat === 'all' ? 'bg-food-primary text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'}"
+                    data-category="${cat}">
+                    ${cat === 'all' ? 'Semua' : cat}
+                </button>
+            `).join('');
+        }
+
+        // --- EVENT HANDLERS & LOGIC ---
+        function applyFilters() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filteredPosts = allPosts.filter(post => {
+                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+                const matchesSearch = post.title.toLowerCase().includes(searchQuery) || post.excerpt.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+
+            renderPosts(filteredPosts);
+        }
+
+        window.filterByCategory = (category) => {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-food-primary', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-600', 'border', 'border-gray-200');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-food-primary', 'text-white');
+                    btn.classList.remove('bg-white', 'text-gray-600', 'border', 'border-gray-200');
+                }
+            });
+            applyFilters();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Listen for storage changes to auto-refresh
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'blogPosts') {
+                allPosts = loadPostsFromStorage();
+                applyFilters();
+            }
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFilters();
+            renderPosts(allPosts);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - FoodMedia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        food: {
+                            primary: '#EF0000',
+                            secondary: '#FF3333',
+                            dark: '#990000',
+                            bg: '#FEF2F2',
+                        },
+                        'foodmedia-primary': '#D63447',
+                        'foodmedia-secondary': '#4FB094',
+                        'footer-dark': '#1a1a1a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Styling for article content */
+        .article-content p { margin-bottom: 1rem; line-height: 1.75; }
+        .article-content h2 { font-size: 1.5rem; font-weight: bold; margin-top: 2rem; margin-bottom: 1rem; }
+        .article-content ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 1rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content a { color: #EF0000; text-decoration: underline; }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40 border-b border-red-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-food-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Food<span class="text-food-primary">Media</span> Help</span>
+                </a>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500 items-center">
+                    <a href="index.html" class="hover:text-food-primary transition">Beranda</a>
+                    <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
+                    <a href="blog.html" class="text-food-primary font-semibold">Blog</a>
+                    <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
+                    <a href="ppt-tutorial.html" class="hover:text-food-primary transition">PPT Tutorial</a>
+                    <a href="linktree.html" class="hover:text-food-primary transition">Linktree</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-gray-400"><i class="fas fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden" id="mobile-menu">
+             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
+                <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
+                <a href="blog.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="faq.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+                <a href="ppt-tutorial.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
+                <a href="linktree.html" class="text-gray-500 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="articleContainer" class="py-12 flex-grow">
+        <!-- Article will be injected here -->
+        <div class="text-center p-10">Memuat artikel...</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-footer-dark text-gray-300 mt-auto shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+             <div class="mt-12 pt-8 border-t border-foodmedia-primary/50 text-center">
+                <p class="text-gray-500 text-xs">&copy; 2025 FoodMedia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA MANAGEMENT ---
+        function loadPostsFromStorage() {
+            const storedPosts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            if (storedPosts.length === 0) {
+                // This is a fallback, but data should exist from blog.html
+                return [];
+            }
+            return storedPosts;
+        }
+
+        // --- RENDER FUNCTION ---
+        function renderArticle() {
+            const container = document.getElementById('articleContainer');
+            const params = new URLSearchParams(window.location.search);
+            const postId = parseInt(params.get('id'));
+
+            if (!postId) {
+                container.innerHTML = `<div class="text-center p-10 text-red-500">Error: ID Artikel tidak valid.</div>`;
+                return;
+            }
+
+            const allPosts = loadPostsFromStorage();
+            const post = allPosts.find(p => p.id === postId);
+
+            if (!post) {
+                container.innerHTML = `<div class="text-center p-10 text-red-500">Error: Artikel tidak ditemukan.</div>`;
+                return;
+            }
+
+            // Update page title
+            document.title = `${post.title} - FoodMedia Blog`;
+
+            // Get recent posts (excluding the current one)
+            const recentPosts = allPosts.filter(p => p.id !== postId).slice(0, 3);
+
+            container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="mb-8">
+                        <a href="blog.html" class="text-food-primary hover:text-food-dark font-semibold">
+                            &larr; Kembali ke Blog
+                        </a>
+                    </div>
+
+                    <article>
+                        <header class="mb-8 text-center">
+                            <p class="text-sm font-semibold text-food-primary uppercase">${post.category}</p>
+                            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">${post.title}</h1>
+                            <div class="text-sm text-gray-500">
+                                <span>Oleh ${post.author}</span> &bull;
+                                <span>${new Date(post.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            </div>
+                        </header>
+
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg mb-8">
+
+                        <div class="grid lg:grid-cols-4 gap-8">
+                            <div class="lg:col-span-3 article-content text-gray-700">
+                                ${post.content}
+                            </div>
+                            
+                            <!-- Sidebar -->
+                            <aside class="lg:col-span-1">
+                                <div class="sticky top-24 p-4 bg-gray-50 rounded-lg border">
+                                    <h3 class="font-bold text-lg mb-4">Artikel Terbaru</h3>
+                                    <div class="space-y-4">
+                                        ${recentPosts.map(rp => `
+                                            <a href="blog-detail.html?id=${rp.id}" class="block group">
+                                                <p class="font-semibold text-gray-800 group-hover:text-food-primary transition">${rp.title}</p>
+                                                <p class="text-xs text-gray-500">${rp.category}</p>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </article>
+                </div>
+            `;
+        }
+
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', renderArticle);
+    </script>
+</body>
+</html>

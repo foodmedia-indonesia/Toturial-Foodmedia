@@ -51,6 +51,7 @@
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500">
                     <a href="index.html" class="hover:text-food-primary transition">Beranda</a>
                     <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
+                    <a href="blog.html" class="hover:text-food-primary transition">Blog</a>
                     <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
                     <a href="ppt-tutorial.html" class="text-food-primary font-semibold">PPT Tutorial</a>
                     <a href="linktree.html" class="hover:text-food-primary transition">Linktree</a>
@@ -70,6 +71,7 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
                 <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
+                <a href="blog.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Blog</a>
                 <a href="faq.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
                 <a href="ppt-tutorial.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
                 <a href="linktree.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
@@ -135,13 +137,10 @@
                             <a href="tutorials.html" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
                         </li>
                         <li>
-                            <a href="faq.html" class="hover:text-foodmedia-primary transition duration-150">FAQ</a>
+                            <a href="blog.html" class="hover:text-foodmedia-primary transition duration-150">Blog</a>
                         </li>
                         <li>
-                            <a href="ppt-tutorial.html" class="hover:text-foodmedia-primary transition duration-150">PPT Tutorial</a>
-                        </li>
-                        <li>
-                            <a href="linktree.html" target="_blank" rel="noopener noreferrer" class="hover:text-foodmedia-primary transition duration-150">Linktree</a>
+                            <a href="efnktree.html" target="_blank" rel="noopener noreferrer" class="hover:text-foodmedia-primary transition duration-150">Linktree</a>
                         </li>
                     </ul>
                 </div>
@@ -273,20 +272,12 @@
             pptList.innerHTML = '';
 
             ppts.forEach(ppt => {
-                // Handle both data formats (admin panel uses viewUrl/downloadUrl, defaults use viewLink/downloadLink)
-                const viewUrl = ppt.viewUrl || ppt.viewLink;
-                const downloadUrl = ppt.downloadUrl || ppt.downloadLink;
-
-                const pptItem = `
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div class="flex items-center gap-4">
+                // Standardize URL properties
+                const viewUrl = ppt.viewUrl || ppt.viewLink || '#';
+                const downloadUrl                        <div class="flex items-center gap-4">
                             <i class="fas fa-file-powerpoint text-3xl text-food-primary"></i>
                             <h3 class="font-semibold text-gray-800">${ppt.title}</h3>
-                        </div>
-                        <div class="flex-shrink-0 flex gap-3">
-                            <a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-food-primary bg-red-50 rounded-md hover:bg-red-100 transition">
-                                <i class="fas fa-external-link-alt"></i> Buka File
-                            </a>
+                        </div>                            </a>
                             <a href="${downloadUrl}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-food-primary rounded-md hover:bg-food-dark transition">
                                 <i class="fas fa-download"></i> Download
                             </a>
