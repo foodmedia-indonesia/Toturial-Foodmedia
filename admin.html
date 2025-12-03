@@ -597,6 +597,11 @@
             }
 
             modal.classList.remove('hidden');
+
+            // Auto-format URL on paste/input for download URL
+            const downloadUrlInput = document.getElementById('pptDownloadUrl');
+            // Attach listener only once
+            downloadUrlInput.oninput = handlePptUrlFormat;
         }
 
         function closePptModal() {
@@ -779,6 +784,22 @@
 
         function editBlogPost(id) {
             openBlogModal(id);
+        }
+
+        // Helper function to auto-format Google Drive URL
+        function handlePptUrlFormat(e) {
+            const input = e.target;
+            // Use a timeout to let the paste action complete
+            setTimeout(() => {
+                const url = input.value;
+                // Check if it's a view/edit URL and not already an export URL
+                if (url.includes('docs.google.com/presentation/d/') && !url.endsWith('/export/pptx')) {
+                    const match = url.match(/presentation\/d\/([a-zA-Z0-9_-]+)/);
+                    if (match && match[1]) {
+                        input.value = `https://docs.google.com/presentation/d/${match[1]}/export/pptx`;
+                    }
+                }
+            }, 100);
         }
 
         // Initial load
