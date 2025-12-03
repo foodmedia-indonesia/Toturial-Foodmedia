@@ -40,9 +40,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-gray-900">Admin Panel - FoodMedia</h1>
-                <a href="index.html" class="text-food-primary hover:text-food-dark transition">
-                    <i class="fas fa-home mr-2"></i>Kembali ke Situs
-                </a>
+                <button onclick="logout()" class="text-food-primary hover:text-food-dark transition">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </button>
             </div>
         </div>
     </header>
@@ -253,12 +253,26 @@
 
 
     <script>
+        // === SECURITY CHECK ===
+        // Cek apakah pengguna sudah login. Jika tidak, redirect ke halaman login.
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
         let currentTab = 'videos';
         let editingVideoId = null;
         let editingPptId = null;
         let editingPostId = null;
 
-        // Notification function
+        // === LOGOUT FUNCTION ===
+        function logout() {
+            // Hapus status login dari sessionStorage
+            sessionStorage.removeItem('isAdminLoggedIn');
+            // Arahkan kembali ke halaman login
+            window.location.href = 'login.html';
+        }
+
+        // === NOTIFICATION FUNCTION ===
         function showNotification(message) {
             const notification = document.getElementById('notification');
             document.getElementById('notification-message').textContent = message;
