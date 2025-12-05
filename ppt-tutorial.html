@@ -284,6 +284,18 @@
     </footer>
 
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
+        });
+
         // Load PPTs from localStorage (managed by admin panel)
         function loadPPTsFromStorage() {
             const storedPPTs = JSON.parse(localStorage.getItem('tutorialPpts') || '[]');
@@ -395,27 +407,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             refreshPpts(); // Initial load
 
-            // Mobile Menu Toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const openIcon = document.getElementById('menu-open-icon');
-            const closeIcon = document.getElementById('menu-close-icon');
-
-            mobileMenuButton.addEventListener('click', () => {
-                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-                mobileMenu.classList.toggle('hidden');
-                openIcon.classList.toggle('hidden');
-                closeIcon.classList.toggle('hidden');
-            });
-
-            // Close mobile menu when a link is clicked
-            mobileMenu.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A') {
-                    mobileMenuButton.click();
-                }
-            });
-
             function initializeSearch() {
                 // Search functionality
                 const searchInput = document.getElementById('search-input');
@@ -498,6 +489,7 @@
                 };
             }
         });
+        
     </script>
 </body>
 </html>

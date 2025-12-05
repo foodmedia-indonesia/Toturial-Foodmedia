@@ -19,23 +19,52 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
+                        // Updated to a vibrant red palette
                         brand: {
                             400: '#F87171', // Red 400 for hover/accent (Lebih terang)
                             500: '#EF4444', // Red 500 for accents (Warna utama)
                             600: '#DC2626', // Red 600 (Warna operasional primer, seperti tombol/logo)
                             700: '#B91C1C',
-                            900: '#881337',
+                        },
+                        dark: {
+                            900: '#0f172a', // Slate 900
+                            800: '#1e293b',
                         }
                     },
                     boxShadow: {
                         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-                        'glow': '0 0 15px rgba(225, 29, 72, 0.3)',
+                        'glow': '0 0 15px rgba(220, 38, 38, 0.3)',
                     }
                 }
             }
         }
     </script>
     <style>
+        /* Gaya khusus untuk memastikan iframe menutupi seluruh area tanpa letterbox (Solusi Full Cover) */
+        .video-cover-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Penting untuk menyembunyikan bagian video yang diperbesar */
+        }
+
+        .video-cover-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%; 
+            min-height: 100%; 
+            /* Perbesar iframe agar selalu menutupi container, meniru object-fit: cover */
+            /* Rasio 16:9 adalah 1.777. Dengan scale 1.777, kita pastikan video menutupi hampir semua rasio layar */
+            transform: translate(-50%, -50%) scale(1.777); 
+        }
+
+        /* Pada rasio potret (misalnya, ponsel), video mungkin tidak cukup besar, kita perbesar lagi */
+        @media (orientation: portrait) {
+            .video-cover-container iframe {
+                transform: translate(-50%, -50%) scale(2.5); 
+            }
+        }
         /* Custom Utilities */
         .line-clamp-2 {
             display: -webkit-box;
@@ -85,22 +114,6 @@
         }
         .play-pulse {
             animation: pulse-ring 2s infinite;
-        }
-
-        /* Existing CSS */
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .hero-pattern {
-            background-color: #ffffff;
-            /* Diganti fill='%23f97316' (orange) menjadi fill='%23ef0000' (merah) */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ef0000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .blob {
-            position: absolute;
-            filter: blur(40px);
-            z-index: -1;
-            opacity: 0.4;
         }
     </style>
 </head>
@@ -495,5 +508,18 @@
         </div>
     </footer>
 
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>
