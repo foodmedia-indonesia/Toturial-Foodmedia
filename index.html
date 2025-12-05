@@ -19,19 +19,21 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        food: {
-                            primary: '#EF0000', // Red Food (Updated)
-                            secondary: '#FF3333',
-                            dark: '#990000',
-                            bg: '#FEF2F2', // Very light red bg
-                            merchant: '#10B981', // Green for Merchant
-                            driver: '#3B82F6', // Blue for Driver
-                            user: '#F43F5E', // Rose for User
+                        // Updated to a vibrant red palette
+                        brand: {
+                            400: '#F87171', // Red 400 for hover/accent (Lebih terang)
+                            500: '#EF4444', // Red 500 for accents (Warna utama)
+                            600: '#DC2626', // Red 600 (Warna operasional primer, seperti tombol/logo)
+                            700: '#B91C1C',
                         },
-                        // Footer colors
-                        'foodmedia-primary': '#D63447',
-                        'foodmedia-secondary': '#4FB094',
-                        'footer-dark': '#1a1a1a',
+                        dark: {
+                            900: '#0f172a', // Slate 900
+                            800: '#1e293b',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(220, 38, 38, 0.3)',
                     }
                 }
             }
@@ -171,32 +173,57 @@
     </header>
 
     <!-- Hero Section -->
-    <header class="bg-food-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-            <div class="grid md:grid-cols-2 gap-12 items-center scroll-animate">
-                <div class="text-center md:text-left">
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                        Jelajahi Dunia Kuliner, <span class="text-food-primary">Semudah Sentuhan Jari.</span>
-                    </h1>
-                    <p class="mt-4 text-lg text-gray-600">
-                        Pesan antar, reservasi tempat, atau ambil sendiri. FoodMedia adalah solusi lengkap untuk semua kebutuhan kuliner Anda, menghubungkan Anda dengan ribuan resto terbaik.
-                    </p>
-                    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <a href="https://bit.ly/foodmedia-id" class="inline-block bg-food-primary text-white font-bold py-3 px-8 rounded-full hover:bg-food-dark transition duration-300 shadow-lg hover:shadow-xl">
-                            <i class="fas fa-mobile-alt mr-2"></i> Download Aplikasi
-                        </a>
-                        <a href="https://foodmedia-indonesia.github.io/Toturial-Foodmedia/regristrasi.html" class="inline-block bg-white text-food-primary font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 border-2 border-food-primary">
-                            Jadi Mitra Merchant
-                        </a>
+    <section class="pt-28 pb-12 md:pt-32 md:pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative rounded-[2rem] overflow-hidden h-[550px] md:h-[650px] w-full shadow-2xl ring-1 ring-slate-900/5 group">
+
+                <!-- Video Background (Menggunakan teknik CSS Scale untuk Full Cover Responsif) -->
+                <div class="absolute inset-0 w-full h-full bg-slate-900 video-cover-container">
+                    <!-- Overlay untuk efek transisi hover pada kontainer utama -->
+                    <div class="absolute inset-0 transition-transform duration-[2s] group-hover:scale-105">
+                        <iframe
+                            src="https://www.youtube.com/embed/oXII0K1UaSQ?autoplay=1&mute=1&loop=1&playlist=oXII0K1UaSQ&controls=0&showinfo=0&modestbranding=1&playsinline=1&enablejsapi=1"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                            style="pointer-events: none;"
+                            class="opacity-80">
+                        </iframe>
                     </div>
                 </div>
-                <div class="hidden md:block">
-                    <!-- Placeholder for an engaging image, e.g., a phone with the app -->
-                    <img src="https://foodmedia.co.id/wp-content/uploads/2025/09/header-foto-home-2.png" alt="Aplikasi FoodMedia" class="rounded-xl shadow-2xl">
+
+                <!-- Modern Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-transparent to-transparent"></div>
+
+                <!-- Content -->
+                <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-16 lg:p-20 scroll-animate">
+                    <div class="max-w-3xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs font-bold uppercase tracking-wider mb-6">
+                            <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                            Leading Food Tech Platform
+                        </div>
+                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight">
+                            Membangun <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-white">Ekosistem Digital</span>
+                        </h1>
+                        <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed font-light">
+                            Menghubungkan jutaan peluang melalui teknologi media terintegrasi untuk mendorong kemajuan ekonomi kuliner Indonesia.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="regristrasi.html" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold text-white bg-brand-600 rounded-full hover:bg-brand-700 transition-all duration-300 shadow-glow hover:-translate-y-1">
+                                Pelajari Layanan
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                            <a href="tutorials.html" target="_blank" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300">
+                                <i class="fas fa-play mr-2 text-xs"></i> Tonton Video
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- Services Section -->
     <section id="features" class="py-20 bg-white relative overflow-hidden">
