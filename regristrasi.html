@@ -3,364 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi Mitra Food-ON - Pilih Paket Anda</title>
-    <!-- Tailwind CSS -->
+    <title>FoodMedia - Solusi Ekosistem Kuliner Digital</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome (Digunakan untuk Ikon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <script>
+        // Konfigurasi Tailwind Kustom
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        food: {
-                            primary: '#EF0000', // Red Food (Updated)
-                            secondary: '#FF3333',
-                            dark: '#990000',
-                            bg: '#FEF2F2', // Very light red bg
-                            merchant: '#10B981', // Green for Merchant
-                            driver: '#3B82F6', // Blue for Driver
-                            user: '#F43F5E', // Rose for User
+                        // Palet Brand (Rose / Merah Primer)
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            400: '#F87171',
+                            500: '#EF4444',
+                            600: '#DC2626',
+                            700: '#B91C1C',
+                            900: '#881337',
                         },
-                        // Footer colors
-                        'foodmedia-primary': '#D63447',
-                        'foodmedia-secondary': '#4FB094',
-                        'footer-dark': '#1a1a1a',
+                        // Palet Dark (untuk Footer dan elemen gelap)
+                        dark: {
+                            900: '#0f172a', // Slate 900
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                        // Warna Aksen untuk Premium (Hijau)
+                        premium: '#10b981', // Emerald 500
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(225, 29, 72, 0.4)',
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f7f7;
+        /* Glassmorphism Navigation Bar */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-        .text-red-primary {
-            color: #d90000; /* Custom red color close to the image */
+
+        /* Hero Background with Gradient Overlay */
+        .hero-bg {
+            background-color: #e11d48; /* brand-600 fallback */
+            background-image: linear-gradient(135deg, rgba(225, 29, 72, 0.95) 0%, rgba(190, 18, 60, 0.9) 100%);
+            position: relative;
+            overflow: hidden;
         }
-        .bg-red-primary {
-            background-color: #d90000; /* Custom red color close to the image */
+
+        /* Simple pattern effect for the hero */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
         }
-        /* Custom Scrollbar */
+
+        /* Custom Scrollbar for better UX */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #f8fafc;
         }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            border-radius: 10px;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-40 border-b border-red-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-food-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">Food<span class="text-food-primary">Media</span> Help</span>
-                </div>
-                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500 items-center">
-                    <a href="index.html" class="text-food-primary font-semibold">Beranda</a>
-                    <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
-                    <a href="blog.html" class="hover:text-food-primary transition">Blog</a>
-                    <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
-                    <a href="ppt-tutorial.html" class="hover:text-food-primary transition">PPT Tutorial</a>
-                    <a href="linktree.html" class="hover:text-food-primary transition">Linktree</a>
-                </div>
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-food-primary" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Buka menu utama</span>
-                        <i id="menu-open-icon" class="fas fa-bars text-xl"></i>
-                        <i id="menu-close-icon" class="fas fa-times text-xl hidden"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu, show/hide based on menu state. -->
-        <div class="hidden md:hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-                <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
-                <a href="blog.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Blog</a>
-                <a href="faq.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
-                <a href="ppt-tutorial.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
-                <a href="linktree.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Navbar Section -->
+    <header class="fixed w-full z-50">
+        <nav class="transition-all duration-300 glass-nav border-b border-gray-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-20 items-center">
+                    <!-- Logo & Brand Name -->
+                    <a href="index.html" class="flex items-center gap-2.5 group" aria-label="FoodMedia Beranda">
+                        <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-glow transition-all duration-300">
+                            <i class="fas fa-utensils text-lg"></i>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="font-bold text-xl leading-none tracking-tight text-slate-900">Food<span class="text-brand-600">Media</span></span>
+                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Sesuai Harga Resto</span>
+                        </div>
+                    </a>
 
-    <!-- Header Section (Red Background) -->
-    <header class="bg-red-primary text-white pt-10 pb-20 md:pb-32 shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Main Title & Logo/Rating -->
-            <div class="text-center md:text-left">
-                <h1 class="text-xl font-semibold mb-1">Gabung Food-ON, Jualan Lebih Cepat. Untung Lebih Hemat.</h1>
-                <div class="flex items-center justify-center md:justify-start space-x-1 mb-6">
-                    <!-- 5-star rating -->
-                    <span class="text-yellow-400 text-2xl">★★★★★</span>
-                    <span class="text-sm">Food-ON - Merchant</span>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex space-x-1 items-center">
+                        <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
+                        <a href="tutorials.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Video Tutorial</a>
+                        <a href="blog.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Blog</a>
+                        <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
+                        <a href="ppt-tutorial.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">PPT Tutorial</a>
+                        <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                        <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            Tentang Kami
+                        </a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-button" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg transition-colors" aria-expanded="false" aria-controls="mobile-menu">
+                            <i id="menu-open-icon" class="fas fa-bars text-xl"></i>
+                            <i id="menu-close-icon" class="fas fa-times text-xl hidden"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            
+
+            <!-- Mobile Menu Dropdown -->
+            <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
+                <div class="px-4 pt-4 pb-6 space-y-2">
+                    <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
+                    <a href="tutorials.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Tutorial Video</a>
+                    <a href="blog.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Blog & Berita</a>
+                    <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
+                    <a href="ppt-tutorial.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Download PPT</a>
+                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-full bg-brand-600 text-white font-bold shadow-md hover:bg-brand-700 transition">Tentang Kami</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Header) -->
+    <main class="hero-bg pt-28 pb-32 md:pt-36 md:pb-48 px-4 sm:px-6 lg:px-8 text-white">
+        <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row items-center justify-between">
                 <!-- Left Content (Text & Downloads) -->
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h2 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tighter">
-                        Registrasi Sekarang!!
+                <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
+                    <h1 class="text-xl font-semibold mb-1 uppercase tracking-wider">Gabung Food-ON, Jualan Lebih Cepat.</h1>
+                    <div class="flex items-center justify-center md:justify-start space-x-1 mb-6">
+                        <!-- 5-star rating -->
+                        <span class="text-yellow-300 text-2xl">★★★★★</span>
+                        <span class="text-sm font-medium">Food-ON - Merchant</span>
+                    </div>
+
+                    <h2 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tighter drop-shadow-md">
+                        Registrasi Sekarang, Untung Lebih Hemat.
                     </h2>
                     
-                    <!-- Feature Highlights (Simplified for header) -->
-                    <ul class="space-y-4 mt-6 text-lg font-medium hidden md:block">
-                        <li class="flex items-center"><svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Priority Support</li>
-                        <li class="flex items-center"><svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Konten Branding</li>
-                        <li class="flex items-center"><svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Promosi & Sosial Media</li>
+                    <!-- Feature Highlights -->
+                    <ul class="space-y-3 mt-8 text-lg font-medium">
+                        <li class="flex items-center justify-center md:justify-start">
+                            <!-- Check Icon -->
+                            <svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Priority Support Cepat
+                        </li>
+                        <li class="flex items-center justify-center md:justify-start">
+                             <!-- Check Icon -->
+                            <svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Gratis Konten Branding & Promosi
+                        </li>
+                        <li class="flex items-center justify-center md:justify-start">
+                             <!-- Check Icon -->
+                            <svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Promosi Massif di Social Media
+                        </li>
                     </ul>
 
                     <!-- Download Buttons -->
-                    <div class="flex justify-center md:justify-start space-x-4 mt-8">
-                        <a href="https://bit.ly/food-on" class="flex items-center bg-black p-2 rounded-lg hover:bg-gray-800 transition duration-300">
-                            <img src="https://placehold.co/40x40/ffffff/000000?text=App" alt="Download App" class="mr-3 rounded-md">
+                    <div class="flex justify-center md:justify-start space-x-4 mt-10">
+                        <a href="https://bit.ly/food-on" target="_blank" class="flex items-center bg-dark-900 text-white p-3 rounded-xl hover:bg-dark-800 transition duration-300 shadow-xl transform hover:scale-[1.03]">
+                             <!-- Play Store Icon -->
+                            <i class="fab fa-google-play text-2xl mr-3"></i>
                             <div>
-                                <div class="text-xs font-light">DOWNLOAD DI</div>
-                                <div class="text-lg font-bold -mt-1">Google Play</div>
+                                <div class="text-xs font-light opacity-80 leading-none">DOWNLOAD DI</div>
+                                <div class="text-xl font-bold -mt-0.5 leading-none">Google Play</div>
                             </div>
                         </a>
                     </div>
                 </div>
 
                 <!-- Right Content (Mockup - Using placeholder image for effect) -->
-                <div class="relative w-full md:w-1/3 flex justify-center mt-8 md:mt-0">
-                    <img src="https://foodmedia.co.id/wp-content/uploads/2025/11/food-On-200x400-1.png" class="w-48 h-auto rounded-xl shadow-2xl rotate-3 transform transition duration-500 ease-in-out hover:rotate-0">
+                <div class="relative w-full md:w-1/3 flex justify-center mt-15 md:mt-0">
+                    <img src="https://foodmedia.co.id/wp-content/uploads/2025/11/food-On-200x400-1.png" 
+                         alt="Food-ON App Mockup"
+                         class="w-48 h-auto rounded-3xl shadow-2xl rotate-3 transform transition duration-500 ease-in-out hover:rotate-0 hover:shadow-glow"
+                         onerror="this.onerror=null; this.src='https://placehold.co/200x400/be123c/ffffff?text=Food-ON';"
+                    >
                 </div>
             </div>
         </div>
-    </header>
+    </main>
 
-    <!-- Comparison Section -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 md:-mt-32 relative z-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Comparison Section (Pricing) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-16 md:-mt-24 relative z-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
             <!-- Card 1: Registrasi Merchant (Standard) -->
-            <div class="bg-white rounded-xl shadow-2xl overflow-hidden p-6 md:p-8 border-t-8 border-gray-400">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrasi Merchant</h3>
+            <div class="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 overflow-hidden p-6 md:p-8 border-t-8 border-slate-300">
+                <h3 class="text-3xl font-extrabold text-slate-800 mb-6 text-center">Registrasi Merchant Sekarang</h3>
                 
-                <div class="flex justify-center items-center mb-6">
-                    <span class="text-lg font-bold text-red-primary border-b-2 border-red-primary pb-1">TIDAK TERMASUK</span>
-                </div>
-
                 <ul class="space-y-4">
-                    <!-- Feature Item Component -->
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Thumbnail</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <!-- Feature Item: Excluded -->
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Thumbnail Premium</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Video Promosi</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Video Promosi Eksklusif</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Konten Branding</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Konten Branding (Grafis)</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Promosi di 5 Social Media Kami</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Promosi di 5 Social Media Kami</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Kartu Promosi</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Kartu Promosi Cetak</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Priority Support</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Priority Chat Support</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
-                    <li class="p-3 bg-red-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Layanan Reservasi</span>
-                        <svg class="w-6 h-6 text-red-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-500">
+                        <span>Layanan Reservasi Khusus</span>
+                        <svg class="w-6 h-6 text-brand-600/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </li>
                 </ul>
 
                 <!-- Button -->
                 <div class="mt-8">
-                    <a href="https://foodmedia.id/free-register" class="block w-full py-3 bg-red-primary text-white font-bold rounded-lg shadow-lg hover:bg-red-700 transition duration-300 transform hover:scale-[1.01] text-center">
-                        Daftar Disini
+                    <a href="https://foodmedia.id/free-register" class="block w-full py-3 bg-slate-900 text-white font-bold rounded-full shadow-lg hover:bg-slate-700 transition duration-300 transform hover:scale-[1.01] text-center">
+                        Daftar Sekarang
                     </a>
                 </div>
             </div>
 
-            <!-- Card 2: Registrasi Merchant Premium -->
-            <div class="bg-white rounded-xl shadow-2xl overflow-hidden p-6 md:p-8 border-t-8 border-green-500">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrasi Merchant Premium</h3>
-                
-                <div class="flex justify-center items-center mb-6">
-                    <span class="text-lg font-bold text-green-600 border-b-2 border-green-600 pb-1">TERMASUK</span>
-                </div>
+            <!-- Card 2: Registrasi Merchant Premium (BEST VALUE) -->
+            <div class="bg-white rounded-3xl shadow-2xl hover:shadow-glow transition duration-300 overflow-hidden p-6 md:p-8 border-t-8 border-premium transform scale-[1.02] lg:scale-100 lg:hover:scale-[1.02] relative">
+
+                <h3 class="text-3xl font-extrabold text-slate-800 mb-6 text-center pt-8 md:pt-0">Registrasi Merchant Premium</h3>
 
                 <ul class="space-y-4">
-                    <!-- Feature Item Component -->
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Thumbnail</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <!-- Feature Item: Included -->
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Thumbnail Premium</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Video Promosi</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Video Promosi Eksklusif</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Konten Branding</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Konten Branding (Grafis)</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Promosi di 5 Social Media Kami</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Promosi di 5 Social Media Kami</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Kartu Promosi</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Kartu Promosi Cetak</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Priority Support</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Priority Chat Support</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
-                    <li class="p-3 bg-green-50 rounded-lg flex justify-between items-center">
-                        <span class="text-gray-700">Layanan Reservasi</span>
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <li class="p-3 bg-green-50 rounded-xl flex justify-between items-center text-slate-700 font-medium">
+                        <span>Layanan Reservasi Khusus</span>
+                        <svg class="w-6 h-6 text-premium" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </li>
                 </ul>
 
                 <!-- Button -->
                 <div class="mt-8">
-                    <a href="https://foodmedia.id/merchant-register" class="block w-full py-3 bg-red-primary text-white font-bold rounded-lg shadow-lg hover:bg-red-700 transition duration-300 transform hover:scale-[1.01] text-center">
-                        Daftar Premium
+                    <a href="https://foodmedia.id/merchant-register" class="block w-full py-3 bg-brand-600 text-white font-bold rounded-full shadow-xl hover:bg-brand-700 transition duration-300 transform hover:scale-[1.01] text-center">
+                        Daftar Premium Sekarang
                     </a>
                 </div>
             </div>
-
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-footer-dark text-gray-300 mt-auto shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    
-            <!-- Grid Utama Footer (4 Kolom pada Desktop, Stacked pada Mobile) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-sm">
-    
-                <!-- Kolom 1: Logo & Deskripsi -->
-                <div>
-                    <!-- Logo FoodMedia -->
-                    <img src="https://foodmedia.co.id/wp-content/uploads/2025/02/foodmedia-tagline-1536x579.png"
-                         alt="Logo FoodMedia"
-                         class="h-10 w-auto mb-4 rounded-lg"
-                         onerror="this.onerror=null; this.src='https://placehold.co/1536x579/D63447/ffffff?text=FoodMedia';"
-                    >
-                    <p class="text-gray-400">
-                        Aplikasi pesan makanan dengan fitur lengkap untuk pelanggan. Kami menghubungkan Anda dengan hidangan favorit dari berbagai restoran terbaik.
+    <!-- Footer Section -->
+    <footer class="bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                
+                <!-- Brand Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white tracking-tight">Food<span class="text-brand-500">Media</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Platform teknologi pangan yang memberdayakan UMKM dan mempermudah konsumen melalui integrasi digital yang mulus.
                     </p>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+
+                    <!-- Download Buttons REMOVED from here -->
                 </div>
-    
-                <!-- Kolom 2: Tautan Cepat -->
+
+                <!-- Quick Links -->
                 <div>
-                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Tautan Cepat</h3>
-                    <ul class="space-y-2">
-                        <li>
-                            <a href="index.html" class="hover:text-foodmedia-primary transition duration-150">Beranda</a>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Navigasi</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="index.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Beranda</a></li>
+                        <li><a href="tutorials.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Tutorial &amp; Bantuan</a></li>
+                        <li><a href="blog.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Blog &amp; Insight</a></li>
+                        <li><a href="faq.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Pertanyaan Umum</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-brand-500 shrink-0"></i>
+                            <span class="text-white">Saphire Estate Blok A No 14,<br>Tegal, Jawa Tengah, Indonesia</span>
                         </li>
-                        <li>
-                        <a href="tutorials.html" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-brand-500 shrink-0"></i>
+                            <span class="font-mono text-white hover:text-slate-300 transition-colors">0817 7686 8188</span>
                         </li>
-                        <li>
-                            <a href="blog.html" class="hover:text-foodmedia-primary transition duration-150">Blog</a>
-                        </li>
-                        <li>
-                            <a href="faq.html" class="hover:text-foodmedia-primary transition duration-150">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="ppt-tutorial.html" class="hover:text-foodmedia-primary transition duration-150">PPT Tutorial</a>
-                        </li>
-                        <li>
-                            <a href="linktree.html" target="_blank" rel="noopener noreferrer" class="hover:text-foodmedia-primary transition duration-150">Linktree</a>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-brand-500 shrink-0"></i>
+                            <span class="text-white hover:text-slate-300 transition-colors">team@foodmedia.id</span>
                         </li>
                     </ul>
                 </div>
-    
-                <!-- Kolom 3: Jam Buka Kantor & Kontak -->
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Hubungi Kami</h3>
-    
-                    <div class="mb-4">
-                        <p class="font-semibold text-gray-300 mb-1">JAM BUKA KANTOR:</p>
-                        <ul class="text-gray-400 space-y-1">
-                            <li>Senin - Jum'at</li>
-                            <li>10.00 AM - 16.00 PM</li>
-                        </ul>
+
+                <!-- Office Hours -->
+                <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 shadow-xl">
+                    <h3 class="text-red-600 font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                            <span class="text-white">Senin - Jumat</span>
+                            <span class="text-white font-semibold">10:00 - 16:00 WIB</span>
+                        </div>
+                        <div class="flex justify-between text-slate-500 pt-2">
+                            <span class="text-white">Sabtu - Minggu</span>
+                            <span class="font-medium text-slate-500 italic">Tutup</span>
+                        </div>
                     </div>
-    
-                    <div>
-                        <p class="font-semibold text-gray-300 mb-1">CUSTOMER SERVICE:</p>
-                        <p class="flex items-center space-x-2">
-                            <!-- Icon Telepon (Lucide Icon/Inline SVG equivalent) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-foodmedia-primary"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 17.5 17.5 0 0 0 .81 4.96 2 2 0 0 1-.45 2.11L8.09 15c.67.67 1.28 1.28 2.11.81a17.5 17.5 0 0 0 4.96.81 2 2 0 0 1 1.72 2v3z"/></svg>
-                            <a href="tel:+6281776868188" class="text-gray-200 hover:text-foodmedia-primary transition duration-150">0817 7686 8188</a>
-                        </p>
-                        <p class="flex items-center space-x-2 mt-2">
-                            <!-- Icon Email (Lucide Icon/Inline SVG equivalent) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-foodmedia-primary"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></polyline></svg>
-                            <a href="mailto:foodmediateam@gmail.com" class="text-gray-200 hover:text-foodmedia-primary transition duration-150">foodmediateam@gmail.com</a>
-                        </p>
-                    </div>
-                </div>
-    
-                <!-- Kolom 4: Alamat -->
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Alamat Kantor</h3>
-                    <p class="text-gray-400">
-                        Saphire Estate Blok A No 14 <br>
-                        Jl. Dr Wahidin Sudiro Husodo <br>
-                        Pesurungan Kidul <br>
-                        Tegal – Jawa Tengah
-                    </p>
-                    <!-- Link Google Maps Placeholder -->
-                    <a href="https://maps.google.com/?q=Saphire+Estate+Blok+A+No+14"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="mt-3 inline-flex items-center text-foodmedia-primary font-semibold hover:text-white transition duration-150 rounded-lg"
-                    >
-                        <!-- Icon Lokasi -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        Lihat di Peta
+                    
+                    <a href="linktree.html" class="block w-full mt-8 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold text-center rounded-lg transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ease-in-out duration-150">
+                        <i class="fas fa-comment-dots mr-2"></i> Chat Customer Service
                     </a>
+
+                    <!-- Download Buttons ADDED here -->
+                    <div class="pt-6 space-y-3">
+                        <a href="https://bit.ly/play-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-google-play text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Dapatkan di</p>
+                                <p class="text-sm font-bold text-white leading-none">Google Play</p>
+                            </div>
+                        </a>
+                        <a href="https://bit.ly/app-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-apple text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Unduh di</p>
+                                <p class="text-sm font-bold text-white leading-none">App Store</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-    
-            <!-- Bagian Hak Cipta (Copyright) -->
-            <div class="mt-12 pt-8 border-t border-foodmedia-primary/50 text-center">
-                <p class="text-gray-500 text-xs">
-                    &copy; 2025 FoodMedia. All rights reserved. | Dibuat dengan cinta untuk semua pecinta kuliner.
-                </p>
+
+            <div class="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+                <p class="text-center md:text-left">© 2025 PT FoodMedia Digital Indonesia. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
             </div>
-    
         </div>
     </footer>
 
     <script>
-        // Mobile Menu Toggle
+        // Logika Toggle Menu Mobile
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const openIcon = document.getElementById('menu-open-icon');
@@ -374,13 +424,12 @@
             closeIcon.classList.toggle('hidden');
         });
 
-        // Close mobile menu when a link is clicked
+        // Menutup menu mobile ketika link di dalamnya diklik
         mobileMenu.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 mobileMenuButton.click();
             }
         });
-
     </script>
 
 </body>

@@ -3,655 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foodmedia Indonesia - Linktree</title>
+    <title>FoodMedia - Solusi Ekosistem Kuliner Digital</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans (Lebih modern untuk bisnis) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        food: {
-                            primary: '#EF0000',
-                            secondary: '#FF3333',
-                            dark: '#990000',
-                            bg: '#FEF2F2',
-                            merchant: '#10B981',
-                            driver: '#3B82F6',
-                            user: '#F43F5E',
-                        },
-                        // Footer colors to match other pages
-                        'foodmedia-primary': '#D63447',
-                        'foodmedia-secondary': '#4FB094',
-                        'footer-dark': '#1a1a1a',
+                        brand: {
+                            400: '#F87171', // Red 400 for hover/accent (Lebih terang)
+                            500: '#EF4444', // Red 500 for accents (Warna utama)
+                            600: '#DC2626', // Red 600 (Warna operasional primer, seperti tombol/logo)
+                            700: '#B91C1C',
+                            900: '#881337',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(225, 29, 72, 0.3)',
                     }
                 }
             }
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* Custom Utilities */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            padding: 30px;
+        }
+        
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        /* Header */
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            text-align: left;
+        /* Scroll Animation Classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .header-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #ef0000;
-            box-shadow: 0 4px 12px rgba(239,0,0,0.2);
-        }
-        .header-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .header-info h1 {
-            font-size: 1.8rem;
-            color: #ef0000;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-        .header-info p {
-            font-size: 0.95rem;
-            color: #666;
-            max-width: 400px;
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Products Section */
-        .products-section h2 {
-            font-size: 1.5rem;
-            color: #ef0000;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .products-container {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 16px;
-            margin-bottom: 40px;
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
         }
-        .products-container::-webkit-scrollbar {
-            height: 8px;
-        }
-        .products-container::-webkit-scrollbar-thumb {
-            background: #ef0000;
-            border-radius: 6px;
-        }
-        .product-card {
-            flex: 0 0 200px;
-            scroll-snap-align: center;
-            background: linear-gradient(145deg, #ffffff, #f9f9f9);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #eee;
-            min-height: 280px;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-        .product-logo {
-            height: 60px;
-            margin-bottom: 15px;
-        }
-        .product-logo img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        .product-card h3 {
-            font-size: 1.1rem;
-            color: #ef0000;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .product-card p {
-            font-size: 0.9rem;
-            color: #555;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-        .product-card a {
-            display: inline-block;
-        }
-        .product-card a img {
-            width: 100px;
-            transition: transform 0.3s ease;
-        }
-        .product-card a img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Actions Section */
-        .actions-section h2 {
-            font-size: 1.5rem;
-            color: #ef0000;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
-        }
-        .actions-container {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .actions-container button,
-        .actions-container a {
-            flex: 1 1 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 20px;
-            border-radius: 12px;
-            text-decoration: none;
-            border: 2px solid #ef0000;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #ef0000;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(239,0,0,0.1);
-        }
-        .actions-container button:hover,
-        .actions-container a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(239,0,0,0.3);
-            background: #fefefe;
-        }
-
-        /* Social Media Section */
-        .social-section h2 {
-            font-size: 1.5rem;
-            color: #ef0000;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
-        }
-        .social-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-        }
-        .link-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 18px;
-            border-radius: 12px;
-            background: #fff;
-            color: #000;
-            text-decoration: none;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #eee;
-        }
-        .link-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
             border-radius: 10px;
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            transition: transform 0.3s ease;
         }
-        .link-item:hover .icon {
-            transform: scale(1.1);
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
-        .icon i {
-            font-size: 1.5rem;
-        }
-        .text .title {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        .text .subtitle {
-            font-size: 0.85rem;
-            color: #777;
-        }
-        .yt .icon { background: #ffeaea; border-color: #ff0000; }
-        .wa .icon { background: #eaffea; border-color: #25d366; }
-        .ig .icon { background: #ffebf0; border-color: #e1306c; }
-        .tt .icon { background: #f0f0f0; border-color: #000; }
-        .fb .icon { background: #e7f0ff; border-color: #1877f2; }
-        .tg .icon { background: #e6f7ff; border-color: #229ed9; }
-        .mail .icon { background: #ffeaea; border-color: #ea4335; }
-        .web .icon { background: #e6f7ff; border-color: #00c3ff; }
 
-        /* Responsive */
-        @media (min-width: 769px) {
-            .products-container {
-                justify-content: center;
-                overflow-x: visible;
-            }
+        /* Video Play Button Pulse */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
         }
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            .header {
-                flex-direction: column;
-                text-align: center;
-                gap: 16px;
-            }
-            .header-avatar {
-                width: 80px;
-                height: 80px;
-            }
-            .header-info h1 {
-                font-size: 1.5rem;
-            }
-            .product-card {
-                flex: 0 0 160px;
-                min-height: 240px;
-            }
-            .actions-container button,
-            .actions-container a {
-                flex: 1 1 140px;
-            }
-            .social-container {
-                grid-template-columns: 1fr;
-            }
+        .play-pulse {
+            animation: pulse-ring 2s infinite;
         }
-        @media (max-width: 480px) {
-            .product-card {
-                flex: 0 0 140px;
-                padding: 16px;
-            }
-            .actions-container {
-                flex-direction: column;
-            }
-            .actions-container button,
-            .actions-container a {
-                flex: 1 1 auto;
-            }
+
+        /* Existing CSS */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-pattern {
+            background-color: #ffffff;
+            /* Diganti fill='%23f97316' (orange) menjadi fill='%23ef0000' (merah) */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ef0000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.4;
         }
     </style>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-40 border-b border-red-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-food-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">Food<span class="text-food-primary">Media</span> Help</span>
-                </div>
-                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500 items-center">
-                    <a href="index.html" class="hover:text-food-primary transition">Beranda</a>
-                    <a href="tutorials.html" class="hover:text-food-primary transition">Tutorial Video</a>
-                    <a href="faq.html" class="hover:text-food-primary transition">FAQ</a>
-                    <a href="blog.html" class="hover:text-food-primary transition">Blog</a>
-                    <a href="ppt-tutorial.html" class="hover:text-food-primary transition">PPT Tutorial</a>
-                    <a href="linktree.html" class="text-food-primary font-semibold">Linktree</a>
-                </div>
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-food-primary" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Buka menu utama</span>
-                        <i id="menu-open-icon" class="fas fa-bars text-xl"></i>
-                        <i id="menu-close-icon" class="fas fa-times text-xl hidden"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu, show/hide based on menu state. -->
-        <div class="hidden md:hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-                <a href="tutorials.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Tutorial Video</a>
-                <a href="faq.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
-                <a href="blog.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">Blog</a>
-                <a href="ppt-tutorial.html" class="text-gray-500 hover:bg-gray-100 hover:text-food-primary block px-3 py-2 rounded-md text-base font-medium">PPT Tutorial</a>
-                <a href="linktree.html" class="bg-food-primary text-white block px-3 py-2 rounded-md text-base font-medium">Linktree</a>
-            </div>
-        </div>
-    </nav>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
 
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-avatar">
-                <img src="https://foodmedia.co.id/wp-content/uploads/2024/03/cropped-Bg-Big-Size.png" alt="Foto profil">
-            </div>
-            <div class="header-info">
-                <h1>Foodmedia Indonesia</h1>
-                <p>Platform pemesanan makanan online PT Asia Kreasi Mandiri yang menghubungkan pelanggan, merchant, dan layanan kurir profesional.</p>
-            </div>
-        </div>
+    <!-- Header Section with Navbar -->
+    <header class="fixed w-full z-50">
+        <nav class="transition-all duration-300 glass-nav border-b border-gray-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-20 items-center">
+                    <!-- Logo -->
+                    <a href="index.html" class="flex items-center gap-2.5 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-glow transition-all duration-300">
+                            <i class="fas fa-utensils text-lg"></i>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="font-bold text-xl leading-none tracking-tight text-slate-900">Food<span class="text-brand-600">Media</span></span>
+                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Sesuai Harga Resto</span>
+                        </div>
+                    </a>
 
-        <!-- Products Section -->
-        <div class="products-section">
-            <h2>Produk Kami</h2>
-            <div class="products-container">
-                <div class="product-card">
-                    <div class="product-logo">
-                        <img src="https://foodmedia.co.id/wp-content/uploads/2025/08/foodmedia-produk-1.png" alt="Foodmedia">
-                    </div>
-                    <h3>Foodmedia</h3>
-                    <p>Hubungkan merchant & pelanggan dengan mudah.</p>
-                    <a href="https://bit.ly/foodmedia-id" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Download">
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex space-x-1 items-center">
+                    <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
+                    <a href="tutorials.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Video Tutorial</a>
+                    <a href="blog.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Blog</a>
+                    <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
+                    <a href="ppt-tutorial.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">PPT Tutorial</a>
+                    <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                    <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
+                        Tentang Kami
                     </a>
                 </div>
-                <div class="product-card">
-                    <div class="product-logo">
-                        <img src="https://foodmedia.co.id/wp-content/uploads/2025/08/Food-On-produk-2.png" alt="Food-ON">
+
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-button" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg transition-colors" aria-expanded="false" aria-controls="mobile-menu">
+                        <i id="menu-open-icon" class="fas fa-bars text-2xl"></i>
+                        <i id="menu-close-icon" class="fas fa-times text-2xl hidden"></i>
+                        </button>
                     </div>
-                    <h3>Food-ON</h3>
-                    <p>Kelola pesanan & bisnis merchant secara profesional.</p>
-                    <a href="https://bit.ly/food-on" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Download">
-                    </a>
                 </div>
-                <div class="product-card">
-                    <div class="product-logo">
-                        <img src="https://foodmedia.co.id/wp-content/uploads/2025/08/Food-D-produk-3.png" alt="Food-D">
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
+                <div class="px-4 pt-4 pb-6 space-y-2">
+                    <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
+                    <a href="tutorials.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Tutorial Video</a>
+                    <a href="blog.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Blog & Berita</a>
+                    <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
+                    <a href="ppt-tutorial.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Download PPT</a>
+                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md">Tentang Kami</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="pt-20 pb-5 md:pt-5 md:pb-5 px-1">
+    <div class="relative bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <svg class="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <polygon points="50,0 100,0 50,100 0,100" />
+                </svg>
+
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                            <span class="block xl:inline">Platform Digital</span>
+                            <span class="block text-[#ef0000] xl:inline">Karya Anak Bangsa</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-auto">
+                            Solusi kebutuhan masyarakat di bidang kuliner. Memudahkan pelaku usaha makanan, UMKM, dan konsumen dalam satu ekosistem terpadu.
+                        </p>
                     </div>
-                    <h3>Food-D</h3>
-                    <p>Driver siap menerima order pelanggan secara cepat.</p>
-                    <a href="https://bit.ly/food-D" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Download">
-                    </a>
-                </div>
-                <div class="product-card">
-                    <div class="product-logo">
-                        <img src="https://foodmedia.co.id/wp-content/uploads/2025/08/salesmedia-produk-4.png" alt="Salesmedia">
-                    </div>
-                    <h3>Salesmedia</h3>
-                    <p>Dukungan optimal untuk tim sales Foodmedia.</p>
-                    <a href="https://bit.ly/-salesmedia" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Download">
-                    </a>
-                </div>
+                </main>
             </div>
         </div>
-
-        <!-- Actions Section -->
-        <div class="actions-section">
-            <h2>Aksi Cepat</h2>
-            <div class="actions-container">
-                <button id="copyWA"><i class="fa-regular fa-copy"></i> Salin nomor WA</button>
-                <a href="#" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> Bagikan</a>
-            </div>
-        </div>
-
-        <!-- Social Media Section -->
-        <div class="social-section">
-            <h2>Ikuti Kami</h2>
-            <div class="social-container">
-                <a class="link-item yt" href="https://www.youtube.com/@foodmediaindonesia" target="_blank">
-                    <span class="icon"><i class="fa-brands fa-youtube"></i></span>
-                    <span class="text">
-                        <span class="title">YouTube</span>
-                        <span class="subtitle">Video & Live</span>
-                    </span>
-                </a>
-                <a class="link-item wa" href="https://wa.me/6281776868188" target="_blank">
-                    <span class="icon"><i class="fa-brands fa-whatsapp"></i></span>
-                    <span class="text">
-                        <span class="title">WhatsApp</span>
-                        <span class="subtitle">Chat langsung</span>
-                    </span>
-                </a>
-                <a class="link-item ig" href="https://www.instagram.com/foodmediaindonesia/" target="_blank">
-                    <span class="icon"><i class="fa-brands fa-instagram"></i></span>
-                    <span class="text">
-                        <span class="title">Instagram</span>
-                        <span class="subtitle">Foto & Story</span>
-                    </span>
-                </a>
-                <a class="link-item tt" href="https://www.tiktok.com/@foodmediaindonesia" target="_blank">
-                    <span class="icon"><i class="fa-brands fa-tiktok"></i></span>
-                    <span class="text">
-                        <span class="title">TikTok</span>
-                        <span class="subtitle">Shorts lucu</span>
-                    </span>
-                </a>
-                <a class="link-item fb" href="https://www.facebook.com/profile.php?id=100074096929860&locale=id_ID" target="_blank">
-                    <span class="icon"><i class="fa-brands fa-facebook-f"></i></span>
-                    <span class="text">
-                        <span class="title">Facebook</span>
-                        <span class="subtitle">Update komunitas</span>
-                    </span>
-                </a>
-                <a class="link-item tg" href="https://t.me/foodmediaindonesia" target="_blank">
-                    <span class="icon"><i class="fa-brands fa-telegram"></i></span>
-                    <span class="text">
-                        <span class="title">Telegram</span>
-                        <span class="subtitle">Channel & Diskusi</span>
-                    </span>
-                </a>
-                <a class="link-item mail" href="mailto:foodmediateam@gmail.com">
-                    <span class="icon"><i class="fa-solid fa-envelope"></i></span>
-                    <span class="text">
-                        <span class="title">Email</span>
-                        <span class="subtitle">Kontak & Kerja Sama</span>
-                    </span>
-                </a>
-                <a class="link-item web" href="https://foodmedia.co.id/" target="_blank">
-                    <span class="icon"><i class="fa-solid fa-globe"></i></span>
-                    <span class="text">
-                        <span class="title">Website</span>
-                        <span class="subtitle">Semua layanan</span>
-                    </span>
-                </a>
-            </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Kuliner Indonesia">
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-footer-dark text-gray-300 mt-auto shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    
-            <!-- Grid Utama Footer (4 Kolom pada Desktop, Stacked pada Mobile) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-sm">
-    
-                <!-- Kolom 1: Logo & Deskripsi -->
-                <div>
-                    <!-- Logo FoodMedia -->
-                    <img src="https://foodmedia.co.id/wp-content/uploads/2025/02/foodmedia-tagline-1536x579.png"
-                         alt="Logo FoodMedia"
-                         class="h-10 w-auto mb-4 rounded-lg"
-                         onerror="this.onerror=null; this.src='https://placehold.co/1536x579/D63447/ffffff?text=FoodMedia';"
-                    >
-                    <p class="text-gray-400">
-                        Aplikasi pesan makanan dengan fitur lengkap untuk pelanggan. Kami menghubungkan Anda dengan hidangan favorit dari berbagai restoran terbaik.
+    <!-- About Section -->
+    <section class="py-16 bg-white hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center mb-12">
+                <h2 class="text-base text-[#ef0000] font-semibold tracking-wide uppercase">Siapa Kami</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Mengenal Foodmedia
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                    Dikembangkan oleh <span class="font-bold text-gray-800">PT Asia Kreasi Mandiri</span>, kami hadir sebagai inovasi ekosistem digital yang sah dan terpercaya.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div class="bg-red-50 rounded-2xl p-8 border border-red-100 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Legalitas & Kepercayaan</h3>
+                    <p class="text-gray-600 mb-4">
+                        Berdiri sah berdasarkan Keputusan Menteri Hukum dan HAM RI No. <span class="font-medium text-gray-800">AHU-0033005.AH.01.01.Tahun 2021</span>.
                     </p>
+                    <p class="text-gray-600">
+                        Terdaftar resmi sebagai Penyelenggara Sistem Elektronik (TDPSE) No: <span class="font-medium text-gray-800">023846.1/DJAI.PSE/05/2025</span>.
+                    </p>
+                    <div class="mt-6 flex items-center gap-2 text-sm text-green-600 font-semibold">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Terverifikasi & Aman</span>
+                    </div>
                 </div>
-    
-                <!-- Kolom 2: Tautan Cepat -->
                 <div>
-                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Tautan Cepat</h3>
-                    <ul class="space-y-2">
-                        <li>
-                            <a href="index.html" class="hover:text-foodmedia-primary transition duration-150">Beranda</a>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        FoodMedia Indonesia siap beroperasi penuh pada <strong>Januari 2025</strong>. Kami fokus pada pengembangan aplikasi berbasis solusi, khususnya kuliner, untuk menghubungkan merchant, driver, dan pelanggan dalam satu harmoni.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg w-1/3 text-center">
+                            <i class="fas fa-utensils text-[#ef0000] text-2xl mb-2"></i>
+                            <span class="text-sm font-medium">FoodMedia<br>(Customer)</span>
+                        </div>
+                        <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg w-1/3 text-center">
+                            <i class="fas fa-store text-[#ef0000] text-2xl mb-2"></i>
+                            <span class="text-sm font-medium">Food ON<br>(Merchant)</span>
+                        </div>
+                        <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg w-1/3 text-center">
+                            <i class="fas fa-motorcycle text-[#ef0000] text-2xl mb-2"></i>
+                            <span class="text-sm font-medium">Food D<br>(Driver)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values Section -->
+    <section class="py-16 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                    Nilai Dasar <span class="text-[#ef0000]">P.E.O.P.L.E</span>
+                </h2>
+                <p class="mt-4 text-gray-400">Fondasi budaya kerja kami untuk memberikan yang terbaik.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- P -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition duration-300 border-l-4 border-[#ef0000]">
+                    <h3 class="text-xl font-bold mb-2">Planning</h3>
+                    <p class="text-gray-400 text-sm">Rencana bisnis terukur, evaluasi rutin, dan strategi yang dinamis sesuai pasar.</p>
+                </div>
+                <!-- E -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition duration-300 border-l-4 border-blue-500">
+                    <h3 class="text-xl font-bold mb-2">Elevating</h3>
+                    <p class="text-gray-400 text-sm">Meningkatkan kualitas brand dengan eksekusi digital yang cepat dan tepat.</p>
+                </div>
+                <!-- O -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition duration-300 border-l-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-2">Organization</h3>
+                    <p class="text-gray-400 text-sm">Membangun loyalitas, kepedulian, dan tim yang unggul dengan prinsip asah, asih, asuh.</p>
+                </div>
+                <!-- P -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition duration-300 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold mb-2">Passion</h3>
+                    <p class="text-gray-400 text-sm">Bekerja dengan semangat dan gairah agar tugas berat terasa ringan.</p>
+                </div>
+                <!-- L -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition duration-300 border-l-4 border-purple-500">
+                    <h3 class="text-xl font-bold mb-2">Leadership</h3>
+                    <p class="text-gray-400 text-sm">Mengembangkan potensi kepemimpinan melalui empati dan adaptasi.</p>
+                </div>
+                <!-- E -->
+                <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition duration-300 border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-2">Evolution</h3>
+                    <p class="text-gray-400 text-sm">Layanan yang lebih cepat, cerdas, dan selalu berkembang tiap hari.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Mission -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-red-50 rounded-3xl overflow-hidden shadow-lg flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-10 flex flex-col justify-center">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-4 border-[#ef0000] inline-block pb-2">Visi & Misi</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-bullseye text-[#ef0000] mt-1 mr-3"></i>
+                            <span class="text-gray-700">Platform pendukung utama bagi pelaku usaha Indonesia</span>
                         </li>
-                        <li>
-                        <a href="tutorials.html" class="hover:text-foodmedia-primary transition duration-150">Tutorial Video</a>
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-holding-dollar text-[#ef0000] mt-1 mr-3"></i>
+                            <span class="text-gray-700">Transaksi bisnis makanan terjangkau, offline dan online</span>
                         </li>
-                        <li>
-                            <a href="blog.html" class="hover:text-foodmedia-primary transition duration-150">Blog</a>
+                        <li class="flex items-start">
+                            <i class="fas fa-users text-[#ef0000] mt-1 mr-3"></i>
+                            <span class="text-gray-700">Menghadirkan keuntungan bagi pengguna, merchant, driver</span>
                         </li>
-                        <li>
-                            <a href="faq.html" class="hover:text-foodmedia-primary transition duration-150">FAQ</a>
+                        <li class="flex items-start">
+                            <i class="fas fa-bullhorn text-[#ef0000] mt-1 mr-3"></i>
+                            <span class="text-gray-700">Media promosi terpercaya bagi UMKM di seluruh Indonesia</span>
                         </li>
-                        <li>
-                            <a href="ppt-tutorial.html" class="hover:text-foodmedia-primary transition duration-150">PPT Tutorial</a>
+                        <li class="flex items-start">
+                            <i class="fas fa-briefcase text-[#ef0000] mt-1 mr-3"></i>
+                            <span class="text-gray-700">Membuka peluang karir luas bagi masyarakat Indonesia</span>
+                        </li>                        
+                    </ul>
+                </div>
+                <div class="md:w-1/2 bg-gray-200 h-64 md:h-auto bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80');">
+                    <div class="w-full h-full bg-black bg-opacity-40 flex items-center justify-center">
+                        <p class="text-white text-2xl font-bold px-4 text-center">"Membuka kesempatan berkarir bagi warga Indonesia"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info (Specific Request) -->
+    <section class="py-16 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900">Hubungi Kami</h2>
+                <p class="mt-4 text-gray-500">Tim kami siap membantu kebutuhan informasi Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Info Cards -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Jam Buka -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start hover:-translate-y-1 transition duration-300">
+                        <div class="bg-red-100 p-3 rounded-full text-[#ef0000] mr-4">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-1">Jam Buka Kantor</h4>
+                            <p class="text-gray-600 font-medium">Senin - Jum'at</p>
+                            <p class="text-gray-500">10.00 AM - 16.00 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Kontak -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start hover:-translate-y-1 transition duration-300">
+                        <div class="bg-red-100 p-3 rounded-full text-[#ef0000] mr-4">
+                            <i class="fas fa-headset text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-1">Customer Service</h4>
+                            <p class="text-gray-600 font-medium">CS : <a href="https://wa.me/6281776868188" class="hover:text-[#ef0000] transition">0817 7686 8188</a></p>
+                            <p class="text-gray-600 mt-1 text-sm break-all">Email : foodmediateam@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start hover:-translate-y-1 transition duration-300">
+                        <div class="bg-red-100 p-3 rounded-full text-[#ef0000] mr-4">
+                            <i class="fas fa-map-marker-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-1">Alamat Kantor</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Saphire Estate Blok A No 14<br>
+                                Jl. Dr Wahidin Sudiro Husodo<br>
+                                Pesurungan Kidul<br>
+                                Tegal – Jawa Tengah
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Placeholder (Simulated) -->
+                <div class="lg:col-span-2 bg-gray-200 rounded-xl overflow-hidden shadow-sm border border-gray-300 relative h-96 lg:h-auto min-h-[300px]">
+                     <!-- Since I cannot use a real Google Maps API key, I am creating a styled placeholder that links to the map -->
+                    <div class="absolute inset-0 bg-cover bg-center opacity-60" style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80');"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 bg-opacity-30">
+                        <i class="fas fa-map-marked-alt text-5xl text-white mb-4 animate-bounce"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Lokasi Kami</h3>
+                        <p class="text-white text-center px-4 mb-6">Tegal, Jawa Tengah</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Saphire+Estate+Blok+A+No+14+Tegal" target="_blank" class="bg-[#ef0000] hover:bg-[#d40000] text-white font-bold py-3 px-8 rounded-full transition shadow-lg flex items-center gap-2">
+                            <i class="fas fa-directions"></i> Buka di Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+                <!-- Brand Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white tracking-tight">Food<span class="text-brand-500">Media</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Platform teknologi pangan yang memberdayakan UMKM dan mempermudah konsumen melalui integrasi digital yang mulus.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Navigasi</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="index.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Beranda</a></li>
+                        <li><a href="tutorials.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Tutorial &amp; Bantuan</a></li>
+                        <li><a href="blog.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Blog &amp; Insight</a></li>
+                        <li><a href="faq.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Pertanyaan Umum</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-brand-500 shrink-0"></i>
+                            <span class="text-white">Saphire Estate Blok A No 14,<br>Tegal, Jawa Tengah, Indonesia</span>
                         </li>
-                        <li>
-                            <a href="linktree.html" target="_blank" rel="noopener noreferrer" class="hover:text-foodmedia-primary transition duration-150">Linktree</a>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-brand-500 shrink-0"></i>
+                            <span class="font-mono text-white hover:text-slate-300 transition-colors">0817 7686 8188</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-brand-500 shrink-0"></i>
+                            <span class="text-white hover:text-slate-300 transition-colors">team@foodmedia.id</span>
                         </li>
                     </ul>
                 </div>
-    
-                <!-- Kolom 3: Jam Buka Kantor & Kontak -->
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Hubungi Kami</h3>
-    
-                    <div class="mb-4">
-                        <p class="font-semibold text-gray-300 mb-1">JAM BUKA KANTOR:</p>
-                        <ul class="text-gray-400 space-y-1">
-                            <li>Senin - Jum'at</li>
-                            <li>10.00 AM - 16.00 PM</li>
-                        </ul>
+
+                <!-- Office Hours -->
+                <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 shadow-xl">
+                    <h3 class="text-red-600 font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                            <span class="text-white">Senin - Jumat</span>
+                            <span class="text-white font-semibold">10:00 - 16:00 WIB</span>
+                        </div>
+                        <div class="flex justify-between text-slate-500 pt-2">
+                            <span class="text-white">Sabtu - Minggu</span>
+                            <span class="font-medium text-slate-500 italic">Tutup</span>
+                        </div>
                     </div>
-    
-                    <div>
-                        <p class="font-semibold text-gray-300 mb-1">CUSTOMER SERVICE:</p>
-                        <p class="flex items-center space-x-2">
-                            <!-- Icon Telepon (Lucide Icon/Inline SVG equivalent) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-foodmedia-primary"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 17.5 17.5 0 0 0 .81 4.96 2 2 0 0 1-.45 2.11L8.09 15c.67.67 1.28 1.28 2.11.81a17.5 17.5 0 0 0 4.96.81 2 2 0 0 1 1.72 2v3z"/></svg>
-                            <a href="tel:+6281776868188" class="text-gray-200 hover:text-foodmedia-primary transition duration-150">0817 7686 8188</a>
-                        </p>
-                        <p class="flex items-center space-x-2 mt-2">
-                            <!-- Icon Email (Lucide Icon/Inline SVG equivalent) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-foodmedia-primary"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></polyline></svg>
-                            <a href="mailto:foodmediateam@gmail.com" class="text-gray-200 hover:text-foodmedia-primary transition duration-150">foodmediateam@gmail.com</a>
-                        </p>
-                    </div>
-                </div>
-    
-                <!-- Kolom 4: Alamat -->
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4 border-b-2 border-foodmedia-primary pb-1">Alamat Kantor</h3>
-                    <p class="text-gray-400">
-                        Saphire Estate Blok A No 14 <br>
-                        Jl. Dr Wahidin Sudiro Husodo <br>
-                        Pesurungan Kidul <br>
-                        Tegal – Jawa Tengah
-                    </p>
-                    <!-- Link Google Maps Placeholder -->
-                    <a href="https://maps.google.com/?q=Saphire+Estate+Blok+A+No+14"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="mt-3 inline-flex items-center text-foodmedia-primary font-semibold hover:text-white transition duration-150 rounded-lg"
-                    >
-                        <!-- Icon Lokasi -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        Lihat di Peta
+
+                    <a href="linktree.html" class="block w-full mt-8 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold text-center rounded-lg transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ease-in-out duration-150">
+                        <i class="fas fa-comment-dots mr-2"></i> Chat Customer Service
                     </a>
+
+                    <!-- Download Buttons ADDED here -->
+                    <div class="pt-6 space-y-3">
+                        <a href="https://bit.ly/play-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-google-play text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Dapatkan di</p>
+                                <p class="text-sm font-bold text-white leading-none">Google Play</p>
+                            </div>
+                        </a>
+                        <a href="https://bit.ly/app-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-apple text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Unduh di</p>
+                                <p class="text-sm font-bold text-white leading-none">App Store</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-    
-            <!-- Bagian Hak Cipta (Copyright) -->
-            <div class="mt-12 pt-8 border-t border-foodmedia-primary/50 text-center">
-                <p class="text-gray-500 text-xs">
-                    &copy; 2025 FoodMedia. All rights reserved. | Dibuat dengan cinta untuk semua pecinta kuliner.
-                </p>
+
+            <div class="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+                <p class="text-center md:text-left">© 2025 PT FoodMedia Digital Indonesia. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
             </div>
-    
         </div>
     </footer>
-    <script>
-        const WA_NUMBER = '+6281776868188';
 
-        // Salin WA
-        document.getElementById('copyWA').addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(WA_NUMBER);
-                alert('Nomor WA disalin: ' + WA_NUMBER);
-            } catch(e) {
-                alert('Gagal menyalin nomor WA.');
-            }
-        });
-
-        // Bagikan Link
-        document.getElementById('shareBtn').addEventListener('click', async (e) => {
-            e.preventDefault();
-            const data = {
-                title: 'Foodmedia Indonesia',
-                text: 'Cek semua tautan resmi Foodmedia di sini',
-                url: window.location.href
-            };
-            if (navigator.share) {
-                try {
-                    await navigator.share(data);
-                } catch (err) {}
-            } else {
-                try {
-                    await navigator.clipboard.writeText(window.location.href);
-                    alert('Link disalin ke clipboard!');
-                } catch (e) {
-                    alert('Gagal menyalin link.');
-                }
-            }
-        });
-    </script>
-
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const openIcon = document.getElementById('menu-open-icon');
-        const closeIcon = document.getElementById('menu-close-icon');
-
-        mobileMenuButton.addEventListener('click', () => {
-            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-            openIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when a link is clicked
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                mobileMenuButton.click();
-            }
-        });
-    </script>
 </body>
 </html>
