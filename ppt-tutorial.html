@@ -158,14 +158,14 @@
 
         <!-- Search Bar -->
         <div class="mb-8">
-            <input type="text" id="search-input" placeholder="Cari tutorial PPT..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent mx-auto block">
+            <input type="text" id="search-input" placeholder="Cari tutorial PPT..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent mx-auto block">
             <div id="recommendations" class="mt-4 text-center">
                 <p class="text-sm text-gray-600 mb-2">Rekomendasi pencarian:</p>
                 <div class="flex flex-wrap justify-center gap-2">
-                    <button class="px-3 py-1 bg-red-100 text-food-primary rounded-full text-sm hover:bg-red-200 transition" onclick="setSearch('Pesan Antar')">Pesan Antar</button>
-                    <button class="px-3 py-1 bg-red-100 text-food-primary rounded-full text-sm hover:bg-red-200 transition" onclick="setSearch('Pick Up')">Pick Up</button>
-                    <button class="px-3 py-1 bg-red-100 text-food-primary rounded-full text-sm hover:bg-red-200 transition" onclick="setSearch('Tutorial')">Tutorial</button>
-                    <button class="px-3 py-1 bg-red-100 text-food-primary rounded-full text-sm hover:bg-red-200 transition" onclick="setSearch('Layanan')">Layanan</button>
+                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pesan Antar')">Pesan Antar</button>
+                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pick Up')">Pick Up</button>
+                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Tutorial')">Tutorial</button>
+                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Layanan')">Layanan</button>
                 </div>
             </div>
         </div>
@@ -173,6 +173,12 @@
         <!-- PPT List -->
         <div class="space-y-4" id="ppt-list">
             <!-- PPT items will be loaded from localStorage -->
+        </div>
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-10">
+            <i class="fas fa-search text-4xl text-slate-300 mb-4"></i>
+            <h3 class="text-xl font-semibold text-slate-700">Tidak ada hasil ditemukan</h3>
+            <p class="text-slate-500 mt-1">Coba gunakan kata kunci lain yang lebih umum.</p>
         </div>
     </main>
 
@@ -361,8 +367,6 @@
         function refreshPpts() {
             const ppts = loadPPTsFromStorage();
             renderPPTs(ppts);
-            // Re-initialize search if it depends on the rendered items
-            initializeSearch();
         }
 
         // Listen for storage changes (when admin panel updates PPTs)
@@ -375,7 +379,9 @@
         // Render PPTs
         function renderPPTs(ppts) {
             const pptList = document.getElementById('ppt-list');
+            const noResultsMessage = document.getElementById('no-results');
             pptList.innerHTML = '';
+            if (ppts.length === 0) return;
 
             ppts.forEach(ppt => {
                 // Standardize URL properties
@@ -383,7 +389,7 @@
                 const downloadUrl = ppt.downloadUrl || ppt.downloadLink || '#';
  
                 const pptItem = `
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div class="ppt-item bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" data-title="${ppt.title.toLowerCase()}">
                         <a href="${viewUrl}" target="_blank" class="flex items-center gap-4 group">
                             <i class="fas fa-file-powerpoint text-3xl text-[#ef0000] group-hover:text-red-700 transition"></i>
                             <h3 class="font-semibold text-black group-hover:text-red-700 transition">${ppt.title}</h3>
@@ -402,92 +408,115 @@
             });
         }
 
-        let pptItems = []; // Define globally to be accessible by search
+        // --- Search Functionality ---
+
+        function levenshteinDistance(a, b) {
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+            for (let j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function searchPPTs(query) {
+            const pptList = document.getElementById('ppt-list');
+            const pptItems = Array.from(pptList.querySelectorAll('.ppt-item'));
+            const noResultsMessage = document.getElementById('no-results');
+            const cleanQuery = query.trim().toLowerCase();
+
+            if (!cleanQuery) {
+                pptItems.forEach(item => {
+                    item.style.display = 'flex';
+                    item.style.order = '0'; // Reset order
+                });
+                noResultsMessage.classList.add('hidden');
+                return;
+            }
+
+            const queryWords = query.toLowerCase().split(' ').filter(w => w);
+            const scoredItems = pptItems.map(item => {
+                const title = item.dataset.title;
+                let score = 0;
+
+                // Higher score for matching the full query phrase
+                if (title.includes(cleanQuery)) {
+                    score += 100; // Highest priority for exact phrase match
+                }
+
+                queryWords.forEach(word => {
+                    let wordFound = false;
+                    // 1. Exact word match check
+                    if (title.includes(word)) {
+                        score += 25; // High score for exact word
+                        wordFound = true;
+                    } 
+                    // 2. Fuzzy match check (only if exact word not found)
+                    else {
+                        const titleWords = title.split(' ');
+                        for (const titleWord of titleWords) {
+                            const distance = levenshteinDistance(word, titleWord);
+                            // Allow slightly more tolerance for longer words
+                            const maxDistance = word.length > 4 ? 2 : 1;
+                            if (distance <= maxDistance) {
+                                // Lower score for fuzzy matches
+                                score += 10 - (distance * 4); // distance 1: +6, distance 2: +2
+                                wordFound = true;
+                                break; // Move to next query word once a close match is found
+                            }
+                        }
+                    }
+                });
+
+                return { item, score };
+            });
+
+            let hasResults = false;
+
+            // Sort by score descending
+            scoredItems.sort((a, b) => b.score - a.score);
+
+            // Apply visibility and order
+            scoredItems.forEach(({ item, score }, index) => {
+                if (score > 0) {
+                    item.style.display = 'flex';
+                    item.style.order = index.toString(); // Use CSS order to re-sort visually
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show or hide the 'no results' message
+            noResultsMessage.classList.toggle('hidden', hasResults);
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             refreshPpts(); // Initial load
 
-            function initializeSearch() {
-                // Search functionality
-                const searchInput = document.getElementById('search-input');
-                pptItems = Array.from(document.getElementById('ppt-list').children);
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => searchPPTs(e.target.value));
 
-                function levenshteinDistance(a, b) {
-                    const matrix = [];
-                    for (let i = 0; i <= b.length; i++) {
-                        matrix[i] = [i];
-                    }
-                    for (let j = 0; j <= a.length; j++) {
-                        matrix[0][j] = j;
-                    }
-                    for (let i = 1; i <= b.length; i++) {
-                        for (let j = 1; j <= a.length; j++) {
-                            if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                                matrix[i][j] = matrix[i - 1][j - 1];
-                            } else {
-                                matrix[i][j] = Math.min(
-                                    matrix[i - 1][j - 1] + 1,
-                                    matrix[i][j - 1] + 1,
-                                    matrix[i - 1][j] + 1
-                                );
-                            }
-                        }
-                    }
-                    return matrix[b.length][a.length];
-                }
-
-                function searchPPTs(query) {
-                    if (!query.trim()) {
-                        pptItems.forEach(item => item.style.display = 'block');
-                        return;
-                    }
-
-                    const queryWords = query.toLowerCase().split(' ');
-                    const scoredItems = pptItems.map(item => {
-                        const title = item.querySelector('h3').textContent.toLowerCase();
-                        let score = 0;
-                        let closestDistance = Infinity;
-
-                        queryWords.forEach(word => {
-                            if (title.includes(word)) {
-                                score += 10; // Exact match bonus
-                            }
-                            // Calculate closest word distance
-                            const titleWords = title.split(' ');
-                            titleWords.forEach(titleWord => {
-                                const distance = levenshteinDistance(word, titleWord);
-                                closestDistance = Math.min(closestDistance, distance);
-                            });
-                        });
-
-                        // Adjust score based on closest distance
-                        if (closestDistance <= 2) {
-                            score += (3 - closestDistance) * 5;
-                        }
-
-                        return { item, score };
-                    });
-
-                    scoredItems.sort((a, b) => b.score - a.score);
-
-                    pptItems.forEach(item => item.style.display = 'none');
-                    scoredItems.forEach(({ item, score }) => {
-                        if (score > 0) {
-                            item.style.display = 'block';
-                        }
-                    });
-                }
-
-                searchInput.addEventListener('input', (e) => {
-                    searchPPTs(e.target.value);
-                });
-
-                // Set search from recommendations
-                window.setSearch = function(term) {
-                    searchInput.value = term;
-                    searchPPTs(term);
-                };
-            }
+            // Make setSearch globally available for the recommendation buttons
+            window.setSearch = function(term) {
+                searchInput.value = term;
+                searchInput.dispatchEvent(new Event('input')); // Trigger search
+            };
         });
         
     </script>
