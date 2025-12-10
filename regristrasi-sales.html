@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodMedia - Solusi Ekosistem Kuliner Digital</title>
-    <!-- Tailwind CSS -->
+    <title>Business Development - FoodMedia</title>
+    <!-- Load Tailwind CSS for modern form styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <!-- Load Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Plus Jakarta Sans (Lebih modern untuk bisnis) -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script>
+    <script> 
         tailwind.config = {
             theme: {
                 extend: {
@@ -40,6 +40,14 @@
         }
     </script>
     <style>
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+
         /* Gaya khusus untuk memastikan iframe menutupi seluruh area tanpa letterbox (Solusi Full Cover) */
         .video-cover-container {
             position: relative;
@@ -52,17 +60,17 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            min-width: 100%; 
-            min-height: 100%; 
+            min-width: 100%;
+            min-height: 100%;
             /* Perbesar iframe agar selalu menutupi container, meniru object-fit: cover */
             /* Rasio 16:9 adalah 1.777. Dengan scale 1.777, kita pastikan video menutupi hampir semua rasio layar */
-            transform: translate(-50%, -50%) scale(1.777); 
+            transform: translate(-50%, -50%) scale(1.777);
         }
 
         /* Pada rasio potret (misalnya, ponsel), video mungkin tidak cukup besar, kita perbesar lagi */
         @media (orientation: portrait) {
             .video-cover-container iframe {
-                transform: translate(-50%, -50%) scale(2.5); 
+                transform: translate(-50%, -50%) scale(2.5);
             }
         }
         /* Custom Utilities */
@@ -72,12 +80,25 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
-        /* Glassmorphism */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+
+        /* Hero Background Merah Solid (Perubahan di sini) */
+        .hero-bg {
+            background-color: #DC2626; /* Merah Solid yang Kuat (Tailwind Red 600) */
+            /* Menambahkan sedikit warna gelap di bagian atas untuk efek kedalaman */
+            background-image: linear-gradient(180deg, #991b1b 0%, #DC2626 50%, #DC2626 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Patern dot halus agar tidak terlalu polos */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px); /* Opasitas dikurangi */
+            background-size: 24px 24px;
+            opacity: 1; /* Opasitas diubah menjadi lebih jelas */
+            pointer-events: none;
         }
 
         /* Scroll Animation Classes */
@@ -115,6 +136,70 @@
         .play-pulse {
             animation: pulse-ring 2s infinite;
         }
+        :root{
+            --fm-red:#EF0000;
+            --fm-black:#0b0b0b;
+            --fm-white:#ffffff;
+            --radius:18px;
+            --max-w:1200px;
+        }
+        .fm-career{max-width:var(--max-w);margin:0 auto;padding:0;border-radius:var(--radius);font-family:Inter,ui-sans-serif,system-ui;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,0.12);animation:fadeIn 0.8s ease}
+
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+        .fm-hero{background:var(--fm-red);color:var(--fm-white);padding:40px 30px;text-align:center;position:relative}
+        .fm-hero h2{font-size:28px;margin:10px 0;letter-spacing:-0.02em;display:flex;align-items:center;justify-content:center;gap:10px}
+        .fm-hero p{max-width:720px;margin:10px auto;font-size:15px;line-height:1.6;opacity:.95}
+
+        .fm-grid{display:grid;grid-template-columns:1fr 380px;gap:24px;padding:40px;background:var(--fm-white);color:var(--fm-black)}
+        @media(max-width:950px){.fm-grid{grid-template-columns:1fr;padding:24px}}
+
+        .fm-content h3{font-size:18px;margin:22px 0 10px;display:flex;align-items:center;gap:8px;color:var(--fm-red)}
+        .fm-content ul{margin:0;padding:0;list-style:none}
+        .fm-content li{margin:10px 0;padding-left:28px;position:relative;animation:slideUp .6s ease both;line-height:1.6}
+        .fm-content li:before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;left:0;top:0;color:var(--fm-red)}
+
+        .fm-meta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0}
+        .meta-item{background:#f7f7f7;padding:10px 14px;border-radius:10px;display:flex;align-items:center;gap:8px;font-size:14px}
+        .meta-item i{color:var(--fm-red)}
+
+        .fm-cta{background:linear-gradient(180deg,#fff,#f9f9f9);padding:28px;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,0.06);animation:slideUp .8s ease}
+        .fm-apply{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+        .apply-btn{display:inline-flex;align-items:center;gap:10px;background:var(--fm-red);color:#fff;padding:14px 20px;border-radius:12px;font-weight:700;text-decoration:none;transition:all .3s ease;border:none;cursor:pointer}
+        .apply-btn:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(239,0,0,0.4)}
+        .apply-btn i{font-size:16px}
+        .apply-hint{font-size:14px;opacity:.9}
+
+        .fm-foot{font-size:13px;opacity:.7;margin-top:18px}
+
+        /* Tambahan agar career-heading dan icon jadi putih */
+        #career-heading,
+        #career-heading i {
+            color: #fff !important;
+        }
+
+        /* Styling gambar tambahan */
+        .fm-apply img {
+            width: 100%;
+            border-radius: 0px; /* sudut siku */
+            margin-top: 14px;
+        }
+
+        /* Input field styling using Tailwind and custom colors */
+        .fm-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        .fm-input:focus {
+            outline: none;
+            border-color: var(--fm-red);
+            box-shadow: 0 0 0 1px rgba(239, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
@@ -138,8 +223,8 @@
 
                     <!-- Desktop Menu -->
                     <div class="hidden md:flex space-x-1 items-center">
-                        <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
-    
+                        <a href="index.html" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Beranda</a>
+
                         <!-- DROPDOWN MENU FOR TUTORIAL (FIXED) -->
                         <div class="relative group pt-2"> <!-- Added pt-2 to create space for the dropdown without a gap -->
                             <div>
@@ -151,7 +236,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-        
+
                                 <!-- Dropdown Content (Appears on hover) -->
                                 <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
                                     <!-- Dropdown Items -->
@@ -161,7 +246,7 @@
                             </div>
                         </div>
                         <!-- END DROPDOWN MENU -->
-    
+
                         <!-- DROPDOWN MENU FOR BLOG -->
                         <div class="relative group pt-2">
                             <div>
@@ -173,7 +258,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-        
+
                                 <!-- Dropdown Content (Appears on hover) -->
                                 <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
                                     <!-- Dropdown Items -->
@@ -185,9 +270,9 @@
                         <!-- END DROPDOWN MENU -->
                         <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
                         <a href="kantor-wilayah.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Kantor Wilayah</a>
-                        
+
                         <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                        
+
                         <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
                             Tentang Kami
                         </a>
@@ -206,8 +291,8 @@
             <!-- Mobile Menu -->
             <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
                 <div class="px-4 pt-4 pb-6 space-y-2">
-                    <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
-                    
+                    <a href="index.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">Beranda</a>
+
                     <!-- MOBILE DROPDOWN FOR VIDEO TUTORIAL (NEW) -->
                     <div>
                         <button id="mobile-tutorials-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
@@ -221,7 +306,7 @@
                         </div>
                     </div>
                     <!-- END MOBILE DROPDOWN -->
-                    
+
                     <!-- MOBILE DROPDOWN FOR BLOG -->
                     <div>
                         <button id="mobile-blog-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
@@ -234,7 +319,7 @@
                         </div>
                     </div>
                     <!-- END MOBILE DROPDOWN -->
-    
+
                     <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
                     <a href="kantor-wilayah.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Kantor Wilayah</a>
                     <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md hover:bg-brand-700 transition-colors">Tentang Kami</a>
@@ -243,39 +328,82 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="pt-28 pb-12 md:pt-32 md:pb-20 px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-900">Panduan Presentasi (PPT)</h1>
-            <p class="mt-2 text-lg text-gray-600">Unduh materi presentasi untuk mempelajari layanan FoodMedia lebih dalam.</p>
-        </div>
+<section class="pt-20 pb-20" data-theme="red" aria-labelledby="career-heading">
 
-        <!-- Search Bar -->
-        <div class="mb-8">
-            <input type="text" id="search-input" placeholder="Cari tutorial PPT..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent mx-auto block">
-            <div id="recommendations" class="mt-4 text-center">
-                <p class="text-sm text-gray-600 mb-2">Rekomendasi pencarian:</p>
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pesan Antar')">Pesan Antar</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pick Up')">Pick Up</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Tutorial')">Tutorial</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Layanan')">Layanan</button>
-                </div>
+    <!-- Hero section -->
+   <main id="articleContainer"></main>
+    <div class="fm-hero">
+        <span class="fm-badge"><i class="fa-solid fa-briefcase"></i> Karir</span>
+        <h3 id="career-heading"><i class="fa-solid fa-handshake"></i> BUSINESS DEVELOPMENT - FOODMEDIA</h3>
+        <p>Sebagai Business Development di foodmedia, Anda akan berperan dalam mengembangkan peluang bisnis, menjalin kemitraan strategis, serta meningkatkan pertumbuhan platform dengan fokus pada ekosistem kuliner dan UMKM.</p>
+    </div>
+
+    <!-- Content + CTA grid -->
+    <div class="fm-grid">
+        <div class="fm-content">
+            <p><i class="fa-solid fa-bullseye"></i> Sebagai Business Development, kamu akan menjalin kemitraan, menemukan peluang bisnis, dan mengakselerasi pertumbuhan FoodMedia.</p>
+
+            <h3><i class="fa-solid fa-user-check"></i> Kualifikasi</h3>
+            <ul>
+                <li>Pengalaman di bidang Business Development, Sales, atau bidang terkait (minimal 1–3 tahun di industri kuliner, e-commerce, atau teknologi lebih disukai).</li>
+                <li>Kemampuan komunikasi dan negosiasi yang kuat.</li>
+                <li>Berorientasi pada target dan memiliki kemampuan analisis bisnis yang baik.</li>
+                <li>Pemahaman tentang pasar kuliner dan tren digital di industri food delivery.</li>
+                <li>Mampu bekerja secara mandiri maupun dalam tim dengan inisiatif tinggi.</li>
+                <li>Asuransi.</li>
+            </ul>
+
+            <h3><i class="fa-solid fa-tasks"></i> Tanggung Jawab</h3>
+            <ul>
+                <li>Mengidentifikasi dan mengembangkan peluang bisnis baru untuk memperluas jangkauan foodmedia.</li>
+                <li>Menjalin dan menjaga hubungan dengan mitra restoran, UMKM kuliner, dan mitra strategis lainnya.</li>
+                <li>Menganalisis tren pasar dan kebutuhan pelanggan untuk menciptakan strategi pertumbuhan yang efektif.</li>
+                <li>Berkolaborasi dengan tim pemasaran dan operasional untuk meningkatkan akuisisi dan retensi mitra.</li>
+                <li>Menyusun proposal bisnis dan presentasi untuk calon mitra dan investor.</li>
+                <li>Memantau kinerja bisnis dan memberikan rekomendasi strategis berdasarkan data serta insight pasar.</li>
+            </ul>
+
+            <div class="fm-meta">
+                <div class="meta-item"><i class="fa-solid fa-location-dot"></i> Remote</div>
+                <div class="meta-item"><i class="fa-solid fa-clock"></i> Full-time</div>
+                <div class="meta-item"><i class="fa-solid fa-signal"></i> Mid Level</div>
             </div>
+
+            <p class="fm-foot">FoodMedia — teknologi untuk rakyat, solusi untuk UMKM.</p>
         </div>
 
-        <!-- PPT List -->
-        <div class="space-y-4" id="ppt-list">
-            <!-- PPT items will be loaded from localStorage -->
-        </div>
-        <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-10">
-            <i class="fas fa-search text-4xl text-slate-300 mb-4"></i>
-            <h3 class="text-xl font-semibold text-slate-700">Tidak ada hasil ditemukan</h3>
-            <p class="text-slate-500 mt-1">Coba gunakan kata kunci lain yang lebih umum.</p>
-        </div>
-    </main>
+        <aside class="fm-cta">
+            <form id="telegramForm" class="fm-apply" onsubmit="handleFormSubmission(event)">
+                <div>
+                    <strong><i class="fa-solid fa-paper-plane"></i> Minat gabung?</strong>
+                    <div class="apply-hint">Isi formulir singkat di bawah untuk mendaftar sebagai Business Development.</div>
+                </div>
 
+                <!-- Input Field: Nama -->
+                <input type="text" id="name" name="name" placeholder="Nama Lengkap *" class="fm-input" required>
+                
+                <!-- Input Field: Email -->
+                <input type="email" id="email" name="email" placeholder="Email Aktif *" class="fm-input" required>
+                
+                <!-- Input Field: Nomor HP -->
+                <input type="tel" id="phone" name="phone" placeholder="Nomor HP/WA *" class="fm-input" required>
+                
+                <!-- Input Field: Link CV (Opsional) -->
+                <input type="url" id="cv_link" name="cv_link" placeholder="Link CV/Portfolio (Opsional)" class="fm-input">
+
+                <button type="submit" id="submitBtn" class="apply-btn w-full justify-center">
+                    <i class="fa-solid fa-file-signature"></i> Kirim Lamaran
+                </button>
+
+                <!-- Status Message Area -->
+                <div id="statusMessage" class="text-sm mt-2 font-medium" style="min-height: 20px;"></div>
+
+                <div style="font-size:14px;opacity:0.9"><i class="fa-solid fa-envelope"></i> Kirim CV ke <a href="mailto:foodmediateam@gmail.com" style="color:var(--fm-red);text-decoration:underline">foodmediateam@gmail.com</a></div>
+                <img src="https://placehold.co/400x200/EF0000/fff?text=FOODMEDIA+BD" alt="Foodmedia BD" />
+            </form>
+        </aside>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="bg-slate-900">
@@ -384,269 +512,171 @@
         </div>
     </footer>
 
+<script>
+    // ************************************************
+    // KONFIGURASI TELEGRAM (SUDAH DIISI)
+    // ************************************************
+    const BOT_TOKEN = "8508828921:AAGjDo7xxuxmKnyOBZ8vQYprmOMJxc3iT7o";
+    const CHAT_ID = "6850641218"; // ID akun @foodmediaindonesia
+    const JOB_TITLE = "BUSINESS DEVELOPMENT - FOODMEDIA";
+    // ************************************************
 
-    <script>
-        // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOpenIcon = document.getElementById('menu-open-icon');
-            const menuCloseIcon = document.getElementById('menu-close-icon');
+    const form = document.getElementById('telegramForm');
+    const statusMessage = document.getElementById('statusMessage');
+    const submitBtn = document.getElementById('submitBtn');
 
-            const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
-            const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
-            const mobileChevron = document.getElementById('mobile-chevron');
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-            const blogTrigger = document.getElementById('mobile-blog-trigger');
-            const blogSubMenu = document.getElementById('blog-sub-menu');
-            const blogChevron = document.getElementById('mobile-blog-chevron');
+    async function sendTelegramMessage(text) {
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        const payload = {
+            chat_id: CHAT_ID,
+            text: text,
+            parse_mode: 'HTML'
+        };
 
-            mobileMenuButton.addEventListener('click', function() {
-                const isExpanded = mobileMenu.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden', !isExpanded);
-                menuCloseIcon.classList.toggle('hidden', isExpanded);
-            });
+        const maxRetries = 3;
+        let delay = 1000;
 
-            if(tutorialsTrigger) {
-                tutorialsTrigger.addEventListener('click', function() {
-                    tutorialSubMenu.classList.toggle('max-h-0');
-                    tutorialSubMenu.classList.toggle('max-h-screen'); // Or a sufficiently large height
-                    tutorialSubMenu.classList.toggle('opacity-0');
-                    tutorialSubMenu.classList.toggle('opacity-100');
-                    mobileChevron.classList.toggle('rotate-180');
-                });
-            }
-
-            if(blogTrigger) {
-                blogTrigger.addEventListener('click', function() {
-                    blogSubMenu.classList.toggle('max-h-0');
-                    blogSubMenu.classList.toggle('max-h-screen');
-                    blogSubMenu.classList.toggle('opacity-0');
-                    blogSubMenu.classList.toggle('opacity-100');
-                    blogChevron.classList.toggle('rotate-180');
-                });
-            }
-        });
-
-        // Load PPTs from localStorage (managed by admin panel)
-        function loadPPTsFromStorage() {
-            const storedPPTs = JSON.parse(localStorage.getItem('tutorialPpts') || '[]');
-            // If no PPTs in localStorage, use default PPTs
-            if (storedPPTs.length === 0) {
-                return [
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Pesan Antar Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Pick Up.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Reservasi.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Lupa Password Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Aktifkan Status Driver & Ubah Informasi Driver (Food D).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Menambahkan Menu & Toping (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Kurir Resto & Reservasi (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Ubah Informasi Resto & Buka Tutup Resto (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Tambahkan Akun Pegawai Dan Fitur Akun Pegawai (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Pesanan (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/export/pptx'
-                    }
-                ];
-            }
-            return storedPPTs;
-        }
-
-        // Function to refresh PPTs from localStorage
-        function refreshPpts() {
-            const ppts = loadPPTsFromStorage();
-            renderPPTs(ppts);
-        }
-
-        // Listen for storage changes (when admin panel updates PPTs)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'tutorialPpts') {
-                refreshPpts();
-            }
-        });
-
-        // Render PPTs
-        function renderPPTs(ppts) {
-            const pptList = document.getElementById('ppt-list');
-            const noResultsMessage = document.getElementById('no-results');
-            pptList.innerHTML = '';
-            if (ppts.length === 0) return;
-
-            ppts.forEach(ppt => {
-                // Standardize URL properties
-                const viewUrl = ppt.viewUrl || ppt.viewLink || '#';
-                const downloadUrl = ppt.downloadUrl || ppt.downloadLink || '#';
- 
-                const pptItem = `
-                    <div class="ppt-item bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" data-title="${ppt.title.toLowerCase()}">
-                        <a href="${viewUrl}" target="_blank" class="flex items-center gap-4 group">
-                            <i class="fas fa-file-powerpoint text-3xl text-[#ef0000] group-hover:text-red-700 transition"></i>
-                            <h3 class="font-semibold text-black group-hover:text-red-700 transition">${ppt.title}</h3>
-                        </a>
-                        <div class="flex-shrink-0 flex gap-2">
-                            <a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition">
-                                <i class="fas fa-eye text-white"></i> Lihat
-                            </a>
-                            <a href="${downloadUrl}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#ef0000] rounded-md hover:bg-red-700 transition">
-                                <i class="fas fa-download text-white"></i> Download
-                            </a>
-                        </div>
-                    </div>
-                `;
-                pptList.innerHTML += pptItem;
-            });
-        }
-
-        // --- Search Functionality ---
-
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        function searchPPTs(query) {
-            const pptList = document.getElementById('ppt-list');
-            const pptItems = Array.from(pptList.querySelectorAll('.ppt-item'));
-            const noResultsMessage = document.getElementById('no-results');
-            const cleanQuery = query.trim().toLowerCase();
-
-            if (!cleanQuery) {
-                pptItems.forEach(item => {
-                    item.style.display = 'flex';
-                    item.style.order = '0'; // Reset order
-                });
-                noResultsMessage.classList.add('hidden');
-                return;
-            }
-
-            const queryWords = query.toLowerCase().split(' ').filter(w => w);
-            const scoredItems = pptItems.map(item => {
-                const title = item.dataset.title;
-                let score = 0;
-
-                // Higher score for matching the full query phrase
-                if (title.includes(cleanQuery)) {
-                    score += 100; // Highest priority for exact phrase match
-                }
-
-                queryWords.forEach(word => {
-                    let wordFound = false;
-                    // 1. Exact word match check
-                    if (title.includes(word)) {
-                        score += 25; // High score for exact word
-                        wordFound = true;
-                    } 
-                    // 2. Fuzzy match check (only if exact word not found)
-                    else {
-                        const titleWords = title.split(' ');
-                        for (const titleWord of titleWords) {
-                            const distance = levenshteinDistance(word, titleWord);
-                            // Allow slightly more tolerance for longer words
-                            const maxDistance = word.length > 4 ? 2 : 1;
-                            if (distance <= maxDistance) {
-                                // Lower score for fuzzy matches
-                                score += 10 - (distance * 4); // distance 1: +6, distance 2: +2
-                                wordFound = true;
-                                break; // Move to next query word once a close match is found
-                            }
-                        }
-                    }
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
 
-                return { item, score };
-            });
-
-            let hasResults = false;
-
-            // Sort by score descending
-            scoredItems.sort((a, b) => b.score - a.score);
-
-            // Apply visibility and order
-            scoredItems.forEach(({ item, score }, index) => {
-                if (score > 0) {
-                    item.style.display = 'flex';
-                    item.style.order = index.toString(); // Use CSS order to re-sort visually
-                    hasResults = true;
+                if (response.ok) {
+                    return true;
+                } else if (attempt < maxRetries) {
+                    await sleep(delay);
+                    delay *= 2;
                 } else {
-                    item.style.display = 'none';
+                    const errorData = await response.json();
+                    console.error("Telegram API Error:", errorData);
+                    throw new Error(`Gagal mengirim data setelah ${maxRetries} percobaan. Kode: ${response.status}`);
                 }
-            });
-
-            // Show or hide the 'no results' message
-            noResultsMessage.classList.toggle('hidden', hasResults);
+            } catch (error) {
+                if (attempt === maxRetries) {
+                    throw error;
+                }
+            }
         }
+    }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Page-specific logic
-
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', (e) => searchPPTs(e.target.value));
-
-            // Make setSearch globally available for the recommendation buttons
-            window.setSearch = function(term) {
-                searchInput.value = term;
-                searchInput.dispatchEvent(new Event('input')); // Trigger search
-            };
-
-            refreshPpts(); // Initial load
-        });
+    async function handleFormSubmission(event) {
+        event.preventDefault();
         
-    </script>
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
+        statusMessage.className = 'text-sm mt-2 font-medium text-gray-500';
+        statusMessage.textContent = 'Memproses data...';
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const cvLink = document.getElementById('cv_link').value.trim();
+
+        const messageText = 
+            `<b>[LAMARAN KERJA BARU]</b>\n` +
+            `\n` +
+            `<b>Posisi:</b> ${JOB_TITLE}\n` +
+            `\n` +
+            `<b>Nama:</b> ${name}\n` +
+            `<b>Email:</b> ${email}\n` +
+            `<b>HP/WA:</b> ${phone}\n` +
+            `<b>Link CV/Portofolio:</b> ${cvLink ? `<a href="${cvLink}">Lihat Link</a>` : 'Tidak Ada'}\n` +
+            `\n` +
+            `<i>Pastikan pelamar mengirim CV ke foodmediateam@gmail.com.</i>`;
+
+        try {
+            const success = await sendTelegramMessage(messageText);
+
+            if (success) {
+                statusMessage.className = 'text-sm mt-2 font-medium text-green-600';
+                statusMessage.innerHTML = '<i class="fa-solid fa-check-circle"></i> Lamaran berhasil dikirim ke Telegram!';
+                form.reset();
+            } else {
+                statusMessage.className = 'text-sm mt-2 font-medium text-red-600';
+                statusMessage.innerHTML = '<i class="fa-solid fa-times-circle"></i> Gagal mengirim. Cek konsol untuk detail error.';
+            }
+        } catch (error) {
+            console.error("Submission Error:", error);
+            statusMessage.className = 'text-sm mt-2 font-medium text-red-600';
+            statusMessage.innerHTML = '<i class="fa-solid fa-times-circle"></i> Terjadi kesalahan saat mengirim. Silakan coba lagi.';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-file-signature"></i> Kirim Lamaran';
+        }
+    }
+
+    // --- Mobile Menu Logic ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
+
+        const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
+        const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
+        const mobileChevron = document.getElementById('mobile-chevron');
+
+        const blogTrigger = document.getElementById('mobile-blog-trigger');
+        const blogSubMenu = document.getElementById('blog-sub-menu');
+        const blogChevron = document.getElementById('mobile-blog-chevron');
+
+
+        // 1. Toggle Main Mobile Menu
+        mobileMenuButton.addEventListener('click', function() {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
+
+            // Sembunyikan submenu dengan transisi halus saat menu utama ditutup
+            if (isExpanded) {
+                // Tutup submenu
+                tutorialSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                tutorialSubMenu.classList.add('max-h-0', 'opacity-0');
+                mobileChevron.classList.remove('rotate-180');
+                // Juga tutup submenu blog
+                blogSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                blogSubMenu.classList.add('max-h-0', 'opacity-0');
+                blogChevron.classList.remove('rotate-180');
+            }
+        });
+
+        // 2. Toggle Mobile Dropdown Submenu with smooth transition
+        tutorialsTrigger.addEventListener('click', function() {
+            const isOpened = tutorialSubMenu.classList.contains('max-h-screen');
+            
+            if (isOpened) {
+                tutorialSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                tutorialSubMenu.classList.add('max-h-0', 'opacity-0');
+            } else {
+                tutorialSubMenu.classList.remove('max-h-0', 'opacity-0');
+                tutorialSubMenu.classList.add('max-h-screen', 'opacity-100');
+            }
+            mobileChevron.classList.toggle('rotate-180');
+        });
+
+        // 3. Toggle Mobile Dropdown Submenu for Blog
+        blogTrigger.addEventListener('click', function() {
+            const isOpened = blogSubMenu.classList.contains('max-h-screen');
+            
+            if (isOpened) {
+                blogSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                blogSubMenu.classList.add('max-h-0', 'opacity-0');
+            } else {
+                blogSubMenu.classList.remove('max-h-0', 'opacity-0');
+                blogSubMenu.classList.add('max-h-screen', 'opacity-100');
+            }
+            blogChevron.classList.toggle('rotate-180');
+        });
+    });
+</script>
+
+
 </body>
 </html>

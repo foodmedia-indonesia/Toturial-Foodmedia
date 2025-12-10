@@ -52,17 +52,17 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            min-width: 100%; 
-            min-height: 100%; 
+            min-width: 100%;
+            min-height: 100%;
             /* Perbesar iframe agar selalu menutupi container, meniru object-fit: cover */
             /* Rasio 16:9 adalah 1.777. Dengan scale 1.777, kita pastikan video menutupi hampir semua rasio layar */
-            transform: translate(-50%, -50%) scale(1.777); 
+            transform: translate(-50%, -50%) scale(1.777);
         }
 
         /* Pada rasio potret (misalnya, ponsel), video mungkin tidak cukup besar, kita perbesar lagi */
         @media (orientation: portrait) {
             .video-cover-container iframe {
-                transform: translate(-50%, -50%) scale(2.5); 
+                transform: translate(-50%, -50%) scale(2.5);
             }
         }
         /* Custom Utilities */
@@ -72,12 +72,32 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
         /* Glassmorphism */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Hero Background Merah Solid (Perubahan di sini) */
+        .hero-bg {
+            background-color: #DC2626; /* Merah Solid yang Kuat (Tailwind Red 600) */
+            /* Menambahkan sedikit warna gelap di bagian atas untuk efek kedalaman */
+            background-image: linear-gradient(180deg, #991b1b 0%, #DC2626 50%, #DC2626 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Patern dot halus agar tidak terlalu polos */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px); /* Opasitas dikurangi */
+            background-size: 24px 24px;
+            opacity: 1; /* Opasitas diubah menjadi lebih jelas */
+            pointer-events: none;
         }
 
         /* Scroll Animation Classes */
@@ -139,7 +159,7 @@
                     <!-- Desktop Menu -->
                     <div class="hidden md:flex space-x-1 items-center">
                         <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
-    
+
                         <!-- DROPDOWN MENU FOR TUTORIAL (FIXED) -->
                         <div class="relative group pt-2"> <!-- Added pt-2 to create space for the dropdown without a gap -->
                             <div>
@@ -151,7 +171,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-        
+
                                 <!-- Dropdown Content (Appears on hover) -->
                                 <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
                                     <!-- Dropdown Items -->
@@ -161,7 +181,7 @@
                             </div>
                         </div>
                         <!-- END DROPDOWN MENU -->
-    
+
                         <!-- DROPDOWN MENU FOR BLOG -->
                         <div class="relative group pt-2">
                             <div>
@@ -173,7 +193,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-        
+
                                 <!-- Dropdown Content (Appears on hover) -->
                                 <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
                                     <!-- Dropdown Items -->
@@ -185,9 +205,9 @@
                         <!-- END DROPDOWN MENU -->
                         <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
                         <a href="kantor-wilayah.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Kantor Wilayah</a>
-                        
+
                         <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                        
+
                         <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
                             Tentang Kami
                         </a>
@@ -207,7 +227,7 @@
             <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
                 <div class="px-4 pt-4 pb-6 space-y-2">
                     <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
-                    
+
                     <!-- MOBILE DROPDOWN FOR VIDEO TUTORIAL (NEW) -->
                     <div>
                         <button id="mobile-tutorials-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
@@ -221,7 +241,7 @@
                         </div>
                     </div>
                     <!-- END MOBILE DROPDOWN -->
-                    
+
                     <!-- MOBILE DROPDOWN FOR BLOG -->
                     <div>
                         <button id="mobile-blog-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
@@ -234,7 +254,7 @@
                         </div>
                     </div>
                     <!-- END MOBILE DROPDOWN -->
-    
+
                     <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
                     <a href="kantor-wilayah.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Kantor Wilayah</a>
                     <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md hover:bg-brand-700 transition-colors">Tentang Kami</a>
@@ -243,38 +263,216 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="pt-28 pb-12 md:pt-32 md:pb-20 px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-900">Panduan Presentasi (PPT)</h1>
-            <p class="mt-2 text-lg text-gray-600">Unduh materi presentasi untuk mempelajari layanan FoodMedia lebih dalam.</p>
-        </div>
+    <!-- Hero Section (Background Merah Solid) -->
+    <main class="hero-bg pt-28 pb-32 md:pt-36 md:pb-48 px-4 sm:px-6 lg:px-8 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <!-- Left Content -->
+                <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left z-10 relative">
+                    <h1 class="text-xl font-semibold mb-1 uppercase tracking-wider text-brand-100">Gabung Mitra Food D</h1>
+                    <div class="flex items-center justify-center md:justify-start space-x-1 mb-6">
+                        <span class="text-yellow-300 text-2xl">★★★★★</span>
+                        <span class="text-sm font-medium">Pilihan Driver Indonesia</span>
+                    </div>
 
-        <!-- Search Bar -->
-        <div class="mb-8">
-            <input type="text" id="search-input" placeholder="Cari tutorial PPT..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent mx-auto block">
-            <div id="recommendations" class="mt-4 text-center">
-                <p class="text-sm text-gray-600 mb-2">Rekomendasi pencarian:</p>
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pesan Antar')">Pesan Antar</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pick Up')">Pick Up</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Tutorial')">Tutorial</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Layanan')">Layanan</button>
+                    <h2 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tighter drop-shadow-md text-white">
+                        Antar Makanan,<br>Raih Jutaan Rupiah.
+                    </h2>
+                    
+                    <p class="mt-4 text-lg text-slate-100 font-medium max-w-lg mx-auto md:mx-0 drop-shadow-sm">
+                        Jadilah pahlawan rasa lapar. Waktu kerja fleksibel, pendapatan harian cair instan, dan bonus insentif melimpah.
+                    </p>
+                     
+                    <!-- Feature Highlights -->
+                    <ul class="space-y-3 mt-8 text-lg font-medium text-white drop-shadow-md">
+                        <li class="flex items-center justify-center md:justify-start">
+                            <i class="fas fa-bolt w-6 text-yellow-300"></i>
+                            Pencairan Dana Setiap Hari
+                        </li>
+                        <li class="flex items-center justify-center md:justify-start">
+                             <i class="fas fa-gift w-6 text-yellow-300"></i>
+                            Banyak Bonus & Insentif
+                        </li>
+                        <li class="flex items-center justify-center md:justify-start">
+                             <i class="fas fa-clock w-6 text-yellow-300"></i>
+                            Jam Kerja Bebas Atur Sendiri
+                        </li>
+                    </ul>
+
+                    <!-- CTA Button -->
+                    <div class="flex justify-center md:justify-start mt-10">
+                        <a href="#form-daftar" class="flex items-center px-8 py-4 bg-white text-brand-700 font-bold rounded-full hover:bg-slate-100 transition duration-300 shadow-xl transform hover:scale-[1.03]">
+                            <i class="fas fa-paper-plane mr-3"></i>
+                            Daftar Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Content (Mockup Image) -->
+                <div class="relative w-full md:w-1/3 flex justify-center mt-15 md:mt-0 z-10">
+                    <!-- Placeholder untuk gambar Driver -->
+                    <div class="relative w-64 h-auto aspect-[9/16] bg-slate-800 rounded-3xl shadow-2xl rotate-3 border-4 border-slate-700 flex flex-col items-center justify-center overflow-hidden group hover:rotate-0 transition-all duration-500">
+                        <!-- Mockup Screen -->
+                        <div class="absolute inset-0 bg-white">
+                            <div class="h-full w-full flex flex-col">
+                                <div class="bg-brand-600 h-1/4 rounded-b-3xl flex items-center justify-center relative z-10">
+                                    <div class="text-white text-center">
+                                        <p class="text-xs opacity-80">Saldo Dompet</p>
+                                        <p class="text-2xl font-bold">Rp 450.000</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 space-y-3 pt-6">
+                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i class="fas fa-map-marker-alt"></i></div>
+                                        <div>
+                                            <p class="text-xs text-slate-500">Jemput di</p>
+                                            <p class="font-bold text-sm text-slate-800">Ayam Geprek Juara</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-brand-50 p-3 rounded-xl border border-brand-100 flex items-center justify-center">
+                                        <span class="text-brand-600 font-bold text-sm">Terima Order</span>
+                                    </div>
+                                </div>
+                                <div class="mt-auto p-4 bg-slate-900 text-white text-center py-6">
+                                    <p class="font-bold">Food D Driver</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Element -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg animate-bounce">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-slate-800 font-bold text-sm">Order Masuk!</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- PPT List -->
-        <div class="space-y-4" id="ppt-list">
-            <!-- PPT items will be loaded from localStorage -->
-        </div>
-        <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-10">
-            <i class="fas fa-search text-4xl text-slate-300 mb-4"></i>
-            <h3 class="text-xl font-semibold text-slate-700">Tidak ada hasil ditemukan</h3>
-            <p class="text-slate-500 mt-1">Coba gunakan kata kunci lain yang lebih umum.</p>
-        </div>
     </main>
+
+    <!-- Info Section (Syarat & Benefit) -->
+    <section id="form-daftar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-16 md:-mt-24 relative z-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Card 1: Persyaratan (Standard Look) -->
+            <div class="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 overflow-hidden p-6 md:p-8 border-t-8 border-slate-400">
+                <div class="flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mx-auto mb-4 text-slate-600">
+                    <i class="fas fa-id-card text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-center">Persyaratan Pendaftaran</h3>
+                <p class="text-center text-slate-500 mb-6 text-sm">Siapkan dokumen fisik asli (bukan fotokopi) berikut ini:</p>
+                
+                <ul class="space-y-4">
+                    <li class="p-3 bg-slate-50 rounded-xl flex items-start text-slate-600 gap-3">
+                        <i class="fas fa-check-circle text-brand-600 mt-1"></i>
+                        <span class="font-medium">KTP Asli (e-KTP)</span>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-xl flex items-start text-slate-600 gap-3">
+                        <i class="fas fa-check-circle text-brand-600 mt-1"></i>
+                        <span class="font-medium">SIM C Aktif</span>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-xl flex items-start text-slate-600 gap-3">
+                        <i class="fas fa-check-circle text-brand-600 mt-1"></i>
+                        <span class="font-medium">STNK Kendaraan (Pajak Hidup)</span>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-xl flex items-start text-slate-600 gap-3">
+                        <i class="fas fa-check-circle text-brand-600 mt-1"></i>
+                        <span class="font-medium">SKCK (Dapat menyusul)</span>
+                    </li>
+                    <li class="p-3 bg-slate-50 rounded-xl flex items-start text-slate-600 gap-3">
+                        <i class="fas fa-check-circle text-brand-600 mt-1"></i>
+                        <span class="font-medium">HP Android (Min. RAM 3GB)</span>
+                    </li>
+                </ul>
+
+                <div class="mt-8 pt-6 border-t border-dashed border-slate-200">
+                    <p class="text-xs text-center text-slate-400">Pastikan kendaraan dalam kondisi prima dan di atas tahun 2012.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Keuntungan & Form Link (Premium Look) -->
+            <div class="bg-white rounded-3xl shadow-2xl hover:shadow-glow transition duration-300 overflow-hidden p-6 md:p-8 border-t-8 border-brand-600 transform scale-[1.02] lg:scale-100 lg:hover:scale-[1.02] relative">
+                
+                <div class="absolute top-0 right-0 bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-bl-xl uppercase">Best Choice</div>
+
+                <div class="flex items-center justify-center w-16 h-16 bg-red-50 rounded-full mx-auto mb-4 text-brand-600">
+                    <i class="fas fa-award text-2xl"></i>
+                </div>
+
+                <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-center">Keuntungan Mitra Food D</h3>
+                <p class="text-center text-slate-500 mb-6 text-sm">Nikmati berbagai fasilitas eksklusif khusus mitra resmi.</p>
+
+                <ul class="space-y-4">
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-700 font-bold border border-red-100">
+                        <span>Potongan Komisi Rendah</span>
+                        <i class="fas fa-percentage text-brand-500"></i>
+                    </li>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-700 font-bold border border-red-100">
+                        <span>Asuransi Kecelakaan Gratis</span>
+                        <i class="fas fa-user-shield text-brand-500"></i>
+                    </li>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-700 font-bold border border-red-100">
+                        <span>Bonus Harian & Mingguan</span>
+                        <i class="fas fa-coins text-brand-500"></i>
+                    </li>
+                    <li class="p-3 bg-red-50 rounded-xl flex justify-between items-center text-slate-700 font-bold border border-red-100">
+                        <span>Jaket & Helm Berkualitas</span>
+                        <i class="fas fa-tshirt text-brand-500"></i>
+                    </li>
+                </ul>
+
+                <!-- Action Button -->
+                <div class="mt-8">
+                    <a href="https://foodmedia.id/driver-register" class="block w-full py-4 bg-brand-600 text-white font-bold rounded-xl shadow-xl hover:bg-brand-700 transition duration-300 transform hover:scale-[1.01] text-center group">
+                        Isi Formulir Pendaftaran
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <p class="text-center text-xs text-slate-400 mt-3">
+                        Pendaftaran Gratis. Hati-hati penipuan yang mengatasnamakan FoodMedia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">Cara Bergabung</h2>
+                <p class="text-slate-500 mt-2">4 Langkah mudah mulai hasilkan cuan</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Step 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center relative">
+                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4 absolute -top-5 left-1/2 transform -translate-x-1/2 border-4 border-slate-50">1</div>
+                    <h4 class="font-bold text-lg mt-2">Isi Data Diri</h4>
+                    <p class="text-sm text-slate-500 mt-2">Lengkapi formulir online melalui tombol di atas.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center relative">
+                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4 absolute -top-5 left-1/2 transform -translate-x-1/2 border-4 border-slate-50">2</div>
+                    <h4 class="font-bold text-lg mt-2">Verifikasi Dokumen</h4>
+                    <p class="text-sm text-slate-500 mt-2">Upload foto KTP, SIM, STNK, dan SKCK yang jelas.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center relative">
+                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4 absolute -top-5 left-1/2 transform -translate-x-1/2 border-4 border-slate-50">3</div>
+                    <h4 class="font-bold text-lg mt-2">Training Online</h4>
+                    <p class="text-sm text-slate-500 mt-2">Pelajari cara terima order dan standar pelayanan.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center relative">
+                    <div class="w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4 absolute -top-5 left-1/2 transform -translate-x-1/2 border-4 border-slate-50">4</div>
+                    <h4 class="font-bold text-lg mt-2 text-brand-600">Akun Aktif</h4>
+                    <p class="text-sm text-slate-500 mt-2">Download aplikasi Driver dan mulai terima orderan!</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
     <!-- Footer -->
@@ -384,269 +582,57 @@
         </div>
     </footer>
 
-
     <script>
         // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOpenIcon = document.getElementById('menu-open-icon');
-            const menuCloseIcon = document.getElementById('menu-close-icon');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openIcon = document.getElementById('menu-open-icon');
+        const closeIcon = document.getElementById('menu-close-icon');
 
-            const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
-            const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
-            const mobileChevron = document.getElementById('mobile-chevron');
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
 
-            const blogTrigger = document.getElementById('mobile-blog-trigger');
-            const blogSubMenu = document.getElementById('blog-sub-menu');
-            const blogChevron = document.getElementById('mobile-blog-chevron');
+        // Mobile Dropdown for Tutorial
+        const mobileTutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
+        const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
+        const mobileChevron = document.getElementById('mobile-chevron');
 
-            mobileMenuButton.addEventListener('click', function() {
-                const isExpanded = mobileMenu.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden', !isExpanded);
-                menuCloseIcon.classList.toggle('hidden', isExpanded);
-            });
-
-            if(tutorialsTrigger) {
-                tutorialsTrigger.addEventListener('click', function() {
-                    tutorialSubMenu.classList.toggle('max-h-0');
-                    tutorialSubMenu.classList.toggle('max-h-screen'); // Or a sufficiently large height
-                    tutorialSubMenu.classList.toggle('opacity-0');
-                    tutorialSubMenu.classList.toggle('opacity-100');
-                    mobileChevron.classList.toggle('rotate-180');
-                });
-            }
-
-            if(blogTrigger) {
-                blogTrigger.addEventListener('click', function() {
-                    blogSubMenu.classList.toggle('max-h-0');
-                    blogSubMenu.classList.toggle('max-h-screen');
-                    blogSubMenu.classList.toggle('opacity-0');
-                    blogSubMenu.classList.toggle('opacity-100');
-                    blogChevron.classList.toggle('rotate-180');
-                });
+        mobileTutorialsTrigger.addEventListener('click', () => {
+            const isOpen = tutorialSubMenu.classList.contains('max-h-0');
+            if (isOpen) {
+                tutorialSubMenu.classList.remove('max-h-0', 'opacity-0');
+                tutorialSubMenu.classList.add('max-h-96', 'opacity-100');
+                mobileChevron.classList.add('rotate-180');
+            } else {
+                tutorialSubMenu.classList.remove('max-h-96', 'opacity-100');
+                tutorialSubMenu.classList.add('max-h-0', 'opacity-0');
+                mobileChevron.classList.remove('rotate-180');
             }
         });
 
-        // Load PPTs from localStorage (managed by admin panel)
-        function loadPPTsFromStorage() {
-            const storedPPTs = JSON.parse(localStorage.getItem('tutorialPpts') || '[]');
-            // If no PPTs in localStorage, use default PPTs
-            if (storedPPTs.length === 0) {
-                return [
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Pesan Antar Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Pick Up.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Reservasi.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Lupa Password Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Aktifkan Status Driver & Ubah Informasi Driver (Food D).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Menambahkan Menu & Toping (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Kurir Resto & Reservasi (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Ubah Informasi Resto & Buka Tutup Resto (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Tambahkan Akun Pegawai Dan Fitur Akun Pegawai (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Pesanan (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/export/pptx'
-                    }
-                ];
-            }
-            return storedPPTs;
-        }
+        // Mobile Dropdown for Blog
+        const mobileBlogTrigger = document.getElementById('mobile-blog-trigger');
+        const blogSubMenu = document.getElementById('blog-sub-menu');
+        const mobileBlogChevron = document.getElementById('mobile-blog-chevron');
 
-        // Function to refresh PPTs from localStorage
-        function refreshPpts() {
-            const ppts = loadPPTsFromStorage();
-            renderPPTs(ppts);
-        }
-
-        // Listen for storage changes (when admin panel updates PPTs)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'tutorialPpts') {
-                refreshPpts();
+        mobileBlogTrigger.addEventListener('click', () => {
+            const isOpen = blogSubMenu.classList.contains('max-h-0');
+            if (isOpen) {
+                blogSubMenu.classList.remove('max-h-0', 'opacity-0');
+                blogSubMenu.classList.add('max-h-96', 'opacity-100');
+                mobileBlogChevron.classList.add('rotate-180');
+            } else {
+                blogSubMenu.classList.remove('max-h-96', 'opacity-100');
+                blogSubMenu.classList.add('max-h-0', 'opacity-0');
+                mobileBlogChevron.classList.remove('rotate-180');
             }
         });
-
-        // Render PPTs
-        function renderPPTs(ppts) {
-            const pptList = document.getElementById('ppt-list');
-            const noResultsMessage = document.getElementById('no-results');
-            pptList.innerHTML = '';
-            if (ppts.length === 0) return;
-
-            ppts.forEach(ppt => {
-                // Standardize URL properties
-                const viewUrl = ppt.viewUrl || ppt.viewLink || '#';
-                const downloadUrl = ppt.downloadUrl || ppt.downloadLink || '#';
- 
-                const pptItem = `
-                    <div class="ppt-item bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" data-title="${ppt.title.toLowerCase()}">
-                        <a href="${viewUrl}" target="_blank" class="flex items-center gap-4 group">
-                            <i class="fas fa-file-powerpoint text-3xl text-[#ef0000] group-hover:text-red-700 transition"></i>
-                            <h3 class="font-semibold text-black group-hover:text-red-700 transition">${ppt.title}</h3>
-                        </a>
-                        <div class="flex-shrink-0 flex gap-2">
-                            <a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition">
-                                <i class="fas fa-eye text-white"></i> Lihat
-                            </a>
-                            <a href="${downloadUrl}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#ef0000] rounded-md hover:bg-red-700 transition">
-                                <i class="fas fa-download text-white"></i> Download
-                            </a>
-                        </div>
-                    </div>
-                `;
-                pptList.innerHTML += pptItem;
-            });
-        }
-
-        // --- Search Functionality ---
-
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        function searchPPTs(query) {
-            const pptList = document.getElementById('ppt-list');
-            const pptItems = Array.from(pptList.querySelectorAll('.ppt-item'));
-            const noResultsMessage = document.getElementById('no-results');
-            const cleanQuery = query.trim().toLowerCase();
-
-            if (!cleanQuery) {
-                pptItems.forEach(item => {
-                    item.style.display = 'flex';
-                    item.style.order = '0'; // Reset order
-                });
-                noResultsMessage.classList.add('hidden');
-                return;
-            }
-
-            const queryWords = query.toLowerCase().split(' ').filter(w => w);
-            const scoredItems = pptItems.map(item => {
-                const title = item.dataset.title;
-                let score = 0;
-
-                // Higher score for matching the full query phrase
-                if (title.includes(cleanQuery)) {
-                    score += 100; // Highest priority for exact phrase match
-                }
-
-                queryWords.forEach(word => {
-                    let wordFound = false;
-                    // 1. Exact word match check
-                    if (title.includes(word)) {
-                        score += 25; // High score for exact word
-                        wordFound = true;
-                    } 
-                    // 2. Fuzzy match check (only if exact word not found)
-                    else {
-                        const titleWords = title.split(' ');
-                        for (const titleWord of titleWords) {
-                            const distance = levenshteinDistance(word, titleWord);
-                            // Allow slightly more tolerance for longer words
-                            const maxDistance = word.length > 4 ? 2 : 1;
-                            if (distance <= maxDistance) {
-                                // Lower score for fuzzy matches
-                                score += 10 - (distance * 4); // distance 1: +6, distance 2: +2
-                                wordFound = true;
-                                break; // Move to next query word once a close match is found
-                            }
-                        }
-                    }
-                });
-
-                return { item, score };
-            });
-
-            let hasResults = false;
-
-            // Sort by score descending
-            scoredItems.sort((a, b) => b.score - a.score);
-
-            // Apply visibility and order
-            scoredItems.forEach(({ item, score }, index) => {
-                if (score > 0) {
-                    item.style.display = 'flex';
-                    item.style.order = index.toString(); // Use CSS order to re-sort visually
-                    hasResults = true;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Show or hide the 'no results' message
-            noResultsMessage.classList.toggle('hidden', hasResults);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Page-specific logic
-
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', (e) => searchPPTs(e.target.value));
-
-            // Make setSearch globally available for the recommendation buttons
-            window.setSearch = function(term) {
-                searchInput.value = term;
-                searchInput.dispatchEvent(new Event('input')); // Trigger search
-            };
-
-            refreshPpts(); // Initial load
-        });
-        
     </script>
+
 </body>
 </html>

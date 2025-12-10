@@ -19,14 +19,12 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
+                        // Updated to a vibrant red palette
                         brand: {
-                            50: '#fef2f2',
-                            100: '#fee2e2',
                             400: '#F87171',
-                            500: '#EF4444',
-                            600: '#DC2626',
+                            500: '#EF4444', // Red 500 for accents (Warna utama)
+                            600: '#DC2626', // Red 600 (Warna operasional primer, seperti tombol/logo)
                             700: '#B91C1C',
-                            900: '#7f1d1d',
                         },
                         dark: {
                             900: '#0f172a', // Slate 900
@@ -35,13 +33,38 @@
                     },
                     boxShadow: {
                         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-                        'glow': '0 0 15px rgba(225, 29, 72, 0.3)',
+                        'glow': '0 0 15px rgba(220, 38, 38, 0.3)',
                     }
                 }
             }
         }
     </script>
     <style>
+        /* Gaya khusus untuk memastikan iframe menutupi seluruh area tanpa letterbox (Solusi Full Cover) */
+        .video-cover-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Penting untuk menyembunyikan bagian video yang diperbesar */
+        }
+
+        .video-cover-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%; 
+            min-height: 100%; 
+            /* Perbesar iframe agar selalu menutupi container, meniru object-fit: cover */
+            /* Rasio 16:9 adalah 1.777. Dengan scale 1.777, kita pastikan video menutupi hampir semua rasio layar */
+            transform: translate(-50%, -50%) scale(1.777); 
+        }
+
+        /* Pada rasio potret (misalnya, ponsel), video mungkin tidak cukup besar, kita perbesar lagi */
+        @media (orientation: portrait) {
+            .video-cover-container iframe {
+                transform: translate(-50%, -50%) scale(2.5); 
+            }
+        }
         /* Custom Utilities */
         .line-clamp-2 {
             display: -webkit-box;
@@ -103,7 +126,8 @@
                 <div class="flex justify-between h-20 items-center">
                     <!-- Logo -->
                     <a href="index.html" class="flex items-center gap-2.5 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-glow transition-all duration-300">
+                        <div class="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-glow transition-all duration-300">
+                            <!-- Using fa-utensils icon based on your original snippet -->
                             <i class="fas fa-utensils text-lg"></i>
                         </div>
                         <div class="flex flex-col justify-center">
@@ -114,16 +138,60 @@
 
                     <!-- Desktop Menu -->
                     <div class="hidden md:flex space-x-1 items-center">
-                    <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
-                    <a href="tutorials.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Video Tutorial</a>
-                    <a href="blog.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Blog</a>
-                    <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
-                    <a href="ppt-tutorial.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">PPT Tutorial</a>
-                    <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                    <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
-                        Tentang Kami
-                    </a>
-                </div>
+                        <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
+    
+                        <!-- DROPDOWN MENU FOR TUTORIAL (FIXED) -->
+                        <div class="relative group pt-2"> <!-- Added pt-2 to create space for the dropdown without a gap -->
+                            <div>
+                                <!-- Dropdown Trigger Button -->
+                                <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
+                                    Tutorial
+                                    <!-- Dropdown Icon (Chevron Down) -->
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+        
+                                <!-- Dropdown Content (Appears on hover) -->
+                                <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <!-- Dropdown Items -->
+                                    <a href="ppt-tutorial.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Tutorial PPT</a>
+                                    <a href="tutorials.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Tutorial Video</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DROPDOWN MENU -->
+    
+                        <!-- DROPDOWN MENU FOR BLOG -->
+                        <div class="relative group pt-2">
+                            <div>
+                                <!-- Dropdown Trigger Button -->
+                                <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
+                                    Blog & Artikel
+                                    <!-- Dropdown Icon (Chevron Down) -->
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+        
+                                <!-- Dropdown Content (Appears on hover) -->
+                                <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <!-- Dropdown Items -->
+                                    <a href="blog.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Blog</a>
+                                    <a href="Artikel.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Artikel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DROPDOWN MENU -->
+                        <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
+                        <a href="kantor-wilayah.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Kantor Wilayah</a>
+                        
+                        <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                        
+                        <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
+                            Tentang Kami
+                        </a>
+                    </div>
 
                     <!-- Mobile Menu Button -->
                     <div class="md:hidden flex items-center">
@@ -139,11 +207,37 @@
             <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
                 <div class="px-4 pt-4 pb-6 space-y-2">
                     <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
-                    <a href="tutorials.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Tutorial Video</a>
-                    <a href="blog.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Blog & Berita</a>
+                    
+                    <!-- MOBILE DROPDOWN FOR VIDEO TUTORIAL (NEW) -->
+                    <div>
+                        <button id="mobile-tutorials-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
+                            Tutorial
+                            <i id="mobile-chevron" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <!-- Submenu Content: Dihapus class 'hidden', diganti dengan 'max-h-0' dan 'opacity-0' untuk transisi halus -->
+                        <div id="tutorial-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                            <a href="ppt-tutorial.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Tutorial PPT</a>
+                            <a href="tutorials.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Tutorial Video</a>
+                        </div>
+                    </div>
+                    <!-- END MOBILE DROPDOWN -->
+                    
+                    <!-- MOBILE DROPDOWN FOR BLOG -->
+                    <div>
+                        <button id="mobile-blog-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
+                            Blog & Artikel
+                            <i id="mobile-blog-chevron" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div id="blog-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                            <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Blog</a>
+                            <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Artikel</a>
+                        </div>
+                    </div>
+                    <!-- END MOBILE DROPDOWN -->
+
                     <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
-                    <a href="ppt-tutorial.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Download PPT</a>
-                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md">Tentang Kami</a>
+                    <a href="kantor-wilayah.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Kantor Wilayah</a>
+                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md hover:bg-brand-700 transition-colors">Tentang Kami</a>
                 </div>
             </div>
         </nav>
@@ -190,113 +284,317 @@
 
     </main>
 
-    <footer class="bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-
-                <!-- Brand Info -->
-                <div class="space-y-6">
-                    <div class="flex items-center gap-2">
-                        <div class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <span class="text-3xl font-extrabold text-white tracking-tight">Food<span class="text-brand-500">Media</span></span>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Platform teknologi pangan yang memberdayakan UMKM dan mempermudah konsumen melalui integrasi digital yang mulus.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-slate-400 shadow-md">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-slate-400 shadow-md">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all text-slate-400 shadow-md">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
-
-                    <!-- Download Buttons REMOVED from here -->
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Navigasi</h3>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="index.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Beranda</a></li>
-                        <li><a href="tutorials.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Tutorial &amp; Bantuan</a></li>
-                        <li><a href="blog.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Blog &amp; Insight</a></li>
-                        <li><a href="faq.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Pertanyaan Umum</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Hubungi Kami</h3>
-                    <ul class="space-y-4 text-sm">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt mt-1 text-brand-500 shrink-0"></i>
-                            <span class="text-white">Saphire Estate Blok A No 14,<br>Tegal, Jawa Tengah, Indonesia</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-phone-alt text-brand-500 shrink-0"></i>
-                            <span class="font-mono text-white hover:text-slate-300 transition-colors">0817 7686 8188</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-envelope text-brand-500 shrink-0"></i>
-                            <span class="text-white hover:text-slate-300 transition-colors">team@foodmedia.id</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Office Hours -->
-                <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 shadow-xl">
-                    <h3 class="text-red-600 font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
-                    <div class="space-y-2 text-sm">
-                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
-                            <span class="text-white">Senin - Jumat</span>
-                            <span class="text-white font-semibold">10:00 - 16:00 WIB</span>
-                        </div>
-                        <div class="flex justify-between text-slate-500 pt-2">
-                            <span class="text-white">Sabtu - Minggu</span>
-                            <span class="font-medium text-slate-500 italic">Tutup</span>
-                        </div>
-                    </div>
-
-                    <a href="linktree.html" class="block w-full mt-8 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold text-center rounded-lg transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ease-in-out duration-150">
-                        <i class="fas fa-comment-dots mr-2"></i> Chat Customer Service
-                    </a>
-
-                    <!-- Download Buttons ADDED here -->
-                    <div class="pt-6 space-y-3">
-                        <a href="https://bit.ly/play-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
-                            <i class="fab fa-google-play text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
-                            <div class="text-left">
-                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Dapatkan di</p>
-                                <p class="text-sm font-bold text-white leading-none">Google Play</p>
-                            </div>
-                        </a>
-                        <a href="https://bit.ly/app-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
-                            <i class="fab fa-apple text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
-                            <div class="text-left">
-                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Unduh di</p>
-                                <p class="text-sm font-bold text-white leading-none">App Store</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl bg-black rounded-xl shadow-2xl overflow-hidden ring-1 ring-white/10">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white z-10 bg-black/50 p-2 rounded-full transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <div class="aspect-video w-full">
+                <iframe id="modalIframe" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-
-            <div class="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
-                <p class="text-center md:text-left">© 2025 PT FoodMedia Digital Indonesia. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                </div>
+            <div class="p-6 bg-gray-900 border-t border-gray-800">
+                <h3 id="modalTitle" class="text-xl font-bold text-white mb-2"></h3>
+                <p id="modalDesc" class="text-gray-400 text-sm"></p>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <script>
+        // Load videos from localStorage (managed by admin panel)
+        function loadVideosFromStorage() {
+            const storedVideos = JSON.parse(localStorage.getItem('tutorialVideos') || '[]');
+            // If no videos in localStorage, use default videos
+            if (storedVideos.length === 0) {
+                return [
+                    // DRIVER (Food D)
+                    {
+                        id: '8ZPFuu6jMks',
+                        title: 'Cara Mengatasi Lupa Sandi Food D Terbaru',
+                        desc: 'Panduan langkah demi langkah mereset kata sandi driver Food D jika Anda mengalami masalah login agar bisa kembali bekerja.',
+                        category: 'Driver'
+                    },
+                    {
+                        id: 'PJtx9NiHd5k',
+                        title: 'Cara Ganti Password Akun Food D Terbaru 2025',
+                        desc: 'Jaga keamanan akun driver Anda. Tutorial ini menjelaskan cara mengubah kata sandi secara berkala langsung lewat aplikasi.',
+                        category: 'Driver'
+                    },
+                    {
+                        id: 'KQtQZMmc0_w',
+                        title: 'Ubah Status Aktif & Edit Info Pribadi Driver',
+                        desc: 'Cara mengubah status on-bid/off-bid dan memperbarui informasi data diri profil driver Anda di Food D.',
+                        category: 'Driver'
+                    },
+
+                    // USER / CUSTOMER (FoodMedia)
+                    {
+                        id: '6xlcjE2nn78',
+                        title: 'Cara Menggunakan Layanan Reservasi FoodMedia',
+                        desc: 'Ingin makan di tempat tanpa antre? Pelajari cara reservasi meja restoran favorit Anda melalui aplikasi FoodMedia.',
+                        category: 'User'
+                    },
+                    {
+                        id: 'VPQFAfLrxDo',
+                        title: 'Cara Menggunakan Layanan Pesan Antar',
+                        desc: 'Tutorial lengkap memesan makanan delivery. Dari pilih menu, masukkan alamat, hingga tracking kurir ke rumah Anda.',
+                        category: 'User'
+                    },
+                    {
+                        id: '7v4uLoztnFE',
+                        title: 'Cara Menggunakan Layanan Pick Up',
+                        desc: 'Hemat ongkir dan waktu! Pesan lewat aplikasi dan ambil sendiri makanan Anda di resto dengan fitur Pick Up FoodMedia.',
+                        category: 'User'
+                    },
+
+                    // MERCHANT (Food ON)
+                    {
+                        id: 'ek02xWgZxtQ',
+                        title: 'Panduan Lengkap Terima Pesanan Food ON',
+                        desc: 'Tutorial wajib bagi Merchant! Cara menerima, memproses, dan menyerahkan pesanan kepada driver dengan benar.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: 'scHtsNh7qD4',
+                        title: 'Cara Mengatasi Lupa Sandi Merchant Food ON',
+                        desc: 'Solusi cepat bagi pemilik resto yang tidak bisa masuk ke aplikasi manajemen resto Food ON karena lupa password.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: 'ISLd_XgR1Ks',
+                        title: 'Cara Kelola Pesanan di Food ON Terbaru',
+                        desc: 'Strategi mengelola dashboard pesanan agar operasional resto berjalan lancar dan pelanggan puas.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: '2d9sWC-CvA0',
+                        title: 'Cara Setting Reservasi & Penarikan Saldo',
+                        desc: 'Panduan mengatur slot meja untuk reservasi dan cara withdraw penghasilan merchant ke rekening bank Anda.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: 'EtuJjvSwQSw',
+                        title: 'Cara Menambahkan User Pegawai/Kasir',
+                        desc: 'Delegasikan tugas resto dengan aman. Cara membuat akun akses khusus untuk staf atau kasir di Food ON.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: 'cVQPr85er-o',
+                        title: 'Setting Buka Tutup Outlet & Info Resto',
+                        desc: 'Cara mengubah jam operasional, menutup toko sementara saat mendesak, dan edit info outlet.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: 'HgB4oLGG9xE',
+                        title: 'Setting Kurir Resto & Promo Ongkir',
+                        desc: 'Tingkatkan penjualan dengan mengatur kurir internal sendiri dan membuat strategi diskon ongkos kirim.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: '_7fWFXGppG8',
+                        title: 'Cara Registrasi Jadi Merchant Food ON',
+                        desc: 'Langkah awal mengembangkan bisnis kuliner Anda. Panduan lengkap pendaftaran menjadi mitra FoodMedia.',
+                        category: 'Merchant'
+                    },
+                    {
+                        id: 'aryJXE8T_i0',
+                        title: 'Cara Menambahkan Topping & Menu Baru',
+                        desc: 'Perkaya etalase resto Anda. Tutorial input menu baru, varian rasa, dan pilihan topping tambahan.',
+                        category: 'Merchant'
+                    }
+                ];
+            }
+            return storedVideos;
+        }
+
+        // Initialize videos from localStorage
+        let videos = loadVideosFromStorage();
+
+        // Function to refresh videos from localStorage
+        function refreshVideos() {
+            videos = loadVideosFromStorage();
+            renderVideos(currentCategory, searchInput.value);
+        }
+
+        // Listen for storage changes (when admin panel updates videos)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'tutorialVideos') {
+                refreshVideos();
+            }
+        });
+
+        // Function to determine badge color
+        function getBadgeColor(category) {
+            switch(category) {
+                case 'Driver': return 'bg-blue-500 text-white';
+                case 'Merchant': return 'bg-green-500 text-white';
+                case 'User': return 'bg-brand-500 text-white';
+                default: return 'bg-gray-500 text-white';
+            }
+        }
+
+        // Render Function
+        function renderVideos(categoryFilter = 'all', searchQuery = '') {
+            const grid = document.getElementById('videoGrid');
+            const noResults = document.getElementById('noResults');
+            grid.innerHTML = '';
+            searchQuery = searchQuery.toLowerCase();
+
+            const filteredVideos = videos.filter(video => {
+                const matchesCategory = categoryFilter === 'all' || video.category === categoryFilter;
+                const matchesSearch = video.title.toLowerCase().includes(searchQuery) || video.desc.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filteredVideos.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+            }
+
+            filteredVideos.forEach(video => {
+                const badgeClass = getBadgeColor(video.category);
+                
+                const card = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300 group flex flex-col h-full">
+                        <div class="relative aspect-video bg-gray-200 cursor-pointer overflow-hidden play-overlay" onclick="openModal('${video.id}', '${video.title.replace(/'/g, "\\'")}', '${video.desc.replace(/'/g, "\\'")}')">
+                            <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
+                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition flex items-center justify-center">
+                                <div class="play-icon w-14 h-14 bg-food-primary/90 text-white rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition duration-300">
+                                    <i class="fas fa-play ml-1 text-xl"></i>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold shadow-sm ${badgeClass}">
+                                ${video.category}
+                            </span>
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h3 class="font-bold text-gray-900 text-lg mb-2 leading-snug group-hover:text-food-primary transition line-clamp-2">${video.title}</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-grow">${video.desc}</p>
+                            <button onclick="openModal('${video.id}', '${video.title.replace(/'/g, "\\'")}', '${video.desc.replace(/'/g, "\\'")}')" class="w-full mt-auto py-2.5 px-4 rounded-lg bg-red-50 text-food-primary font-semibold text-sm hover:bg-food-primary hover:text-white transition flex items-center justify-center gap-2 group-btn">
+                                <span>Tonton Video</span>
+                                <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        let currentCategory = 'all';
+        const searchInput = document.getElementById('searchInput');
+
+        // Filter Logic
+        function filterVideos(category) {
+            currentCategory = category;
+
+            // Update buttons styling
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-[#ef0000]', 'text-white', 'shadow-md', 'ring-2', 'ring-offset-2', 'ring-[#ef0000]');
+                btn.classList.add('bg-white', 'text-black');
+            });
+
+            const clickedBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.getAttribute('onclick').includes(`'${category}'`));
+            if(clickedBtn) {
+                clickedBtn.classList.remove('bg-white', 'text-black');
+                clickedBtn.classList.add('bg-[#ef0000]', 'text-white', 'shadow-md', 'ring-2', 'ring-offset-2', 'ring-[#ef0000]');
+            }
+
+            renderVideos(currentCategory, searchInput.value);
+        }
+
+        // Search Logic
+        searchInput.addEventListener('input', () => {
+            renderVideos(currentCategory, searchInput.value);
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('videoModal');
+        const iframe = document.getElementById('modalIframe');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+
+        function openModal(id, title, desc) {
+            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+            modalTitle.innerText = title;
+            modalDesc.innerText = desc;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            iframe.src = ''; // Stop video
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initial Render
+        renderVideos('all', '');
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOpenIcon = document.getElementById('menu-open-icon');
+            const menuCloseIcon = document.getElementById('menu-close-icon');
+
+            const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
+            const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
+            const mobileChevron = document.getElementById('mobile-chevron');
+
+            const blogTrigger = document.getElementById('mobile-blog-trigger');
+            const blogSubMenu = document.getElementById('blog-sub-menu');
+            const blogChevron = document.getElementById('mobile-blog-chevron');
+
+            mobileMenuButton.addEventListener('click', function() {
+                const isExpanded = mobileMenu.classList.toggle('hidden');
+                menuOpenIcon.classList.toggle('hidden', !isExpanded);
+                menuCloseIcon.classList.toggle('hidden', isExpanded);
+            });
+
+            if(tutorialsTrigger) {
+                tutorialsTrigger.addEventListener('click', function() {
+                    tutorialSubMenu.classList.toggle('max-h-0');
+                    tutorialSubMenu.classList.toggle('max-h-screen'); // Or a sufficiently large height
+                    tutorialSubMenu.classList.toggle('opacity-0');
+                    tutorialSubMenu.classList.toggle('opacity-100');
+                    mobileChevron.classList.toggle('rotate-180');
+                });
+            }
+
+            if(blogTrigger) {
+                blogTrigger.addEventListener('click', function() {
+                    blogSubMenu.classList.toggle('max-h-0');
+                    blogSubMenu.classList.toggle('max-h-screen');
+                    blogSubMenu.classList.toggle('opacity-0');
+                    blogSubMenu.classList.toggle('opacity-100');
+                    blogChevron.classList.toggle('rotate-180');
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>
 
     <!-- Video Modal -->
     <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
@@ -585,6 +883,140 @@
             }
         });
 
+        // Mobile submenu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
+
+            submenuToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const submenu = this.parentElement;
+                    const content = submenu.querySelector('.mobile-submenu-content');
+                    const icon = this.querySelector('i');
+
+                    // Toggle content visibility
+                    content.classList.toggle('hidden');
+
+                    // Rotate icon
+                    icon.classList.toggle('rotate-180');
+
+                    // Close other submenus
+                    document.querySelectorAll('.mobile-submenu-content').forEach(otherContent => {
+                        if (otherContent !== content) {
+                            otherContent.classList.add('hidden');
+                            otherContent.parentElement.querySelector('i').classList.remove('rotate-180');
+                        }
+                    });
+                });
+            });
+        });
+
     </script>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+                <!-- Brand Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white tracking-tight">Food<span class="text-brand-500">Media</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Platform teknologi pangan yang memberdayakan UMKM dan mempermudah konsumen melalui integrasi digital yang mulus.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Navigasi</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="index.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Beranda</a></li>
+                        <li><a href="tutorials.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Tutorial &amp; Bantuan</a></li>
+                        <li><a href="blog.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Blog &amp; Insight</a></li>
+                        <li><a href="faq.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Pertanyaan Umum</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-brand-500 shrink-0"></i>
+                            <span class="text-white">Saphire Estate Blok A No 14,<br>Tegal, Jawa Tengah, Indonesia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-brand-500 shrink-0"></i>
+                            <span class="font-mono text-white hover:text-slate-300 transition-colors">0817 7686 8188</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-brand-500 shrink-0"></i>
+                            <span class="text-white hover:text-slate-300 transition-colors">team@foodmedia.id</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Office Hours -->
+                <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 shadow-xl">
+                    <h3 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                            <span class="text-white">Senin - Jumat</span>
+                            <span class="text-white font-semibold">10:00 - 16:00 WIB</span>
+                        </div>
+                        <div class="flex justify-between text-slate-500 pt-2">
+                            <span class="text-white">Sabtu - Minggu</span>
+                            <span class="font-medium text-slate-500 italic">Tutup</span>
+                        </div>
+                    </div>
+
+                    <a href="linktree.html" class="block w-full mt-8 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold text-center rounded-lg transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ease-in-out duration-150">
+                        <i class="fas fa-comment-dots mr-2"></i> Chat Customer Service
+                    </a>
+
+                    <!-- Download Buttons ADDED here -->
+                    <div class="pt-6 space-y-3">
+                        <a href="https://bit.ly/play-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-google-play text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Dapatkan di</p>
+                                <p class="text-sm font-bold text-white leading-none">Google Play</p>
+                            </div>
+                        </a>
+                        <a href="https://bit.ly/app-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-apple text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Unduh di</p>
+                                <p class="text-sm font-bold text-white leading-none">App Store</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+                <p class="text-center md:text-left">© 2025 PT FoodMedia Digital Indonesia. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

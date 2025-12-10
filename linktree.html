@@ -137,16 +137,60 @@
 
                     <!-- Desktop Menu -->
                     <div class="hidden md:flex space-x-1 items-center">
-                    <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
-                    <a href="tutorials.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Video Tutorial</a>
-                    <a href="blog.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Blog</a>
-                    <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
-                    <a href="ppt-tutorial.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">PPT Tutorial</a>
-                    <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                    <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
-                        Tentang Kami
-                    </a>
-                </div>
+                        <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
+    
+                        <!-- DROPDOWN MENU FOR TUTORIAL (FIXED) -->
+                        <div class="relative group pt-2"> <!-- Added pt-2 to create space for the dropdown without a gap -->
+                            <div>
+                                <!-- Dropdown Trigger Button -->
+                                <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
+                                    Tutorial
+                                    <!-- Dropdown Icon (Chevron Down) -->
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+        
+                                <!-- Dropdown Content (Appears on hover) -->
+                                <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <!-- Dropdown Items -->
+                                    <a href="ppt-tutorial.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Tutorial PPT</a>
+                                    <a href="tutorials.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Tutorial Video</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DROPDOWN MENU -->
+    
+                        <!-- DROPDOWN MENU FOR BLOG -->
+                        <div class="relative group pt-2">
+                            <div>
+                                <!-- Dropdown Trigger Button -->
+                                <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
+                                    Blog & Artikel
+                                    <!-- Dropdown Icon (Chevron Down) -->
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+        
+                                <!-- Dropdown Content (Appears on hover) -->
+                                <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <!-- Dropdown Items -->
+                                    <a href="blog.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Blog</a>
+                                    <a href="Artikel.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Artikel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DROPDOWN MENU -->
+                        <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
+                        <a href="kantor-wilayah.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Kantor Wilayah</a>
+                        
+                        <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                        
+                        <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
+                            Tentang Kami
+                        </a>
+                    </div>
 
                     <!-- Mobile Menu Button -->
                     <div class="md:hidden flex items-center">
@@ -162,11 +206,37 @@
             <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
                 <div class="px-4 pt-4 pb-6 space-y-2">
                     <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
-                    <a href="tutorials.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Tutorial Video</a>
-                    <a href="blog.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Blog & Berita</a>
+                    
+                    <!-- MOBILE DROPDOWN FOR VIDEO TUTORIAL (NEW) -->
+                    <div>
+                        <button id="mobile-tutorials-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
+                            Tutorial
+                            <i id="mobile-chevron" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <!-- Submenu Content: Dihapus class 'hidden', diganti dengan 'max-h-0' dan 'opacity-0' untuk transisi halus -->
+                        <div id="tutorial-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                            <a href="ppt-tutorial.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Tutorial PPT</a>
+                            <a href="tutorials.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Tutorial Video</a>
+                        </div>
+                    </div>
+                    <!-- END MOBILE DROPDOWN -->
+                    
+                    <!-- MOBILE DROPDOWN FOR BLOG -->
+                    <div>
+                        <button id="mobile-blog-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
+                            Blog & Artikel
+                            <i id="mobile-blog-chevron" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div id="blog-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                            <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Blog</a>
+                            <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Artikel</a>
+                        </div>
+                    </div>
+                    <!-- END MOBILE DROPDOWN -->
+    
                     <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
-                    <a href="ppt-tutorial.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Download PPT</a>
-                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md">Tentang Kami</a>
+                    <a href="kantor-wilayah.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Kantor Wilayah</a>
+                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md hover:bg-brand-700 transition-colors">Tentang Kami</a>
                 </div>
             </div>
         </nav>
@@ -401,7 +471,8 @@
         </div>
     </section>
 
-    <!-- Footer Section -->
+
+    <!-- Footer -->
     <footer class="bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -462,7 +533,7 @@
 
                 <!-- Office Hours -->
                 <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 shadow-xl">
-                    <h3 class="text-red-600 font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
+                    <h3 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
                     <div class="space-y-2 text-sm">
                         <div class="flex justify-between border-b border-slate-700/50 pb-2">
                             <span class="text-white">Senin - Jumat</span>
@@ -508,17 +579,48 @@
         </div>
     </footer>
 
+
     <script>
         // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOpenIcon = document.getElementById('menu-open-icon');
-        const menuCloseIcon = document.getElementById('menu-close-icon');
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOpenIcon = document.getElementById('menu-open-icon');
+            const menuCloseIcon = document.getElementById('menu-close-icon');
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuOpenIcon.classList.toggle('hidden');
-            menuCloseIcon.classList.toggle('hidden');
+            const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
+            const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
+            const mobileChevron = document.getElementById('mobile-chevron');
+
+            const blogTrigger = document.getElementById('mobile-blog-trigger');
+            const blogSubMenu = document.getElementById('blog-sub-menu');
+            const blogChevron = document.getElementById('mobile-blog-chevron');
+
+            mobileMenuButton.addEventListener('click', function() {
+                const isExpanded = mobileMenu.classList.toggle('hidden');
+                menuOpenIcon.classList.toggle('hidden', !isExpanded);
+                menuCloseIcon.classList.toggle('hidden', isExpanded);
+            });
+
+            if(tutorialsTrigger) {
+                tutorialsTrigger.addEventListener('click', function() {
+                    tutorialSubMenu.classList.toggle('max-h-0');
+                    tutorialSubMenu.classList.toggle('max-h-screen'); // Or a sufficiently large height
+                    tutorialSubMenu.classList.toggle('opacity-0');
+                    tutorialSubMenu.classList.toggle('opacity-100');
+                    mobileChevron.classList.toggle('rotate-180');
+                });
+            }
+
+            if(blogTrigger) {
+                blogTrigger.addEventListener('click', function() {
+                    blogSubMenu.classList.toggle('max-h-0');
+                    blogSubMenu.classList.toggle('max-h-screen');
+                    blogSubMenu.classList.toggle('opacity-0');
+                    blogSubMenu.classList.toggle('opacity-100');
+                    blogChevron.classList.toggle('rotate-180');
+                });
+            }
         });
     </script>
 </body>

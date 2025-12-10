@@ -33,7 +33,7 @@
                     },
                     boxShadow: {
                         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-                        'glow': '0 0 15px rgba(220, 38, 38, 0.3)',
+                        'glow': '0 0 0 15px rgba(220, 38, 38, 0.3)',
                     }
                 }
             }
@@ -147,7 +147,7 @@
                                 <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
                                     Tutorial
                                     <!-- Dropdown Icon (Chevron Down) -->
-                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="current-color">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
@@ -169,7 +169,7 @@
                                 <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
                                     Blog & Artikel
                                     <!-- Dropdown Icon (Chevron Down) -->
-                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="current-color">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
@@ -192,7 +192,7 @@
                             Tentang Kami
                         </a>
                     </div>
-
+    
                     <!-- Mobile Menu Button -->
                     <div class="md:hidden flex items-center">
                         <button id="mobile-menu-button" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg transition-colors" aria-expanded="false" aria-controls="mobile-menu">
@@ -202,7 +202,7 @@
                     </div>
                 </div>
             </div>
-
+    
             <!-- Mobile Menu -->
             <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
                 <div class="px-4 pt-4 pb-6 space-y-2">
@@ -230,7 +230,7 @@
                         </button>
                         <div id="blog-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
                             <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Blog</a>
-                            <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Artikel</a>
+                            <a href="Artikel.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Artikel</a>
                         </div>
                     </div>
                     <!-- END MOBILE DROPDOWN -->
@@ -246,33 +246,27 @@
     <!-- Main Content -->
     <main class="pt-28 pb-12 md:pt-32 md:pb-20 px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-900">Panduan Presentasi (PPT)</h1>
-            <p class="mt-2 text-lg text-gray-600">Unduh materi presentasi untuk mempelajari layanan FoodMedia lebih dalam.</p>
+            <h1 class="text-4xl font-bold text-gray-900">Artikel FoodMedia</h1>
+            <p class="mt-2 text-lg text-gray-600 max-w-2xl mx-auto">Wawasan, berita, dan cerita terbaru dari dunia kuliner dan teknologi.</p>
         </div>
 
-        <!-- Search Bar -->
-        <div class="mb-8">
-            <input type="text" id="search-input" placeholder="Cari tutorial PPT..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent mx-auto block">
-            <div id="recommendations" class="mt-4 text-center">
-                <p class="text-sm text-gray-600 mb-2">Rekomendasi pencarian:</p>
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pesan Antar')">Pesan Antar</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pick Up')">Pick Up</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Tutorial')">Tutorial</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Layanan')">Layanan</button>
-                </div>
+        <!-- Search -->
+        <div class="flex justify-center items-center mb-10">
+            <div class="relative w-full md:w-1/2 lg:w-1/3">
+                <input type="text" id="searchInput" placeholder="Cari artikel..." class="w-full py-2.5 px-4 pr-10 rounded-full bg-white border border-gray-200 focus:ring-2 focus:ring-food-primary/50 focus:outline-none">
+                <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
             </div>
         </div>
 
-        <!-- PPT List -->
-        <div class="space-y-4" id="ppt-list">
-            <!-- PPT items will be loaded from localStorage -->
+        <!-- Blog Grid -->
+        <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Blog posts will be injected here by JS -->
         </div>
+
         <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-10">
-            <i class="fas fa-search text-4xl text-slate-300 mb-4"></i>
-            <h3 class="text-xl font-semibold text-slate-700">Tidak ada hasil ditemukan</h3>
-            <p class="text-slate-500 mt-1">Coba gunakan kata kunci lain yang lebih umum.</p>
+        <div id="noResults" class="hidden text-center py-10">
+            <i class="fas fa-newspaper fa-3x text-gray-300 mb-4"></i>
+            <p class="text-gray-500 text-lg">Artikel tidak ditemukan.</p>
         </div>
     </main>
 
@@ -384,269 +378,168 @@
         </div>
     </footer>
 
-
     <script>
-        // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOpenIcon = document.getElementById('menu-open-icon');
-            const menuCloseIcon = document.getElementById('menu-close-icon');
-
-            const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
-            const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
-            const mobileChevron = document.getElementById('mobile-chevron');
-
-            const blogTrigger = document.getElementById('mobile-blog-trigger');
-            const blogSubMenu = document.getElementById('blog-sub-menu');
-            const blogChevron = document.getElementById('mobile-blog-chevron');
-
-            mobileMenuButton.addEventListener('click', function() {
-                const isExpanded = mobileMenu.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden', !isExpanded);
-                menuCloseIcon.classList.toggle('hidden', isExpanded);
-            });
-
-            if(tutorialsTrigger) {
-                tutorialsTrigger.addEventListener('click', function() {
-                    tutorialSubMenu.classList.toggle('max-h-0');
-                    tutorialSubMenu.classList.toggle('max-h-screen'); // Or a sufficiently large height
-                    tutorialSubMenu.classList.toggle('opacity-0');
-                    tutorialSubMenu.classList.toggle('opacity-100');
-                    mobileChevron.classList.toggle('rotate-180');
-                });
-            }
-
-            if(blogTrigger) {
-                blogTrigger.addEventListener('click', function() {
-                    blogSubMenu.classList.toggle('max-h-0');
-                    blogSubMenu.classList.toggle('max-h-screen');
-                    blogSubMenu.classList.toggle('opacity-0');
-                    blogSubMenu.classList.toggle('opacity-100');
-                    blogChevron.classList.toggle('rotate-180');
-                });
-            }
-        });
-
-        // Load PPTs from localStorage (managed by admin panel)
-        function loadPPTsFromStorage() {
-            const storedPPTs = JSON.parse(localStorage.getItem('tutorialPpts') || '[]');
-            // If no PPTs in localStorage, use default PPTs
-            if (storedPPTs.length === 0) {
-                return [
+        // --- DATA MANAGEMENT ---
+        function loadPostsFromStorage() {
+            const storedPosts = JSON.parse(localStorage.getItem('articles') || '[]');
+            if (storedPosts.length === 0) {
+                // Default data if localStorage is empty
+                const defaultPosts = [
                     {
-                        title: 'Toturial PPT Mengunakan Layanan Pesan Antar Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/export/pptx'
+                        id: new Date().getTime() + 2,
+                        title: "Kisah Sukses: Warung Ibu Siti Naik Omzet 200% Bersama Foodmedia",
+                        content: "Ibu Siti, pemilik warung makan sederhana, awalnya ragu untuk go digital. Setelah bergabung dengan Foodmedia, usahanya mengalami lonjakan pesanan yang drastis. 'Dulu saya hanya melayani pelanggan sekitar, sekarang pesanan datang dari seluruh kota,' ujarnya. Dengan bantuan fitur promosi di aplikasi Food-ON, Warung Ibu Siti kini berhasil meningkatkan omzet hingga 200% dalam tiga bulan. Ini adalah bukti bahwa teknologi dapat membawa perubahan besar bagi usaha kecil."
                     },
                     {
-                        title: 'Toturial PPT Mengunakan Layanan Pick Up.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/export/pptx'
+                        id: new Date().getTime() + 1,
+                        title: "5 Tips Fotografi Makanan Menggunakan Smartphone",
+                        content: "Tampilan visual adalah segalanya dalam bisnis makanan. Anda tidak perlu kamera mahal untuk menghasilkan foto yang menggugah selera.\n\n1. Gunakan cahaya alami dari jendela, hindari penggunaan flash.\n2. Atur komposisi dengan menarik, coba angle dari atas (flat lay) atau 45 derajat.\n3. Tambahkan properti sederhana seperti serbet atau sendok untuk mempercantik tampilan.\n4. Pastikan latar belakang (background) bersih dan tidak mengganggu.\n5. Edit sedikit untuk meningkatkan kecerahan dan kontras. Selamat mencoba!"
                     },
                     {
-                        title: 'Toturial PPT Mengunakan Layanan Reservasi.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Lupa Password Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Aktifkan Status Driver & Ubah Informasi Driver (Food D).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Menambahkan Menu & Toping (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Kurir Resto & Reservasi (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Ubah Informasi Resto & Buka Tutup Resto (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Tambahkan Akun Pegawai Dan Fitur Akun Pegawai (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Pesanan (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/export/pptx'
+                        id: new Date().getTime(),
+                        title: "Mengapa Foodmedia Pilihan Terbaik untuk Bisnis Kuliner Anda?",
+                        content: "Di era digital yang kompetitif, memiliki kehadiran online yang kuat adalah kunci kesuksesan. Foodmedia tidak hanya menawarkan platform pesan antar, tetapi juga ekosistem lengkap untuk membantu UMKM kuliner tumbuh. Dengan biaya transparan dan fitur manajemen yang canggih, kami memberdayakan bisnis Anda untuk menjangkau lebih banyak pelanggan dan mengoptimalkan operasional. Bergabunglah dengan ribuan merchant yang telah merasakan manfaatnya!"
                     }
                 ];
+                localStorage.setItem('articles', JSON.stringify(defaultPosts));
+                return defaultPosts;
             }
-            return storedPPTs;
+            return storedPosts;
         }
 
-        // Function to refresh PPTs from localStorage
-        function refreshPpts() {
-            const ppts = loadPPTsFromStorage();
-            renderPPTs(ppts);
-        }
+        let allPosts = loadPostsFromStorage();
+        let currentCategory = 'all';
 
-        // Listen for storage changes (when admin panel updates PPTs)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'tutorialPpts') {
-                refreshPpts();
+        // --- RENDER FUNCTIONS ---
+        function renderPosts(postsToRender) {
+            const grid = document.getElementById('blogGrid');
+            const noResults = document.getElementById('noResults');
+            grid.innerHTML = '';
+
+            if (postsToRender.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
             }
-        });
 
-        // Render PPTs
-        function renderPPTs(ppts) {
-            const pptList = document.getElementById('ppt-list');
-            const noResultsMessage = document.getElementById('no-results');
-            pptList.innerHTML = '';
-            if (ppts.length === 0) return;
-
-            ppts.forEach(ppt => {
-                // Standardize URL properties
-                const viewUrl = ppt.viewUrl || ppt.viewLink || '#';
-                const downloadUrl = ppt.downloadUrl || ppt.downloadLink || '#';
- 
-                const pptItem = `
-                    <div class="ppt-item bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" data-title="${ppt.title.toLowerCase()}">
-                        <a href="${viewUrl}" target="_blank" class="flex items-center gap-4 group">
-                            <i class="fas fa-file-powerpoint text-3xl text-[#ef0000] group-hover:text-red-700 transition"></i>
-                            <h3 class="font-semibold text-black group-hover:text-red-700 transition">${ppt.title}</h3>
+            postsToRender.forEach(post => {
+                const excerpt = post.content.substring(0, 150) + (post.content.length > 150 ? '...' : '');
+                const card = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                        <a href="detail-artikel.html?id=${post.id}" class="block">
+                            <img src="https://placehold.co/700x400/4FB094/FFFFFF?text=Artikel" alt="${post.title}" class="w-full h-48 object-cover">
                         </a>
-                        <div class="flex-shrink-0 flex gap-2">
-                            <a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition">
-                                <i class="fas fa-eye text-white"></i> Lihat
-                            </a>
-                            <a href="${downloadUrl}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#ef0000] rounded-md hover:bg-red-700 transition">
-                                <i class="fas fa-download text-white"></i> Download
-                            </a>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">${post.title}</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${excerpt}</p>
+                            <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
+                                <span>Dipublikasikan</span>
+                                <span>${new Date(post.id).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            </div>
                         </div>
                     </div>
                 `;
-                pptList.innerHTML += pptItem;
+                grid.innerHTML += card;
             });
         }
 
-        // --- Search Functionality ---
+        function renderFilters() {
+            const filterContainer = document.getElementById('filterContainer');
+            const categories = ['all', ...new Set(allPosts.map(p => p.category))];
 
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
+            filterContainer.innerHTML = categories.map(cat => `
+                <button
+                    onclick="filterByCategory('${cat}')"
+                    class="filter-btn capitalize px-4 py-1.5 rounded-full text-sm font-medium transition border ${cat === 'all' ? 'bg-food-primary text-black border-food-primary' : 'bg-white text-gray-600 border-gray-200'}"
+                    data-category="${cat}">
+                    ${cat === 'all' ? 'Semua' : cat}
+                </button>
+            `).join('');
         }
 
-        function searchPPTs(query) {
-            const pptList = document.getElementById('ppt-list');
-            const pptItems = Array.from(pptList.querySelectorAll('.ppt-item'));
-            const noResultsMessage = document.getElementById('no-results');
-            const cleanQuery = query.trim().toLowerCase();
-
-            if (!cleanQuery) {
-                pptItems.forEach(item => {
-                    item.style.display = 'flex';
-                    item.style.order = '0'; // Reset order
-                });
-                noResultsMessage.classList.add('hidden');
-                return;
-            }
-
-            const queryWords = query.toLowerCase().split(' ').filter(w => w);
-            const scoredItems = pptItems.map(item => {
-                const title = item.dataset.title;
-                let score = 0;
-
-                // Higher score for matching the full query phrase
-                if (title.includes(cleanQuery)) {
-                    score += 100; // Highest priority for exact phrase match
-                }
-
-                queryWords.forEach(word => {
-                    let wordFound = false;
-                    // 1. Exact word match check
-                    if (title.includes(word)) {
-                        score += 25; // High score for exact word
-                        wordFound = true;
-                    } 
-                    // 2. Fuzzy match check (only if exact word not found)
-                    else {
-                        const titleWords = title.split(' ');
-                        for (const titleWord of titleWords) {
-                            const distance = levenshteinDistance(word, titleWord);
-                            // Allow slightly more tolerance for longer words
-                            const maxDistance = word.length > 4 ? 2 : 1;
-                            if (distance <= maxDistance) {
-                                // Lower score for fuzzy matches
-                                score += 10 - (distance * 4); // distance 1: +6, distance 2: +2
-                                wordFound = true;
-                                break; // Move to next query word once a close match is found
-                            }
-                        }
-                    }
-                });
-
-                return { item, score };
+        // --- EVENT HANDLERS & LOGIC ---
+        function applyFilters() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filteredPosts = allPosts.filter(post => {
+                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+                const matchesSearch = post.title.toLowerCase().includes(searchQuery) || post.excerpt.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
             });
 
-            let hasResults = false;
+            renderPosts(filteredPosts);
+        }
 
-            // Sort by score descending
-            scoredItems.sort((a, b) => b.score - a.score);
+        window.filterByCategory = (category) => {
+            currentCategory = category;
 
-            // Apply visibility and order
-            scoredItems.forEach(({ item, score }, index) => {
-                if (score > 0) {
-                    item.style.display = 'flex';
-                    item.style.order = index.toString(); // Use CSS order to re-sort visually
-                    hasResults = true;
-                } else {
-                    item.style.display = 'none';
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                // Reset total
+                btn.className = "filter-btn capitalize px-4 py-1.5 rounded-full text-sm font-medium transition border";
+
+                // Style default
+                btn.classList.add("bg-white", "text-gray-600", "border-gray-200");
+
+                // Style active
+                if (btn.dataset.category === category) {
+                    btn.classList.remove("bg-white", "text-gray-600", "border-gray-200");
+                    btn.classList.add("bg-food-primary", "text-black", "border-food-primary");
                 }
             });
 
-            // Show or hide the 'no results' message
-            noResultsMessage.classList.toggle('hidden', hasResults);
+            applyFilters();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Page-specific logic
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
 
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', (e) => searchPPTs(e.target.value));
-
-            // Make setSearch globally available for the recommendation buttons
-            window.setSearch = function(term) {
-                searchInput.value = term;
-                searchInput.dispatchEvent(new Event('input')); // Trigger search
-            };
-
-            refreshPpts(); // Initial load
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
-        
+
+        // Listen for storage changes to auto-refresh
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'articles') {
+                allPosts = loadPostsFromStorage();
+                applyFilters();
+            }
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPosts(allPosts);
+        });
+
+        // Mobile submenu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
+
+            submenuToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const submenu = this.parentElement;
+                    const content = submenu.querySelector('.mobile-submenu-content');
+                    const icon = this.querySelector('i');
+
+                    // Toggle content visibility
+                    content.classList.toggle('hidden');
+
+                    // Rotate icon
+                    icon.classList.toggle('rotate-180');
+
+                    // Close other submenus
+                    document.querySelectorAll('.mobile-submenu-content').forEach(otherContent => {
+                        if (otherContent !== content) {
+                            otherContent.classList.add('hidden');
+                            otherContent.parentElement.querySelector('i').classList.remove('rotate-180');
+                        }
+                    });
+                });
+            });
+        });
     </script>
 </body>
 </html>

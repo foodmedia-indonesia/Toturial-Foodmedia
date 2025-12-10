@@ -61,6 +61,9 @@
                     <button id="blogTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
                         <i class="fas fa-blog mr-2"></i>Kelola Blog
                     </button>
+                    <button id="articlesTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-newspaper mr-2"></i>Kelola Artikel
+                    </button>
                 </nav>
             </div>
         </div>
@@ -130,6 +133,27 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="p-6">
                     <div id="blogPostsList" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Articles Section -->
+        <div id="articlesSection" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Artikel</h2>
+                    <p class="text-sm text-gray-500">Tambah, edit, atau hapus artikel untuk halaman Artikel.html.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="loadDefaultArticles()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition text-sm"><i class="fas fa-cloud-download-alt mr-2"></i>Muat Artikel Default</button>
+                    <button onclick="openArticleModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah Artikel
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div id="articlesList" class="space-y-4"></div>
                 </div>
             </div>
         </div>
@@ -251,6 +275,51 @@
         </div>
     </div>
 
+    <!-- Article Modal -->
+    <div id="articleModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full h-[90vh] flex flex-col">
+            <div class="p-6 border-b">
+                <h3 class="text-lg font-bold text-gray-900" id="articleModalTitle">Tambah Artikel Baru</h3>
+            </div>
+            <div class="p-6 flex-grow overflow-y-auto">
+                <form id="articleForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Artikel</label>
+                            <input type="text" id="articleTitle" class="w-full input-field" placeholder="Judul yang menarik..." required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar Utama</label>
+                            <input type="url" id="articleImage" class="w-full input-field" placeholder="https://..." required>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                            <input type="text" id="articleCategory" class="w-full input-field" placeholder="Contoh: Tips & Trik, Berita, Promo" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Penulis</label>
+                            <input type="text" id="articleAuthor" class="w-full input-field" placeholder="Nama penulis" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kutipan (Excerpt)</label>
+                        <textarea id="articleExcerpt" rows="2" class="w-full input-field" placeholder="Ringkasan singkat artikel..." required></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Konten Lengkap</label>
+                        <textarea id="articleContent" class="w-full"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end gap-3">
+                <button type="button" onclick="closeArticleModal()" class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100 transition">Batal</button>
+                <button type="button" onclick="document.getElementById('articleForm').requestSubmit()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">Simpan Artikel</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // === SECURITY CHECK ===
@@ -263,6 +332,7 @@
         let editingVideoId = null;
         let editingPptId = null;
         let editingPostId = null;
+        let editingArticleId = null;
 
         // === LOGOUT FUNCTION ===
         function logout() {
@@ -286,6 +356,7 @@
         document.getElementById('videosTab').addEventListener('click', () => switchTab('videos'));
         document.getElementById('pptsTab').addEventListener('click', () => switchTab('ppts'));
         document.getElementById('blogTab').addEventListener('click', () => switchTab('blog'));
+        document.getElementById('articlesTab').addEventListener('click', () => switchTab('articles'));
 
         function switchTab(tab) {
             currentTab = tab;
@@ -310,6 +381,11 @@
                 document.getElementById('blogTab').classList.add('border-food-primary', 'text-food-primary');
                 document.getElementById('blogSection').classList.remove('hidden');
                 loadBlogPosts();
+            } else if (tab === 'articles') {
+                document.getElementById('articlesTab').classList.remove('border-transparent', 'text-gray-500');
+                document.getElementById('articlesTab').classList.add('border-food-primary', 'text-food-primary');
+                document.getElementById('articlesSection').classList.remove('hidden');
+                loadArticles();
             }
         }
 
@@ -566,6 +642,48 @@
             showNotification('Artikel default berhasil dimuat!');
         }
 
+        // Function to load default Articles into localStorage
+        function loadDefaultArticles() {
+            if (!confirm('Apakah Anda yakin ingin memuat ulang artikel default? Ini akan menimpa daftar artikel yang ada saat ini.')) {
+                return;
+            }
+            const defaultArticles = [
+                {
+                    id: 1,
+                    title: 'Panduan Lengkap Menggunakan Aplikasi FoodMedia',
+                    category: 'Panduan',
+                    image: 'https://placehold.co/700x400/10B981/FFFFFF?text=Article+1',
+                    excerpt: 'Pelajari cara menggunakan aplikasi FoodMedia dari awal hingga akhir. Dari registrasi hingga melakukan pesanan pertama Anda.',
+                    author: 'Tim Support',
+                    date: '2024-05-15',
+                    content: `<p>Selamat datang di panduan lengkap aplikasi FoodMedia! Artikel ini akan memandu Anda melalui setiap fitur yang tersedia di aplikasi kami.</p><h3>1. Registrasi Akun</h3><p>Pertama, unduh aplikasi FoodMedia dari Google Play Store atau App Store. Buka aplikasi dan pilih "Daftar" untuk membuat akun baru.</p><h3>2. Verifikasi Akun</h3><p>Setelah registrasi, verifikasi email atau nomor telepon Anda untuk mengaktifkan akun.</p><h3>3. Melakukan Pesanan</h3><p>Cari restoran favorit, pilih menu, dan lakukan checkout. Pilih metode pembayaran dan tunggu driver mengantar pesanan Anda.</p>`
+                },
+                {
+                    id: 2,
+                    title: 'Tips Hemat Saat Pesan Makan Online',
+                    category: 'Tips',
+                    image: 'https://placehold.co/700x400/F59E0B/FFFFFF?text=Article+2',
+                    excerpt: 'Ingin pesan makan online tapi tetap hemat? Simak tips-tips berikut untuk mendapatkan promo dan diskon terbaik.',
+                    author: 'Editor FoodMedia',
+                    date: '2024-05-18',
+                    content: `<p>Pesan makan online bisa jadi mahal jika tidak bijak. Berikut tips untuk tetap hemat:</p><ol><li><strong>Manfaatkan Promo</strong>: Selalu cek bagian promo di aplikasi untuk diskon dan voucher.</li><li><strong>Pilih Waktu Tepat</strong>: Pesan di luar jam sibuk untuk menghindari biaya tambahan.</li><li><strong>Gabung Program Loyalty</strong>: Dapatkan poin dari setiap pesanan untuk ditukar diskon.</li><li><strong>Bandrol dengan Teman</strong>: Bagikan biaya delivery dengan teman untuk lebih hemat.</li></ol>`
+                },
+                {
+                    id: 3,
+                    title: 'Mengenal Layanan FoodMedia: Pesan Antar, Pick Up, dan Reservasi',
+                    category: 'Informasi',
+                    image: 'https://placehold.co/700x400/8B5CF6/FFFFFF?text=Article+3',
+                    excerpt: 'FoodMedia menawarkan tiga layanan utama: Pesan Antar, Pick Up, dan Reservasi. Ketahui perbedaannya dan kapan menggunakan masing-masing.',
+                    author: 'Tim Marketing',
+                    date: '2024-05-20',
+                    content: `<p>FoodMedia hadir dengan tiga layanan utama untuk memenuhi kebutuhan kuliner Anda:</p><h3>Pesan Antar (Delivery)</h3><p>Driver kami akan mengantar makanan langsung ke rumah Anda. Cocok untuk saat malas keluar rumah.</p><h3>Pick Up</h3><p>Ambil sendiri makanan di restoran untuk hemat biaya delivery. Pilih saat Anda sedang di sekitar resto.</p><h3>Reservasi</h3><p>Pesan meja di restoran untuk menghindari antrean. Ideal untuk acara spesial atau makan bersama keluarga.</p>`
+                }
+            ];
+            localStorage.setItem('articles', JSON.stringify(defaultArticles));
+            loadArticles();
+            showNotification('Artikel default berhasil dimuat!');
+        }
+
         // Load videos
         function loadVideos() {
             const videos = JSON.parse(localStorage.getItem('tutorialVideos') || '[]');
@@ -659,6 +777,44 @@
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button onclick="deleteBlogPost(${post.id})" class="text-red-600 hover:text-red-800" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += item;
+            });
+        }
+
+        // Load Articles
+        function loadArticles() {
+            const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+            const list = document.getElementById('articlesList');
+            list.innerHTML = '';
+
+            if (articles.length === 0) {
+                list.innerHTML = `<p class="text-center text-gray-500 py-4">Belum ada artikel. Silakan tambahkan artikel baru atau muat data default.</p>`;
+                return;
+            }
+
+            articles.forEach(article => {
+                const item = `
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <img src="${article.image}" alt="${article.title}" class="w-16 h-12 rounded object-cover bg-gray-100">
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${article.title}</h4>
+                                <p class="text-sm text-gray-600">Kategori: ${article.category} | Penulis: ${article.author}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="detail-artikel.html?id=${article.id}" target="_blank" class="text-gray-500 hover:text-gray-800" title="Lihat Artikel">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button onclick="editArticle(${article.id})" class="text-blue-600 hover:text-blue-800" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteArticle(${article.id})" class="text-red-600 hover:text-red-800" title="Hapus">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -774,6 +930,46 @@
             editingPostId = null;
         }
 
+        // Article modal functions
+        function openArticleModal(articleId = null) {
+            editingArticleId = articleId;
+            const modal = document.getElementById('articleModal');
+            const form = document.getElementById('articleForm');
+            const title = document.getElementById('articleModalTitle');
+
+            form.reset(); // Selalu reset form
+
+            if (articleId) {
+                title.textContent = 'Edit Artikel';
+                const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+                const article = articles.find(a => a.id == articleId); // Use loose comparison
+                if (article) {
+                    document.getElementById('articleTitle').value = article.title;
+                    document.getElementById('articleImage').value = article.image;
+                    document.getElementById('articleCategory').value = article.category;
+                    document.getElementById('articleAuthor').value = article.author;
+                    document.getElementById('articleExcerpt').value = article.excerpt;
+                    // Set content for TinyMCE
+                    tinymce.get('articleContent').setContent(article.content || '');
+                }
+            } else {
+                title.textContent = 'Tambah Artikel Baru';
+                // Kosongkan editor TinyMCE
+                if(tinymce.get('articleContent')) {
+                    tinymce.get('articleContent').setContent('');
+                }
+            }
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticleModal() {
+            document.getElementById('articleModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            editingArticleId = null;
+        }
+
 
         // Form submissions
         document.getElementById('videoForm').addEventListener('submit', (e) => {
@@ -868,6 +1064,40 @@
             showNotification('Artikel berhasil disimpan!');
         });
 
+        document.getElementById('articleForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const articleData = {
+                id: editingArticleId || Date.now(), // Use timestamp for new ID
+                title: document.getElementById('articleTitle').value,
+                image: document.getElementById('articleImage').value || 'https://placehold.co/700x400/cccccc/ffffff?text=No+Image',
+                category: document.getElementById('articleCategory').value,
+                author: document.getElementById('articleAuthor').value,
+                excerpt: document.getElementById('articleExcerpt').value,
+                content: tinymce.get('articleContent').getContent(),
+                date: new Date().toISOString().split('T')[0] // Set current date
+            };
+
+            const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+
+            if (editingArticleId) {
+                // Edit
+                const index = articles.findIndex(a => a.id == editingArticleId); // Use loose comparison
+                if (index !== -1) {
+                    articleData.date = articles[index].date; // Keep original date on edit
+                    articles[index] = articleData;
+                }
+            } else {
+                // Add new
+                articles.unshift(articleData); // Add to the beginning of the array
+            }
+
+            localStorage.setItem('articles', JSON.stringify(articles));
+            closeArticleModal();
+            loadArticles();
+            showNotification('Artikel berhasil disimpan!');
+        });
+
 
         // Delete functions
         function deleteVideo(id) {
@@ -898,6 +1128,16 @@
             }
         }
 
+        function deleteArticle(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
+                const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+                const updatedArticles = articles.filter(article => article.id != id); // Use loose comparison
+                localStorage.setItem('articles', JSON.stringify(updatedArticles));
+                loadArticles();
+                showNotification('Artikel berhasil dihapus.');
+            }
+        }
+
         // Edit functions
         function editVideo(id) {
             openVideoModal(id);
@@ -909,6 +1149,10 @@
 
         function editBlogPost(id) {
             openBlogModal(id);
+        }
+
+        function editArticle(id) {
+            openArticleModal(id);
         }
 
         // Helper function to auto-format Google Drive URL
@@ -931,7 +1175,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize TinyMCE
             tinymce.init({
-                selector: '#blogContent',
+                selector: '#blogContent,#articleContent',
                 plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
                 toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
                 height: 400,

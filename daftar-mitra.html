@@ -115,7 +115,216 @@
         .play-pulse {
             animation: pulse-ring 2s infinite;
         }
-    </style>
+
+    /* —— Variabel & Scope khusus komponen —— */
+    #fm-mitra {
+      --fm-red: #ef0000;
+      --fm-red-dark: #c70000;
+      --fm-black: #0e0e0e;
+      --fm-gray-1: #1a1a1a;
+      --fm-gray-2: #2a2a2a;
+      --fm-white: #ffffff;
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 6px 20px rgba(0,0,0,.10);
+      --shadow-md: 0 12px 30px rgba(0,0,0,.16);
+      --maxw: 1100px;
+      --transition: 240ms cubic-bezier(.2,.7,.2,1);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color: var(--fm-white);
+      position: relative; 
+      isolation: isolate;
+      overflow: clip;
+    }
+
+    /* —— Latar dinamis —— */
+    #fm-mitra .fm-wrap {
+      margin: 0 auto;
+      max-width: var(--maxw); 
+      padding: 56px 20px 72px;
+    }
+
+    #fm-mitra .fm-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1200px 500px at 80% -10%, rgba(255,255,255,.18) 0%, transparent 60%), 
+        radial-gradient(600px 300px at 10% 110%, rgba(255,255,255,.12) 0%, transparent 60%),
+        linear-gradient(135deg, var(--fm-white));
+      z-index: -2;
+    }
+    #fm-mitra .fm-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(100% 100% at 50% 20%, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* —— Header —— */
+    #fm-mitra .fm-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    #fm-mitra .fm-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #ef0000;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+    #fm-mitra .fm-kicker i { font-size: 14px; }
+
+    #fm-mitra .fm-title {
+      margin: 16px auto 10px;
+      color: #000000; /* ✅ Judul utama jadi hitam */
+      line-height: 1.1;
+      font-weight: 800;
+      font-size: clamp(28px, 4.2vw, 42px);
+    }
+
+    #fm-mitra .fm-sub {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #000000; /* ✅ Deskripsi di bawah judul jadi hitam */
+      font-size: clamp(14px, 2.4vw, 16px);
+    }
+
+    /* —— Kartu daftar —— */
+    #fm-mitra .fm-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 30px;
+    }
+    @media (min-width: 720px) {
+      #fm-mitra .fm-cards { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    }
+
+    /* ✅ Perubahan di sini — Box kartu merah */
+    #fm-mitra .fm-card {
+      background: var(--fm-red) !important;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      transform: translateY(14px) scale(.98);
+      opacity: 0;
+      transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition), border-color var(--transition), background var(--transition);
+      backdrop-filter: blur(8px);
+      will-change: transform, opacity;
+    }
+
+    #fm-mitra .fm-card.is-visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    #fm-mitra .fm-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    #fm-mitra .fm-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      background: var(--fm-white);
+      color: var(--fm-red); /* ✅ Warna ikon diset di sini */
+      box-shadow: 0 8px 18px rgba(0,0,0,.10);
+    }
+    #fm-mitra .fm-icon i { font-size: 26px; }
+
+    #fm-mitra .fm-card h3 {
+      margin: 6px 0 6px;
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    #fm-mitra .fm-desc {
+      color: #ffffff; /* ✅ Paragraf dalam card jadi putih */
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* —— Badge fitur kecil —— */
+    #fm-mitra .fm-badges {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 6px;
+    }
+    #fm-mitra .fm-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    #fm-mitra .fm-badge i { font-size: 12px; opacity: .9; }
+
+    /* —— Tombol —— */
+    #fm-mitra .fm-cta {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      text-decoration: none;
+      background: var(--fm-white);
+      color: var(--fm-red);
+      border: 2px solid transparent;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    #fm-mitra .fm-cta i { font-size: 14px; }
+    #fm-mitra .fm-cta:hover {
+      transform: translateY(-2px);
+      background: var(--fm-red);
+      color: var(--fm-white);
+      box-shadow: 0 14px 30px rgba(0,0,0,.22);
+    }
+    #fm-mitra .fm-cta:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.35), 0 0 0 2px var(--fm-white) inset;
+    }
+
+/* —— Footer mini —— */
+    /* —— Footer mini —— */
+    #fm-mitra .fm-foot {
+      margin-top: 34px;
+      display: grid; gap: 8px;
+      justify-items: center; 
+      color: #ffffff;
+      font-size: 13px;
+    } 
+    #fm-mitra .fm-foot .fm-safe {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 12px;
+      background: #ef0000;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    
+    /* —— Preferensi aksesibilitas —— */
+    @media (prefers-reduced-motion: reduce) {
+      #fm-mitra .fm-card { transition: none; transform: none !important; opacity: 1 !important; }
+      #fm-mitra .fm-cta { transition: none; }
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
 
@@ -135,7 +344,7 @@
                             <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Sesuai Harga Resto</span>
                         </div>
                     </a>
-
+ 
                     <!-- Desktop Menu -->
                     <div class="hidden md:flex space-x-1 items-center">
                         <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
@@ -192,7 +401,7 @@
                             Tentang Kami
                         </a>
                     </div>
-
+    
                     <!-- Mobile Menu Button -->
                     <div class="md:hidden flex items-center">
                         <button id="mobile-menu-button" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg transition-colors" aria-expanded="false" aria-controls="mobile-menu">
@@ -202,7 +411,7 @@
                     </div>
                 </div>
             </div>
-
+    
             <!-- Mobile Menu -->
             <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
                 <div class="px-4 pt-4 pb-6 space-y-2">
@@ -243,38 +452,74 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="pt-28 pb-12 md:pt-32 md:pb-20 px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-900">Panduan Presentasi (PPT)</h1>
-            <p class="mt-2 text-lg text-gray-600">Unduh materi presentasi untuk mempelajari layanan FoodMedia lebih dalam.</p>
-        </div>
+<section id="fm-mitra" aria-labelledby="fm-heading" class="pt-20">
+  <div class="fm-bg" aria-hidden="true"></div>
+  <div class="fm-grid-bg" aria-hidden="true"></div>
 
-        <!-- Search Bar -->
-        <div class="mb-8">
-            <input type="text" id="search-input" placeholder="Cari tutorial PPT..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent mx-auto block">
-            <div id="recommendations" class="mt-4 text-center">
-                <p class="text-sm text-gray-600 mb-2">Rekomendasi pencarian:</p>
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pesan Antar')">Pesan Antar</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Pick Up')">Pick Up</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Tutorial')">Tutorial</button>
-                    <button class="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-sm hover:bg-brand-100 transition" onclick="setSearch('Layanan')">Layanan</button>
-                </div>
-            </div>
-        </div>
+  <div class="fm-wrap">
+    <header class="fm-header">
+      <div class="fm-kicker"><i class="fa-solid fa-bolt"></i> Daftar Mitra Foodmedia</div>
+      <h1 id="fm-heading" class="fm-title">Bergabung sebagai Mitra—<span style="opacity:.92">Merchant, Driver, atau Tim Sales</span></h1>
+      <p class="fm-sub">Ekosistem Foodmedia membantu bisnis berkembang dengan teknologi, jaringan pelanggan, dan dukungan operasional. Pilih peranmu dan mulai sekarang.</p>
+    </header>
 
-        <!-- PPT List -->
-        <div class="space-y-4" id="ppt-list">
-            <!-- PPT items will be loaded from localStorage -->
+    <div class="fm-cards" role="list">
+      <!-- Merchant • food-ON -->
+      <article class="fm-card" role="listitem">
+        <div class="fm-icon" aria-hidden="true"><i class="fa-solid fa-store"></i></div>
+        <div>
+          <h3>Daftar Mitra <strong>food-ON (Merchant)</strong></h3>
+          <p class="fm-desc">Dapatkan pesanan online, kelola menu & promo, pantau performa penjualan secara real-time.</p>
+          <div class="fm-badges">
+            <span class="fm-badge"><i class="fa-solid fa-chart-line"></i> Analitik</span>
+            <span class="fm-badge"><i class="fa-solid fa-robot"></i> Otomasi</span>
+            <span class="fm-badge"><i class="fa-solid fa-shield-halved"></i> Aman</span>
+          </div>
         </div>
-        <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-10">
-            <i class="fas fa-search text-4xl text-slate-300 mb-4"></i>
-            <h3 class="text-xl font-semibold text-slate-700">Tidak ada hasil ditemukan</h3>
-            <p class="text-slate-500 mt-1">Coba gunakan kata kunci lain yang lebih umum.</p>
+        <a class="fm-cta" href="regristrasi-merchant.html" rel="noopener noreferrer">
+          Mulai Daftar Merchant <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+      <!-- Driver • food-D -->
+      <article class="fm-card" role="listitem">
+        <div class="fm-icon" aria-hidden="true"><i class="fa-solid fa-motorcycle"></i></div>
+        <div>
+          <h3>Daftar Mitra <strong>food-D (Driver)</strong></h3>
+          <p class="fm-desc">Pendapatan fleksibel, insentif menarik, navigasi & order real-time langsung dari aplikasi.</p>
+          <div class="fm-badges">
+            <span class="fm-badge"><i class="fa-solid fa-location-arrow"></i> Navigasi</span>
+            <span class="fm-badge"><i class="fa-solid fa-bell"></i> Notifikasi</span>
+            <span class="fm-badge"><i class="fa-solid fa-clock"></i> Fleksibel</span>
+          </div>
         </div>
-    </main>
+        <a class="fm-cta" href="regristrasi-driver.html" rel="noopener noreferrer">
+          Mulai Daftar Driver <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+      <!-- Sales • Salesmedia -->
+      <article class="fm-card" role="listitem">
+        <div class="fm-icon" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></div>
+        <div>
+          <h3>Daftar Mitra <strong>Salesmedia (Tim Sales)</strong></h3>
+          <p class="fm-desc">Kembangkan jaringan merchant, raih komisi kompetitif, dan dukungan materi penjualan.</p>
+          <div class="fm-badges">
+            <span class="fm-badge"><i class="fa-solid fa-handshake"></i> Kemitraan</span>
+            <span class="fm-badge"><i class="fa-solid fa-bullseye"></i> Target</span>
+            <span class="fm-badge"><i class="fa-solid fa-file-lines"></i> Materi</span>
+          </div>
+        </div>
+        <a class="fm-cta" href="regristrasi-sales.html" rel="noopener noreferrer">
+          Mulai Daftar Sales <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+    </div>
+
+    <div class="fm-foot">
+      <div class="fm-safe"><i class="fa-solid fa-shield-halved"></i> <strong>Foodmedia</strong>Sesuai Harga Resto</div>
+    </div>
+  </div>
 
 
     <!-- Footer -->
@@ -384,269 +629,89 @@
         </div>
     </footer>
 
-
     <script>
-        // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOpenIcon = document.getElementById('menu-open-icon');
-            const menuCloseIcon = document.getElementById('menu-close-icon');
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Mobile Menu Logic ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
 
-            const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
-            const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
-            const mobileChevron = document.getElementById('mobile-chevron');
+        const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
+        const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
+        const mobileChevron = document.getElementById('mobile-chevron');
 
-            const blogTrigger = document.getElementById('mobile-blog-trigger');
-            const blogSubMenu = document.getElementById('blog-sub-menu');
-            const blogChevron = document.getElementById('mobile-blog-chevron');
+        const blogTrigger = document.getElementById('mobile-blog-trigger');
+        const blogSubMenu = document.getElementById('blog-sub-menu');
+        const blogChevron = document.getElementById('mobile-blog-chevron');
 
+        if (mobileMenuButton) {
             mobileMenuButton.addEventListener('click', function() {
-                const isExpanded = mobileMenu.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden', !isExpanded);
-                menuCloseIcon.classList.toggle('hidden', isExpanded);
-            });
-
-            if(tutorialsTrigger) {
-                tutorialsTrigger.addEventListener('click', function() {
-                    tutorialSubMenu.classList.toggle('max-h-0');
-                    tutorialSubMenu.classList.toggle('max-h-screen'); // Or a sufficiently large height
-                    tutorialSubMenu.classList.toggle('opacity-0');
-                    tutorialSubMenu.classList.toggle('opacity-100');
-                    mobileChevron.classList.toggle('rotate-180');
-                });
-            }
-
-            if(blogTrigger) {
-                blogTrigger.addEventListener('click', function() {
-                    blogSubMenu.classList.toggle('max-h-0');
-                    blogSubMenu.classList.toggle('max-h-screen');
-                    blogSubMenu.classList.toggle('opacity-0');
-                    blogSubMenu.classList.toggle('opacity-100');
-                    blogChevron.classList.toggle('rotate-180');
-                });
-            }
-        });
-
-        // Load PPTs from localStorage (managed by admin panel)
-        function loadPPTsFromStorage() {
-            const storedPPTs = JSON.parse(localStorage.getItem('tutorialPpts') || '[]');
-            // If no PPTs in localStorage, use default PPTs
-            if (storedPPTs.length === 0) {
-                return [
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Pesan Antar Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1tzFnU3ImO_BnVFNIekb3Ck7xgZcq_URi/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Pick Up.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1fhHAS9gqzNX6wfF88_UlB0MHtEqL2E6h/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Mengunakan Layanan Reservasi.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Dqmy97OGa9nUy3Pzt3I0rxuJeCIYCvPT/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Lupa Password Food D.pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Q2vIleWPNAvhGLxNJqpu9pdsao572FIM/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Aktifkan Status Driver & Ubah Informasi Driver (Food D).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1wbPL50OmfAMBJ7AS2VQMupEUv6Wam-QE/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Menambahkan Menu & Toping (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/edit?usp=drive_link&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1Jkkh2gywOOfNGa13vkLIsu3punc5OgCt/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Kurir Resto & Reservasi (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1twRDLifMsp0A7M4-9nkCawjefU7wqAZZ/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Ubah Informasi Resto & Buka Tutup Resto (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/14aon5JUmo1cBsUmeOm0zftG7KdYI7NHm/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Tambahkan Akun Pegawai Dan Fitur Akun Pegawai (Food ON)',
-                        viewLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/1_WdUR3cZGwyPw_a5DBepYaUkdeZUaPa1/export/pptx'
-                    },
-                    {
-                        title: 'Toturial PPT Cara Kelola Pesanan (Food ON).pptx',
-                        viewLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/edit?usp=sharing&ouid=109970452406468218490&rtpof=true&sd=true',
-                        downloadLink: 'https://docs.google.com/presentation/d/16EhpRgRJl1gWy2a-tju7mUasBa0us6so/export/pptx'
-                    }
-                ];
-            }
-            return storedPPTs;
-        }
-
-        // Function to refresh PPTs from localStorage
-        function refreshPpts() {
-            const ppts = loadPPTsFromStorage();
-            renderPPTs(ppts);
-        }
-
-        // Listen for storage changes (when admin panel updates PPTs)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'tutorialPpts') {
-                refreshPpts();
-            }
-        });
-
-        // Render PPTs
-        function renderPPTs(ppts) {
-            const pptList = document.getElementById('ppt-list');
-            const noResultsMessage = document.getElementById('no-results');
-            pptList.innerHTML = '';
-            if (ppts.length === 0) return;
-
-            ppts.forEach(ppt => {
-                // Standardize URL properties
-                const viewUrl = ppt.viewUrl || ppt.viewLink || '#';
-                const downloadUrl = ppt.downloadUrl || ppt.downloadLink || '#';
- 
-                const pptItem = `
-                    <div class="ppt-item bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" data-title="${ppt.title.toLowerCase()}">
-                        <a href="${viewUrl}" target="_blank" class="flex items-center gap-4 group">
-                            <i class="fas fa-file-powerpoint text-3xl text-[#ef0000] group-hover:text-red-700 transition"></i>
-                            <h3 class="font-semibold text-black group-hover:text-red-700 transition">${ppt.title}</h3>
-                        </a>
-                        <div class="flex-shrink-0 flex gap-2">
-                            <a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition">
-                                <i class="fas fa-eye text-white"></i> Lihat
-                            </a>
-                            <a href="${downloadUrl}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#ef0000] rounded-md hover:bg-red-700 transition">
-                                <i class="fas fa-download text-white"></i> Download
-                            </a>
-                        </div>
-                    </div>
-                `;
-                pptList.innerHTML += pptItem;
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                menuOpenIcon.classList.toggle('hidden');
+                menuCloseIcon.classList.toggle('hidden');
             });
         }
 
-        // --- Search Functionality ---
-
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        function searchPPTs(query) {
-            const pptList = document.getElementById('ppt-list');
-            const pptItems = Array.from(pptList.querySelectorAll('.ppt-item'));
-            const noResultsMessage = document.getElementById('no-results');
-            const cleanQuery = query.trim().toLowerCase();
-
-            if (!cleanQuery) {
-                pptItems.forEach(item => {
-                    item.style.display = 'flex';
-                    item.style.order = '0'; // Reset order
-                });
-                noResultsMessage.classList.add('hidden');
-                return;
-            }
-
-            const queryWords = query.toLowerCase().split(' ').filter(w => w);
-            const scoredItems = pptItems.map(item => {
-                const title = item.dataset.title;
-                let score = 0;
-
-                // Higher score for matching the full query phrase
-                if (title.includes(cleanQuery)) {
-                    score += 100; // Highest priority for exact phrase match
-                }
-
-                queryWords.forEach(word => {
-                    let wordFound = false;
-                    // 1. Exact word match check
-                    if (title.includes(word)) {
-                        score += 25; // High score for exact word
-                        wordFound = true;
-                    } 
-                    // 2. Fuzzy match check (only if exact word not found)
-                    else {
-                        const titleWords = title.split(' ');
-                        for (const titleWord of titleWords) {
-                            const distance = levenshteinDistance(word, titleWord);
-                            // Allow slightly more tolerance for longer words
-                            const maxDistance = word.length > 4 ? 2 : 1;
-                            if (distance <= maxDistance) {
-                                // Lower score for fuzzy matches
-                                score += 10 - (distance * 4); // distance 1: +6, distance 2: +2
-                                wordFound = true;
-                                break; // Move to next query word once a close match is found
-                            }
-                        }
-                    }
-                });
-
-                return { item, score };
-            });
-
-            let hasResults = false;
-
-            // Sort by score descending
-            scoredItems.sort((a, b) => b.score - a.score);
-
-            // Apply visibility and order
-            scoredItems.forEach(({ item, score }, index) => {
-                if (score > 0) {
-                    item.style.display = 'flex';
-                    item.style.order = index.toString(); // Use CSS order to re-sort visually
-                    hasResults = true;
+        if (tutorialsTrigger) {
+            tutorialsTrigger.addEventListener('click', function() {
+                const isOpened = tutorialSubMenu.classList.contains('max-h-screen');
+                if (isOpened) {
+                    tutorialSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                    tutorialSubMenu.classList.add('max-h-0', 'opacity-0');
                 } else {
-                    item.style.display = 'none';
+                    tutorialSubMenu.classList.remove('max-h-0', 'opacity-0');
+                    tutorialSubMenu.classList.add('max-h-screen', 'opacity-100');
                 }
+                mobileChevron.classList.toggle('rotate-180');
             });
-
-            // Show or hide the 'no results' message
-            noResultsMessage.classList.toggle('hidden', hasResults);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Page-specific logic
+        if (blogTrigger) {
+            blogTrigger.addEventListener('click', function() {
+                const isOpened = blogSubMenu.classList.contains('max-h-screen');
+                if (isOpened) {
+                    blogSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                    blogSubMenu.classList.add('max-h-0', 'opacity-0');
+                } else {
+                    blogSubMenu.classList.remove('max-h-0', 'opacity-0');
+                    blogSubMenu.classList.add('max-h-screen', 'opacity-100');
+                }
+                blogChevron.classList.toggle('rotate-180');
+            });
+        }
 
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', (e) => searchPPTs(e.target.value));
+        // —— Animasi masuk kartu dengan IntersectionObserver (halus & profesional) —— //
+    (function () {
+      var root = document.querySelector('#fm-mitra');
+      if (!root) return;
 
-            // Make setSearch globally available for the recommendation buttons
-            window.setSearch = function(term) {
-                searchInput.value = term;
-                searchInput.dispatchEvent(new Event('input')); // Trigger search
-            };
+      var cards = root.querySelectorAll('.fm-card');
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            refreshPpts(); // Initial load
+      if (prefersReduced) {
+        cards.forEach(function (c) { c.classList.add('is-visible'); });
+        return;
+      }
+
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
         });
-        
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+      cards.forEach(function (c, i) {
+        c.style.transitionDelay = (80 * i) + 'ms';
+        obs.observe(c);
+      });
+    })();
+    });
     </script>
+</section>
 </body>
 </html>
