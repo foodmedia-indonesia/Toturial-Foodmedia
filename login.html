@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin Panel foodmedia</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="canonical" href="https://foodmedia.co.id/login.html">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        food: {
+                            primary: '#FE0000',
+                            secondary: '#FF3333',
+                            dark: '#990000',
+                            bg: '#FEF2F2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen antialiased">
+
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-900">Admin Panel Login</h2>
+            <p class="mt-2 text-sm text-gray-600">Selamat datang kembali, silakan masuk.</p>
+        </div>
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
+                <div class="mt-1">
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-food-primary focus:border-transparent">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Kata Sandi</label>
+                <div class="mt-1">
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-food-primary focus:border-transparent">
+                </div>
+            </div>
+
+            <p id="errorMessage" class="text-sm text-red-600 hidden text-center"></p>
+
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-food-primary hover:bg-food-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-food-primary transition">
+                    Masuk
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Kredensial yang benar
+            const correctEmail = 'Superadmin@gmail.com';
+            const correctPassword = 'AdminSuper1967!';
+
+            if (email === correctEmail && password === correctPassword) {
+                // Jika login berhasil, simpan status di sessionStorage
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                // Arahkan ke halaman admin
+                window.location.href = 'admin.html';
+            } else {
+                // Jika gagal, tampilkan pesan error
+                errorMessage.textContent = 'Email atau kata sandi yang Anda masukkan salah.';
+                errorMessage.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

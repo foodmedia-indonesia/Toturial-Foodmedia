@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin panel - foodmedia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdn.tiny.cloud/1/4twgqddvpp93mu6kwtk6kpuhq0t6p5x0vvzuy8tg3p1q1tr7/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <style>
+        /* Custom styles for Kelola Asset */
+        #assetUploadDropzone {
+            border: 2px dashed #d1d5db; /* gray-300 */
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        #assetUploadDropzone.drag-over {
+            border-color: #FE0000; /* food-primary */
+            background-color: #fef2f2; /* food-bg */
+        }
+        .asset-preview {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+        .banner-preview {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 12px; /* rounded-xl */
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        food: {
+                            primary: '#FE0000',
+                            secondary: '#FF3333',
+                            dark: '#990000',
+                            bg: '#FEF2F2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-red-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Admin Panel - foodmedia</h1>
+                <div class="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-end">
+                    <button onclick="logout()" class="text-food-primary hover:text-food-dark transition p-2">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Tabs -->
+        <div class="mb-8">
+            <div class="border-b border-gray-200 overflow-x-auto">
+                <nav class="-mb-px flex space-x-6 sm:space-x-8 whitespace-nowrap">
+                    <button id="videosTab" class="tab-btn active border-b-2 border-food-primary py-2 px-1 text-sm font-medium text-food-primary">
+                        <i class="fas fa-video mr-2"></i>Video Tutorials
+                    </button>
+                    <button id="pptsTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-file-powerpoint mr-2"></i>PPT Tutorials
+                    </button>
+                    <button id="blogTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-blog mr-2"></i>Kelola Blog
+                    </button>
+                    <button id="articlesTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-newspaper mr-2"></i>Kelola Artikel
+                    </button>
+                    <button id="assetsTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-images mr-2"></i>Kelola Asset
+                    </button>
+                    <button id="analyticsTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300" style="white-space: nowrap;">
+                        <i class="fas fa-chart-line mr-2"></i>Dashboard Analitik
+                    </button>
+                    <button id="settingsTab" class="tab-btn border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <i class="fas fa-cog mr-2"></i>Pengaturan
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Videos Section -->
+        <div id="videosSection" class="tab-content">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Video Tutorials</h2>
+                    <p class="text-sm text-gray-500">Data video tersimpan di server.</p>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="openVideoModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah Video
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div id="videosList" class="space-y-4">
+                        <!-- Videos will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PPTs Section -->
+        <div id="pptsSection" class="tab-content hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola PPT Tutorials</h2>
+                    <p class="text-sm text-gray-500">Data PPT tersimpan di server.</p>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="openPptModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah PPT
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div id="pptsList" class="space-y-4">
+                        <!-- PPTs will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Section -->
+        <div id="blogSection" class="tab-content hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Artikel Blog</h2>
+                    <p class="text-sm text-gray-500">Perubahan artikel akan langsung tampil di website public.</p>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="openBlogModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah Artikel
+                    </button>
+                </div>
+            </div>
+            <!-- Filter and Search Section for Blog -->
+            <div class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="blogSearchInput" class="block text-sm font-medium text-gray-700">Cari Judul</label>
+                        <input type="text" id="blogSearchInput" placeholder="Ketik judul blog..." class="mt-1 w-full input-field">
+                    </div>
+                    <div>
+                        <label for="blogCategoryFilter" class="block text-sm font-medium text-gray-700">Filter Kategori</label>
+                        <select id="blogCategoryFilter" class="mt-1 w-full input-field">
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="blogDateFrom" class="block text-sm font-medium text-gray-700">Dari Tanggal</label>
+                        <input type="date" id="blogDateFrom" class="mt-1 w-full input-field">
+                    </div>
+                    <div>
+                        <label for="blogDateTo" class="block text-sm font-medium text-gray-700">Sampai Tanggal</label>
+                        <input type="date" id="blogDateTo" class="mt-1 w-full input-field">
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button id="resetBlogFilters" class="text-sm text-gray-600 hover:text-gray-900 underline">Reset Filter</button>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div id="blogPostsList" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Articles Section -->
+        <div id="articlesSection" class="tab-content hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Artikel</h2>
+                    <p class="text-sm text-gray-500">Perubahan artikel akan langsung tampil di website public.</p>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="openArticleModal()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>Tambah Artikel
+                    </button>
+                </div>
+            </div>
+            <!-- Filter and Search Section -->
+            <div class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="articleSearchInput" class="block text-sm font-medium text-gray-700">Cari Judul</label>
+                        <input type="text" id="articleSearchInput" placeholder="Ketik judul artikel..." class="mt-1 w-full input-field">
+                    </div>
+                    <div>
+                        <label for="articleCategoryFilter" class="block text-sm font-medium text-gray-700">Filter Kategori</label>
+                        <select id="articleCategoryFilter" class="mt-1 w-full input-field">
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="articleDateFrom" class="block text-sm font-medium text-gray-700">Dari Tanggal</label>
+                        <input type="date" id="articleDateFrom" class="mt-1 w-full input-field">
+                    </div>
+                    <div>
+                        <label for="articleDateTo" class="block text-sm font-medium text-gray-700">Sampai Tanggal</label>
+                        <input type="date" id="articleDateTo" class="mt-1 w-full input-field">
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button id="resetArticleFilters" class="text-sm text-gray-600 hover:text-gray-900 underline">Reset Filter</button>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div id="articlesList" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assets Section -->
+        <div id="assetsSection" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Kelola Asset</h2>
+                    <p class="text-sm text-gray-500">Upload dan kelola asset gambar. File akan diupload ke server.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Upload Column -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Upload Asset Baru</h3>
+                    
+                    <!-- Dropzone -->
+                    <div id="assetUploadDropzone" class="rounded-lg p-8 text-center cursor-pointer mb-4">
+                        <input type="file" id="assetFileInput" class="hidden" accept=".png,.jpg,.jpeg,.svg,.mp4,.webm,.pdf,.ppt,.pptx" multiple>
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-gray-600">Seret & lepas file di sini</p>
+                        <p class="text-sm text-gray-500">atau</p>
+                        <button type="button" onclick="document.getElementById('assetFileInput').click()" class="mt-2 bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition text-sm font-medium">
+                            Pilih File
+                        </button>
+                        <p class="text-xs text-gray-400 mt-3">Didukung: Gambar, Video, PDF, PPT. Maks 500MB.</p>
+                    </div>
+
+                    <!-- Preview Area -->
+                    <div id="assetPreviewContainer" class="space-y-4">
+                        <!-- Preview akan muncul di sini -->
+                    </div>
+                </div>
+
+                <!-- Asset List Column -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Daftar Asset Tersimpan</h3>
+                        <p class="text-xs text-gray-500 -mt-3 mb-3"><b>Catatan:</b> Klik pada item untuk melihat preview.</p>
+                        <div id="assetsList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
+                            <!-- Daftar asset akan dimuat di sini -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analyticsSection" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Dashboard Analitik Pengunjung</h2>
+                    <p class="text-sm text-gray-500">Data disediakan oleh Google Looker Studio. Dashboard ini bersifat read-only dan diperbarui secara otomatis.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <!-- Embed Plausible Dashboard Here -->
+                <div class="p-2 sm:p-4">
+                    <iframe
+                        src="https://lookerstudio.google.com/embed/reporting/08a9954a-cf30-46ec-b5d8-8a87faf3a526/page/kIV1C"
+                        style="width:100%; height:80vh; border:0; border-radius: 8px;"
+                        allowfullscreen
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settingsSection" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Pengaturan Website</h2>
+                    <p class="text-sm text-gray-500">Atur informasi global, logo, dan SEO untuk seluruh halaman website.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8">
+                <form id="settingsForm" class="space-y-6">
+                    <!-- Website Info -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Informasi Dasar</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="websiteName" class="block text-sm font-medium text-gray-700 mb-1">Nama Website</label>
+                                <input type="text" id="websiteName" class="w-full input-field" placeholder="Contoh: foodmedia" required>
+                            </div>
+                            <div>
+                                <label for="websiteDescription" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Singkat Website</label>
+                                <input type="text" id="websiteDescription" class="w-full input-field" placeholder="Slogan atau deskripsi singkat" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Logo -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Logo Website</label>
+                        <div class="flex items-center gap-4">
+                            <img id="logoPreview" src="https://placehold.co/100x100/f0f0f0/cccccc?text=Logo" alt="Logo preview" class="w-20 h-20 rounded-lg object-contain bg-gray-100 border p-1">
+                            <input type="file" id="logoUpload" class="w-full input-field" accept="image/png, image/jpeg, image/svg+xml">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Disarankan format PNG transparan atau SVG. Logo akan ditampilkan di header dan footer.</p>
+                    </div>
+
+                    <!-- SEO Settings -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Pengaturan SEO</h3>
+                        <div>
+                            <label for="seoTitle" class="block text-sm font-medium text-gray-700 mb-1">Judul SEO Global</label>
+                            <input type="text" id="seoTitle" class="w-full input-field" placeholder="Judul yang muncul di tab browser dan hasil pencarian Google" required>
+                        </div>
+                        <div class="mt-4">
+                            <label for="seoMetaDescription" class="block text-sm font-medium text-gray-700 mb-1">Meta Deskripsi SEO Global</label>
+                            <textarea id="seoMetaDescription" rows="3" class="w-full input-field" placeholder="Deskripsi singkat (sekitar 155 karakter) untuk mesin pencari" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Notifikasi Pop-up Website</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                <label for="notificationEnabled" class="font-medium text-gray-700">Aktifkan Notifikasi Pop-up</label>
+                                <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input type="checkbox" id="notificationEnabled" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                                    <label for="notificationEnabled" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="notificationType" class="block text-sm font-medium text-gray-700 mb-1">Jenis Notifikasi</label>
+                                <select id="notificationType" class="w-full input-field">
+                                    <option value="update">Info Update</option>
+                                    <option value="maintenance">Maintenance</option>
+                                    <option value="announcement">Pengumuman</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="notificationTitle" class="block text-sm font-medium text-gray-700 mb-1">Judul Notifikasi</label>
+                                <input type="text" id="notificationTitle" class="w-full input-field" placeholder="Contoh: Pembaruan Sistem">
+                            </div>
+                            <div>
+                                <label for="notificationMessage" class="block text-sm font-medium text-gray-700 mb-1">Isi Pesan Notifikasi</label>
+                                <textarea id="notificationMessage" rows="4" class="w-full input-field" placeholder="Jelaskan detail informasi di sini..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button type="submit" class="bg-food-primary text-white px-6 py-2 rounded-lg hover:bg-food-dark transition font-bold">Simpan Pengaturan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 ease-out z-50">
+        <div class="flex items-center gap-3">
+            <i id="notification-icon" class="fas fa-check-circle"></i>
+            <span id="notification-message">Data berhasil disimpan!</span>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-4" id="videoModalTitle">Tambah Video Baru</h3>
+                <form id="videoForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">YouTube Video ID</label>
+                        <input type="text" id="videoId" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" placeholder="Contoh: 8ZPFuu6jMks" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Judul Video</label>
+                        <input type="text" id="videoTitle" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" placeholder="Masukkan judul video" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
+                        <textarea id="videoDesc" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" placeholder="Masukkan deskripsi video" required></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
+                        <select id="videoCategory" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" required>
+                            <option value="">Pilih kategori</option>
+                            <option value="Driver">Driver (Food D)</option>
+                            <option value="Merchant">Merchant (Food ON)</option>
+                            <option value="User">Pelanggan</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end gap-3">
+                        <button type="button" onclick="closeVideoModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition">Batal</button>
+                        <button type="submit" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- PPT Modal -->
+    <div id="pptModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-4" id="pptModalTitle">Tambah PPT Baru</h3>
+                <form id="pptForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Judul PPT</label>
+                        <input type="text" id="pptTitle" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" placeholder="Masukkan judul PPT" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">URL Google Drive (View)</label>
+                        <input type="url" id="pptViewUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" placeholder="https://docs.google.com/presentation/d/..." required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">URL Google Drive (Download)</label>
+                        <input type="url" id="pptDownloadUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-food-primary focus:border-transparent" placeholder="https://docs.google.com/presentation/d/.../export/pptx" required>
+                    </div>
+                    <div class="flex justify-end gap-3">
+                        <button type="button" onclick="closePptModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition">Batal</button>
+                        <button type="submit" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div id="blogModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="p-6 border-b">
+                <h3 class="text-lg font-bold text-gray-900" id="blogModalTitle">Tambah Artikel Blog</h3>
+            </div>
+            <div class="p-6 flex-grow overflow-y-auto">
+                <form id="blogForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Artikel</label>
+                            <input type="text" id="blogTitle" class="w-full input-field" placeholder="Judul yang menarik..." required>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-sm font-medium text-gray-700">Gambar Utama</label>
+                                <button type="button" onclick="openAssetPicker('blogImagePreview', 'blogImageUrl')" class="text-sm text-food-primary hover:underline">Pilih dari Asset</button>
+                            </div>
+                            <input type="file" id="blogImage" class="w-full input-field" accept="image/png, image/jpeg, image/jpg, image/webp" onchange="previewImage(this, 'blogImagePreview')">
+                            <div class="mt-2">
+                                <img id="blogImagePreview" src="" alt="Image preview" class="rounded-lg shadow-sm" style="display: none; max-height: 200px; border: 1px solid #e5e7eb;">
+                                <input type="hidden" id="blogImageUrl">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                            <select id="blogCategory" class="w-full input-field" required>
+                                <!-- Options will be populated by JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Penulis</label>
+                            <input type="text" id="blogAuthor" class="w-full input-field" placeholder="Nama penulis" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kutipan (Excerpt)</label>
+                        <textarea id="blogExcerpt" rows="2" class="w-full input-field" placeholder="Ringkasan singkat artikel..." required></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Konten</label>
+                            <select id="blogStatus" class="w-full input-field" required>
+                                <option value="Draft">Draft</option>
+                                <option value="Publish">Publish</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jadwal Publish (Opsional)</label>
+                            <input type="datetime-local" id="blogPublishDate" class="w-full input-field" placeholder="Pilih tanggal & waktu publish">
+                            <p class="text-xs text-gray-500 mt-1">Kosongkan untuk publish manual</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Konten Lengkap</label>
+                        <textarea id="blogContent" class="w-full"></textarea>
+                    </div>
+                </form>
+                <div class="mt-6 p-4 bg-gray-50 rounded-lg border">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">SEO Checker</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Panjang Judul</label>
+                            <div class="flex items-center gap-2">
+                                <span id="blogTitleLength" class="text-gray-600">0</span> karakter
+                                <span id="blogTitleStatus" class="text-gray-600">Baik</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Meta Description (Excerpt)</label>
+                            <div class="flex items-center gap-2">
+                                <span id="blogExcerptLength" class="text-gray-600">0</span> karakter
+                                <span id="blogExcerptStatus" class="text-gray-600">Cukup</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Keyword Utama</label>
+                            <input type="text" id="blogKeyword" class="w-full input-field" placeholder="Masukkan keyword utama">
+                            <div class="mt-2 space-y-1">
+                                <div>Dalam Judul: <span id="blogKeywordTitle" class="text-gray-600">Tidak ditemukan</span></div>
+                                <div>Dalam Konten: <span id="blogKeywordContent" class="text-gray-600">Tidak ditemukan</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end gap-3">
+                <button type="button" onclick="closeBlogModal()" class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100 transition">Batal</button>
+                <button type="button" onclick="document.getElementById('blogForm').requestSubmit()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">Simpan Artikel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="p-6 border-b">
+                <h3 class="text-lg font-bold text-gray-900" id="articleModalTitle">Tambah Artikel Baru</h3>
+            </div>
+            <div class="p-6 flex-grow overflow-y-auto">
+                <form id="articleForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Artikel</label>
+                            <input type="text" id="articleTitle" class="w-full input-field" placeholder="Judul yang menarik..." required>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-sm font-medium text-gray-700">Gambar Utama</label>
+                                <button type="button" onclick="openAssetPicker('articleImagePreview', 'articleImageUrl')" class="text-sm text-food-primary hover:underline">Pilih dari Asset</button>
+                            </div>
+                            <input type="file" id="articleImage" class="w-full input-field" accept="image/png, image/jpeg, image/jpg, image/webp" onchange="previewImage(this, 'articleImagePreview')">
+                            <div class="mt-2">
+                                <img id="articleImagePreview" src="" alt="Image preview" class="rounded-lg shadow-sm" style="display: none; max-height: 200px; border: 1px solid #e5e7eb;">
+                                <input type="hidden" id="articleImageUrl">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                            <select id="articleCategory" class="w-full input-field" required>
+                                <!-- Options will be populated by JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Penulis</label>
+                            <input type="text" id="articleAuthor" class="w-full input-field" placeholder="Nama penulis" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kutipan (Excerpt)</label>
+                        <textarea id="articleExcerpt" rows="2" class="w-full input-field" placeholder="Ringkasan singkat artikel..." required></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Konten</label>
+                            <select id="articleStatus" class="w-full input-field" required>
+                                <option value="Draft">Draft</option>
+                                <option value="Publish">Publish</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jadwal Publish (Opsional)</label>
+                            <input type="datetime-local" id="articlePublishDate" class="w-full input-field" placeholder="Pilih tanggal & waktu publish">
+                            <p class="text-xs text-gray-500 mt-1">Kosongkan untuk publish manual</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Konten Lengkap</label>
+                        <textarea id="articleContent" class="w-full"></textarea>
+                    </div>
+                </form>
+                <div class="mt-6 p-4 bg-gray-50 rounded-lg border">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">SEO Checker</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Panjang Judul</label>
+                            <div class="flex items-center gap-2">
+                                <span id="articleTitleLength" class="text-gray-600">0</span> karakter
+                                <span id="articleTitleStatus" class="text-gray-600">Baik</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Meta Description (Excerpt)</label>
+                            <div class="flex items-center gap-2">
+                                <span id="articleExcerptLength" class="text-gray-600">0</span> karakter
+                                <span id="articleExcerptStatus" class="text-gray-600">Cukup</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Keyword Utama</label>
+                            <input type="text" id="articleKeyword" class="w-full input-field" placeholder="Masukkan keyword utama">
+                            <div class="mt-2 space-y-1">
+                                <div>Dalam Judul: <span id="articleKeywordTitle" class="text-gray-600">Tidak ditemukan</span></div>
+                                <div>Dalam Konten: <span id="articleKeywordContent" class="text-gray-600">Tidak ditemukan</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end gap-3">
+                <button type="button" onclick="closeArticleModal()" class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100 transition">Batal</button>
+                <button type="button" onclick="document.getElementById('articleForm').requestSubmit()" class="bg-food-primary text-white px-4 py-2 rounded-lg hover:bg-food-dark transition">Simpan Artikel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asset Picker Modal -->
+    <div id="assetPickerModal" class="fixed inset-0 z-[60] hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full h-[70vh] flex flex-col">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 class="text-lg font-bold text-gray-900">Pilih Asset Gambar</h3>
+                <button onclick="closeAssetPicker()" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="assetPickerList" class="p-6 flex-grow overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <!-- Asset items will be loaded here -->
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end">
+                <button type="button" onclick="closeAssetPicker()" class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100 transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asset Preview Modal -->
+    <div id="assetPreviewModal" class="fixed inset-0 z-[70] hidden bg-black/70 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 id="assetPreviewTitle" class="text-lg font-bold text-gray-900 truncate pr-4">Preview Asset</h3>
+                <button onclick="closeAssetPreviewModal()" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div id="assetPreviewContent" class="p-6 flex-grow overflow-auto flex items-center justify-center bg-gray-100">
+                <!-- Preview content (image, video, or link) will be injected here -->
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end">
+                <button type="button" onclick="closeAssetPreviewModal()" class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100 transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === SECURITY CHECK ===
+        // Cek apakah pengguna sudah login. Jika tidak, redirect ke halaman login.
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        let currentTab = 'videos';
+        let videoStorage = [];
+        let pptStorage = [];
+        let blogStorage = [];
+        let articleStorage = [];
+        let assetStorage = [];
+        let settingsStorage = {};
+
+        // Editing variables
+        let editingVideoId = null;
+        let editingPptId = null;
+        let editingPostId = null;
+        let editingArticleId = null;
+
+        // === CONSTANTS FOR DATA TYPES ===
+        const DATA_TYPES = {
+            VIDEOS: 'videos',
+            PPTS: 'presents',
+            BLOGS: 'blogs',
+            ARTICLES: 'articles',
+            ASSETS: 'assets',
+            SETTINGS: 'settings'
+        };
+
+        // Auto-save debouncing
+        let autoSaveTimeouts = {};
+        const AUTO_SAVE_DELAY = 2000; // 2 seconds
+
+        const PREDEFINED_CATEGORIES = [
+            "Update Foodmedia",
+            "Tips & Edukasi",
+            "Promo & Penawaran",
+            "Kuliner & Rekomendasi",
+            "UMKM & Mitra",
+            "Panduan Mitra",
+            "Panduan Driver",
+            "Teknologi & Produk",
+            "Event & Kampanye",
+            "FAQ & Bantuan"
+        ];
+
+        function debounceSave(type, saveFunction) {
+            clearTimeout(autoSaveTimeouts[type]);
+            autoSaveTimeouts[type] = setTimeout(() => {
+                saveFunction();
+            }, AUTO_SAVE_DELAY);
+        }
+
+        // === LOGOUT FUNCTION ===
+        function logout() {
+            // Hapus status login dari sessionStorage
+            sessionStorage.removeItem('isAdminLoggedIn');
+            // Arahkan kembali ke halaman login
+            window.location.href = 'login.html';
+        }
+
+        // === SERVER SYNC FUNCTIONS (NEW) ===
+        async function saveDataToServer(type, data) {
+            try {
+                const response = await fetch(`api/save_data.php?type=${type}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (!result.success) throw new Error(result.message || 'Unknown error');
+                console.log(`${type} saved to server.`);
+                showNotification('Data berhasil disimpan ke server!');
+            } catch (error) {
+                console.error(`Failed to save ${type} to server:`, error);
+                showNotification(`Gagal menyimpan ke server: ${error.message}`, true);
+            }
+        }
+        
+        async function fetchDataFromServer(type) {
+            try {
+                const response = await fetch(`api/get_data.php?type=${type}&t=${Date.now()}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(`Data type ${type} fetched successfully.`);
+                return data;
+            } catch (error) {
+                console.error(`Error fetching ${type}:`, error);
+                showNotification(`Gagal memuat data ${type} dari server.`, true);
+                return []; // Return empty array on failure
+            }
+        }
+
+        // === UTILITY FUNCTIONS ===
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            const messageSpan = document.getElementById('notification-message');
+            const icon = document.getElementById('notification-icon');
+            
+            // Atur warna dan ikon berdasarkan status error
+            notification.classList.remove('bg-green-500', 'bg-red-500');
+            icon.classList.remove('fa-check-circle', 'fa-exclamation-circle');
+
+            if(isError) {
+                notification.classList.add('bg-red-500');
+                icon.classList.add('fa-exclamation-circle');
+            } else {
+                notification.classList.add('bg-green-500');
+                icon.classList.add('fa-check-circle');
+            }
+            
+            messageSpan.textContent = message;
+
+            // Tampilkan notifikasi
+            notification.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                notification.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Membaca file sebagai Data URL untuk pratinjau / penyimpanan
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Menampilkan pratinjau gambar saat file dipilih
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const file = input.files[0];
+
+            if (file) {
+                readFileAsDataURL(file)
+                    .then(imageDataUrl => {
+                        preview.src = imageDataUrl;
+                        preview.style.display = 'block';
+                    })
+                    .catch(err => {
+                        console.error("Gagal membaca file:", err);
+                        preview.src = "";
+                        preview.style.display = 'none';
+                    });
+            } else {
+                preview.src = "";
+                preview.style.display = 'none';
+            }
+        }
+
+        // Tab switching
+        document.getElementById('videosTab').addEventListener('click', () => switchTab('videos'));
+        document.getElementById('pptsTab').addEventListener('click', () => switchTab('ppts'));
+        document.getElementById('blogTab').addEventListener('click', () => switchTab('blog'));
+        document.getElementById('articlesTab').addEventListener('click', () => switchTab('articles'));
+        document.getElementById('assetsTab').addEventListener('click', () => switchTab('assets'));
+        document.getElementById('analyticsTab').addEventListener('click', () => switchTab('analytics'));
+        document.getElementById('settingsTab').addEventListener('click', () => switchTab('settings'));
+
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-food-primary', 'text-food-primary');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            const tabButton = document.getElementById(tab + 'Tab');
+            const tabSection = document.getElementById(tab + 'Section');
+
+            if(tabButton && tabSection) {
+                tabButton.classList.remove('border-transparent', 'text-gray-500');
+                tabButton.classList.add('border-food-primary', 'text-food-primary');
+                tabSection.classList.remove('hidden');
+            }
+
+            // Load content for the specific tab
+            if (tab === 'videos') renderVideos();
+            else if (tab === 'ppts') renderPpts();
+            else if (tab === 'blog') {
+                populateBlogCategoryFilter();
+                renderBlogPosts();
+            }
+            else if (tab === 'articles') {
+                populateArticleCategoryFilter(); // Ensure category filter is populated when tab is switched
+                renderArticles();
+            } else if (tab === 'assets') renderAssets();
+            else if (tab === 'settings') renderSettings();
+            // Tidak perlu load function khusus untuk analytics karena sudah di-handle iframe
+        }
+
+
+
+        // === ASSET MANAGEMENT FUNCTIONS (REFACTORED) ===
+
+        function initAssetManager() {
+            const dropzone = document.getElementById('assetUploadDropzone');
+            const fileInput = document.getElementById('assetFileInput');
+
+            if (!dropzone || !fileInput) return;
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add('drag-over');
+            });
+
+            dropzone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove('drag-over');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length) {
+                    handleAssetFiles(files);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length) {
+                    handleAssetFiles(e.target.files);
+                }
+            });
+        }
+
+        function handleAssetFiles(files) {
+            const previewContainer = document.getElementById('assetPreviewContainer');
+            const fileInput = document.getElementById('assetFileInput');
+            previewContainer.innerHTML = '';
+
+            const allowedTypes = [
+                'image/png', 'image/jpeg', 'image/svg+xml', 'image/webp',
+                'video/mp4', 'video/webm',
+                'application/pdf',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            ];
+            const maxFileSize = 50 * 1024 * 1024;
+
+            let allFilesValid = true;
+            let filesToProcess = Array.from(files);
+
+            const processNextFile = async (index) => {
+                if (index >= filesToProcess.length) {
+                    if (allFilesValid) {
+                        showNotification(`${filesToProcess.length} asset berhasil diupload!`);
+                        setTimeout(() => { previewContainer.innerHTML = ''; }, 2000);
+                        renderAssets();
+                    }
+                    fileInput.value = '';
+                    return;
+                }
+
+                const file = filesToProcess[index];
+
+                if (!allowedTypes.includes(file.type)) {
+                    showNotification(`Format file tidak didukung: ${file.name}`, true);
+                    allFilesValid = false;
+                    processNextFile(index + 1);
+                    return; 
+                }
+                if (file.size > maxFileSize) {
+                    showNotification(`Ukuran file melebihi 50MB: ${file.name}`, true);
+                    allFilesValid = false;
+                    processNextFile(index + 1);
+                    return; 
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch('api/upload_asset.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        const previewWrapper = document.createElement('div');
+                        previewWrapper.className = 'bg-gray-50 p-2 rounded-lg flex items-center gap-3';
+                        previewWrapper.innerHTML = `<span class="font-medium text-sm text-gray-700 truncate"><i class="fas fa-check text-green-500"></i> ${file.name}</span>`;
+                        previewContainer.appendChild(previewWrapper);
+
+                        saveAssetToStorage(file, result.url);
+                    } else {
+                        showNotification(`Gagal upload ${file.name}: ${result.message}`, true);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showNotification(`Error upload ${file.name}`, true);
+                }
+
+                processNextFile(index + 1);
+            };
+
+            processNextFile(0);
+        }
+
+        function saveAssetToStorage(file, url) {
+            const newAsset = {
+                id: Date.now() + '-' + file.name,
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                url: url
+            };
+            assetStorage.unshift(newAsset);
+            saveDataToServer(DATA_TYPES.ASSETS, assetStorage);
+        }
+
+        function renderAssets() {
+            const assets = assetStorage || [];
+            const listContainer = document.getElementById('assetsList');
+            listContainer.innerHTML = '';
+
+            if (assets.length === 0) {
+                listContainer.innerHTML = `<p class="text-center text-gray-500 py-4">Belum ada asset. Silakan upload asset baru.</p>`;
+                return;
+            }
+
+            assets.forEach(asset => {
+                const item = document.createElement('button');
+                item.className = 'w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all text-left';
+                item.onclick = () => openAssetPreviewModal(asset.id);
+                
+                const fileSize = (asset.size / (1024 * 1024)).toFixed(2) + ' MB';
+                
+                let thumbnailHtml = '';
+                if (asset.type.startsWith('image/')) {
+                    thumbnailHtml = `<img src="${asset.url}" alt="${asset.name}" class="w-10 h-10 object-cover rounded-md bg-gray-200 flex-shrink-0">`;
+                } else if (asset.type.startsWith('video/')) {
+                    thumbnailHtml = `<div class="w-10 h-10 bg-gray-800 rounded-md flex items-center justify-center flex-shrink-0"><i class="fas fa-video text-white"></i></div>`;
+                } else if (asset.type === 'application/pdf') {
+                    thumbnailHtml = `<div class="w-10 h-10 bg-red-100 rounded-md flex items-center justify-center flex-shrink-0"><i class="fas fa-file-pdf text-red-600"></i></div>`;
+                } else {
+                    thumbnailHtml = `<div class="w-10 h-10 bg-orange-100 rounded-md flex items-center justify-center flex-shrink-0"><i class="fas fa-file-powerpoint text-orange-600"></i></div>`;
+                }
+
+                item.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        ${thumbnailHtml}
+                        <div class="overflow-hidden">
+                            <p class="font-medium text-sm text-gray-800 truncate" title="${asset.name}">${asset.name}</p>
+                            <p class="text-xs text-gray-500">${fileSize}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); copyAssetLink('${asset.url}')" class="text-blue-500 hover:text-blue-700 transition-colors p-1" title="Salin Link">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button onclick="event.stopPropagation(); deleteAsset('${asset.id}')" class="text-red-500 hover:text-red-700 transition-colors p-1" title="Hapus Asset">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+                listContainer.appendChild(item);
+            });
+        }
+        
+        function copyAssetLink(assetUrl) {
+            navigator.clipboard.writeText(assetUrl).then(() => {
+                showNotification('Data URL asset disalin ke clipboard.');
+            }).catch(err => {
+                console.error('Gagal menyalin link: ', err);
+                showNotification('Gagal menyalin link.', true);
+            });
+        }
+
+        function deleteAsset(assetId) {
+            if (confirm('Apakah Anda yakin ingin menghapus asset ini?')) {
+                assetStorage = assetStorage.filter(asset => asset.id !== assetId);
+                saveDataToServer(DATA_TYPES.ASSETS, assetStorage);
+                renderAssets();
+                showNotification('Asset berhasil dihapus.');
+            }
+        }
+
+        function openAssetPreviewModal(assetId) {
+            const asset = assetStorage.find(a => a.id === assetId);
+            if (!asset) return;
+
+            const modal = document.getElementById('assetPreviewModal');
+            const title = document.getElementById('assetPreviewTitle');
+            const content = document.getElementById('assetPreviewContent');
+
+            title.textContent = asset.name;
+            content.innerHTML = '';
+
+            if (asset.type.startsWith('image/')) {
+                content.innerHTML = `<img src="${asset.url}" alt="${asset.name}" class="max-w-full max-h-full object-contain rounded-lg">`;
+            } else if (asset.type.startsWith('video/')) {
+                content.innerHTML = `<video src="${asset.url}" controls class="max-w-full max-h-full object-contain rounded-lg" autoplay></video>`;
+            } else {
+                content.innerHTML = `
+                    <div class="text-center">
+                        <i class="fas fa-file-alt text-6xl text-gray-400 mb-4"></i>
+                        <p class="text-lg text-gray-700 mb-4">Preview tidak tersedia untuk tipe file ini.</p>
+                        <a href="${asset.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 bg-food-primary text-white font-bold rounded-lg hover:bg-food-dark transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> Buka di Tab Baru
+                        </a>
+                    </div>
+                `;
+            }
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAssetPreviewModal() {
+            document.getElementById('assetPreviewModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // === WEBSITE SETTINGS FUNCTIONS (REFACTORED) ===
+
+        function initSettings() {
+            const form = document.getElementById('settingsForm');
+            if (!form) return;
+
+            // Handle explicit form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveSettings(true); // Force save on submit
+            });
+
+            // Add auto-save listeners to all inputs
+            const inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                const eventType = (input.type === 'checkbox' || input.type === 'radio' || input.tagName === 'SELECT') ? 'change' : 'input';
+                input.addEventListener(eventType, () => debounceSave('settings', saveSettings));
+            });
+            
+            const logoUpload = document.getElementById('logoUpload');
+            logoUpload.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    readFileAsDataURL(file).then(dataUrl => {
+                        document.getElementById('logoPreview').src = dataUrl;
+                        debounceSave('settings', saveSettings);
+                    });
+                }
+            });
+        }
+
+        function renderSettings() {
+            const settings = settingsStorage || {};
+            
+            document.getElementById('websiteName').value = settings.name || '';
+            document.getElementById('websiteDescription').value = settings.description || '';
+            document.getElementById('logoPreview').src = settings.logo || 'https://placehold.co/100x100/f0f0f0/cccccc?text=Logo';
+            document.getElementById('seoTitle').value = settings.seoTitle || '';
+            document.getElementById('seoMetaDescription').value = settings.seoMetaDescription || '';
+
+            const notification = settings.notification || {};
+            document.getElementById('notificationEnabled').checked = notification.enabled || false;
+            document.getElementById('notificationType').value = notification.type || 'update';
+            document.getElementById('notificationTitle').value = notification.title || '';
+            document.getElementById('notificationMessage').value = notification.message || '';
+        }
+
+        async function saveSettings(force = false) {
+            if (force) {
+                clearTimeout(autoSaveTimeouts['settings']);
+            }
+            showNotification('Menyimpan pengaturan...', false);
+
+            const logoFile = document.getElementById('logoUpload').files[0];
+            let logoDataUrl = document.getElementById('logoPreview').src;
+
+            // If a new logo file is selected, read it as Data URL
+            if (logoFile) {
+                try {
+                    logoDataUrl = await readFileAsDataURL(logoFile);
+                } catch (error) {
+                    console.error('Error reading logo file:', error);
+                    showNotification('Gagal membaca file logo.', true);
+                    return; // Stop saving if file read fails
+                }
+            }
+            
+            const settings = {
+                name: document.getElementById('websiteName').value,
+                description: document.getElementById('websiteDescription').value,
+                logo: logoDataUrl,
+                seoTitle: document.getElementById('seoTitle').value,
+                seoMetaDescription: document.getElementById('seoMetaDescription').value,
+                notification: {
+                    enabled: document.getElementById('notificationEnabled').checked,
+                    type: document.getElementById('notificationType').value,
+                    title: document.getElementById('notificationTitle').value,
+                    message: document.getElementById('notificationMessage').value,
+                    id: settingsStorage.notification?.id || Date.now() // Preserve old ID or create new one
+                }
+            };
+
+            // Basic validation
+            if (!settings.name || !settings.seoTitle || !settings.seoMetaDescription) {
+                showNotification('Nama Website, Judul SEO, dan Meta Deskripsi tidak boleh kosong!', true);
+                return;
+            }
+
+            settingsStorage = settings; // Update local state
+            await saveDataToServer(DATA_TYPES.SETTINGS, settingsStorage);
+        }
+
+        // === VIDEO FUNCTIONS (REFACTORED) ===
+
+        function renderVideos() {
+            const videos = videoStorage || [];
+            const videosList = document.getElementById('videosList');
+            videosList.innerHTML = '';
+
+            if (videos.length === 0) {
+                videosList.innerHTML = `<p class="text-center text-gray-500 py-4">Belum ada video. Silakan tambahkan video baru.</p>`;
+                return;
+            }
+
+            videos.forEach(video => {
+                const videoItem = `
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <img src="https://img.youtube.com/vi/${video.id}/default.jpg" alt="${video.title}" class="w-16 h-12 rounded object-cover">
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${video.title}</h4>
+                                <p class="text-sm text-gray-600">${video.category}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openVideoModal('${video.id}')" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteVideo('${video.id}')" class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                videosList.innerHTML += videoItem;
+            });
+        }
+
+        function openVideoModal(videoId = null) {
+            editingVideoId = videoId;
+            const modal = document.getElementById('videoModal');
+            const form = document.getElementById('videoForm');
+            const title = document.getElementById('videoModalTitle');
+
+            if (videoId) {
+                title.textContent = 'Edit Video';
+                const video = videoStorage.find(v => v.id === videoId);
+                if (video) {
+                    document.getElementById('videoId').value = video.id;
+                    document.getElementById('videoTitle').value = video.title;
+                    document.getElementById('videoDesc').value = video.desc;
+                    document.getElementById('videoCategory').value = video.category;
+                }
+            } else {
+                title.textContent = 'Tambah Video Baru';
+                form.reset();
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('videoModal').classList.add('hidden');
+            editingVideoId = null;
+        }
+
+        document.getElementById('videoForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const videoData = {
+                id: document.getElementById('videoId').value,
+                title: document.getElementById('videoTitle').value,
+                desc: document.getElementById('videoDesc').value,
+                category: document.getElementById('videoCategory').value
+            };
+
+            if (editingVideoId) {
+                const index = videoStorage.findIndex(v => v.id === editingVideoId);
+                if (index !== -1) {
+                    videoStorage[index] = videoData;
+                }
+            } else {
+                videoStorage.push(videoData);
+            }
+
+            saveDataToServer(DATA_TYPES.VIDEOS, videoStorage);
+            closeVideoModal();
+            renderVideos();
+            showNotification('Video berhasil disimpan!');
+        });
+
+        function deleteVideo(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus video ini?')) {
+                videoStorage = videoStorage.filter(video => video.id !== id);
+                saveDataToServer(DATA_TYPES.VIDEOS, videoStorage);
+                renderVideos();
+            }
+        }
+
+        // === PPT FUNCTIONS (REFACTORED) ===
+
+        function renderPpts() {
+            const ppts = pptStorage || [];
+            const pptsList = document.getElementById('pptsList');
+            pptsList.innerHTML = '';
+
+            if (ppts.length === 0) {
+                pptsList.innerHTML = `<p class="text-center text-gray-500 py-4">Belum ada PPT. Silakan tambahkan PPT baru.</p>`;
+                return;
+            }
+
+            ppts.forEach(ppt => {
+                const pptItem = `
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-file-powerpoint text-3xl text-food-primary"></i>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${ppt.title}</h4>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openPptModal('${ppt.id}')" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deletePpt('${ppt.id}')" class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                pptsList.innerHTML += pptItem;
+            });
+        }
+
+        function openPptModal(pptId = null) {
+            editingPptId = pptId;
+            const modal = document.getElementById('pptModal');
+            const form = document.getElementById('pptForm');
+            const title = document.getElementById('pptModalTitle');
+
+            if (pptId) {
+                title.textContent = 'Edit PPT';
+                const ppt = pptStorage.find(p => p.id === pptId);
+                if (ppt) {
+                    document.getElementById('pptTitle').value = ppt.title;
+                    document.getElementById('pptViewUrl').value = ppt.viewUrl;
+                    document.getElementById('pptDownloadUrl').value = ppt.downloadUrl;
+                }
+            } else {
+                title.textContent = 'Tambah PPT Baru';
+                form.reset();
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closePptModal() {
+            document.getElementById('pptModal').classList.add('hidden');
+            editingPptId = null;
+        }
+        
+        document.getElementById('pptForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const pptData = {
+                id: editingPptId || Date.now().toString(),
+                title: document.getElementById('pptTitle').value,
+                viewUrl: document.getElementById('pptViewUrl').value,
+                downloadUrl: document.getElementById('pptDownloadUrl').value
+            };
+
+            if (editingPptId) {
+                const index = pptStorage.findIndex(p => p.id === editingPptId);
+                if (index !== -1) {
+                    pptStorage[index] = pptData;
+                }
+            } else {
+                pptStorage.push(pptData);
+            }
+
+            saveDataToServer(DATA_TYPES.PPTS, pptStorage);
+            closePptModal();
+            renderPpts();
+            showNotification('PPT berhasil disimpan!');
+        });
+
+        function deletePpt(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus PPT ini?')) {
+                pptStorage = pptStorage.filter(ppt => ppt.id !== id);
+                saveDataToServer(DATA_TYPES.PPTS, pptStorage);
+                renderPpts();
+            }
+        }
+
+        // === BLOG FUNCTIONS (REFACTORED) ===
+
+        function renderBlogPosts() {
+            let posts = blogStorage || [];
+            const list = document.getElementById('blogPostsList');
+
+            const searchQuery = document.getElementById('blogSearchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('blogCategoryFilter').value;
+            const dateFrom = document.getElementById('blogDateFrom').value;
+            const dateTo = document.getElementById('blogDateTo').value;
+
+            const filteredPosts = posts.filter(post => {
+                const postDate = new Date(post.date);
+                const fromDate = dateFrom ? new Date(dateFrom) : null;
+                const toDate = dateTo ? new Date(dateTo) : null;
+
+                const matchesSearch = post.title.toLowerCase().includes(searchQuery);
+                const matchesCategory = !categoryFilter || post.category === categoryFilter;
+                const matchesDate = (!fromDate || postDate >= fromDate) && (!toDate || postDate <= toDate);
+
+                return matchesSearch && matchesCategory && matchesDate;
+            });
+
+            list.innerHTML = '';
+
+            if (filteredPosts.length === 0) {
+                list.innerHTML = `<p class="text-center text-gray-500 py-4">Postingan blog tidak ditemukan. Coba ubah kriteria filter Anda atau <a href="#" onclick="resetFilters('blog'); return false;" class="text-food-primary underline">reset filter</a>.</p>`;
+                return;
+            }
+
+            filteredPosts.forEach(post => {
+                const item = `
+                    <div class="flex items-start sm:items-center justify-between p-4 border border-gray-200 rounded-lg flex-col sm:flex-row gap-3">
+                        <div class="flex items-center gap-4">
+                            <img src="${post.image}" alt="${post.title}" class="w-16 h-12 rounded object-cover bg-gray-100">
+                            <div>
+                                <span class="text-xs font-semibold py-0.5 px-2 rounded-full ${post.status === 'Publish' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                                    ${post.status || 'Publish'}
+                                </span>
+                                <h4 class="font-semibold text-gray-900">${post.title}</h4>
+                                <p class="text-sm text-gray-600">Kategori: ${post.category} | Penulis: ${post.author} | Tanggal: ${new Date(post.date).toLocaleDateString('id-ID')}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="blog-detail.html?id=${post.id}" target="_blank" class="text-gray-500 hover:text-gray-800" title="Lihat Artikel">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button onclick="openBlogModal('${post.id}')" class="text-blue-600 hover:text-blue-800" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteBlogPost('${post.id}')" class="text-red-600 hover:text-red-800" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += item;
+            });
+        }
+
+        function openBlogModal(postId = null) {
+            editingPostId = postId;
+            const modal = document.getElementById('blogModal');
+            const form = document.getElementById('blogForm');
+            const title = document.getElementById('blogModalTitle');
+
+            form.reset(); 
+
+            const blogCategorySelect = document.getElementById('blogCategory');
+            blogCategorySelect.innerHTML = '<option value="">Pilih Kategori</option>'; 
+            PREDEFINED_CATEGORIES.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                blogCategorySelect.appendChild(option);
+            });
+
+            document.getElementById('blogTitle').addEventListener('input', () => checkSeo('blog'));
+            document.getElementById('blogExcerpt').addEventListener('input', () => checkSeo('blog'));
+            document.getElementById('blogKeyword').addEventListener('input', () => checkSeo('blog'));
+            tinymce.get('blogContent').on('input', () => checkSeo('blog'));
+
+            if (postId) {
+                title.textContent = 'Edit Artikel';
+                const post = blogStorage.find(p => p.id.toString() === postId.toString());
+                if (post) {
+                    document.getElementById('blogTitle').value = post.title;
+                    const preview = document.getElementById('blogImagePreview');
+                    if (post.image) {
+                        preview.src = post.image;
+                        preview.style.display = 'block';
+                        document.getElementById('blogImageUrl').value = post.image;
+                    }
+                    document.getElementById('blogImageUrl').value = post.image; 
+                    document.getElementById('blogCategory').value = post.category;
+                    document.getElementById('blogAuthor').value = post.author;
+                    document.getElementById('blogExcerpt').value = post.excerpt;
+                    document.getElementById('blogStatus').value = post.status || 'Publish';
+                    document.getElementById('blogPublishDate').value = post.publishDate ? post.publishDate.slice(0, 16) : '';
+
+                    tinymce.get('blogContent').setContent(post.content || '');
+                    checkSeo('blog'); 
+                }
+            } else {
+                title.textContent = 'Tambah Artikel Baru';
+                if(tinymce.get('blogContent')) {
+                    tinymce.get('blogContent').setContent('');
+                    document.getElementById('blogStatus').value = 'Draft';
+                    document.getElementById('blogPublishDate').value = '';
+                    checkSeo('blog');
+                }
+            }
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBlogModal() {
+            document.getElementById('blogModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            editingPostId = null;
+            document.getElementById('blogImagePreview').style.display = 'none';
+        }
+
+        document.getElementById('blogForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const imageInput = document.getElementById('blogImage');
+            const file = imageInput.files[0];
+            const selectedAssetUrl = document.getElementById('blogImageUrl').value;
+
+            if (file && !validateImage(file, 'blogImage')) {
+                return;
+            }
+
+            const processForm = (imageData) => {
+                const postData = {
+                    id: editingPostId || Date.now(),
+                    title: document.getElementById('blogTitle').value,
+                    image: imageData,
+                    category: document.getElementById('blogCategory').value,
+                    author: document.getElementById('blogAuthor').value,
+                    excerpt: document.getElementById('blogExcerpt').value,
+                    content: tinymce.get('blogContent').getContent(),
+                    date: new Date().toISOString().split('T')[0],
+                    status: document.getElementById('blogStatus').value,
+                    publishDate: document.getElementById('blogPublishDate').value || null
+                };
+
+                if (editingPostId) {
+                    const index = blogStorage.findIndex(p => p.id.toString() === editingPostId.toString());
+                    if (index !== -1) {
+                        postData.id = blogStorage[index].id;
+                        postData.date = blogStorage[index].date;
+                        blogStorage[index] = postData;
+                    }
+                } else {
+                    blogStorage.unshift(postData);
+                }
+
+                saveDataToServer(DATA_TYPES.BLOGS, blogStorage);
+                closeBlogModal();
+                renderBlogPosts();
+                showNotification('Artikel berhasil disimpan!');
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processForm(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else if (selectedAssetUrl) {
+                processForm(selectedAssetUrl);
+            } else {
+                const existingImage = editingPostId ? blogStorage.find(p => p.id.toString() === editingPostId.toString())?.image : null;
+                processForm(existingImage || 'https://placehold.co/700x400/cccccc/ffffff?text=No+Image');
+            }
+            document.getElementById('blogImageUrl').value = '';
+        });
+
+        function deleteBlogPost(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
+                blogStorage = blogStorage.filter(post => post.id.toString() !== id.toString());
+                saveDataToServer(DATA_TYPES.BLOGS, blogStorage);
+                renderBlogPosts();
+                showNotification('Artikel berhasil dihapus.');
+            }
+        }
+
+        // === ARTICLE FUNCTIONS (REFACTORED) ===
+        function renderArticles() {
+            let articles = articleStorage || [];
+            const list = document.getElementById('articlesList');
+
+            const searchQuery = document.getElementById('articleSearchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('articleCategoryFilter').value;
+            const dateFrom = document.getElementById('articleDateFrom').value;
+            const dateTo = document.getElementById('articleDateTo').value;
+
+            const filteredArticles = articles.filter(article => {
+                const articleDate = new Date(article.date);
+                const fromDate = dateFrom ? new Date(dateFrom) : null;
+                const toDate = dateTo ? new Date(dateTo) : null;
+
+                const matchesSearch = article.title.toLowerCase().includes(searchQuery);
+                const matchesCategory = !categoryFilter || article.category === categoryFilter;
+                const matchesDate = (!fromDate || articleDate >= fromDate) && (!toDate || articleDate <= toDate);
+
+                return matchesSearch && matchesCategory && matchesDate;
+            });
+
+            list.innerHTML = '';
+
+            if (filteredArticles.length === 0) {
+                list.innerHTML = `<p class="text-center text-gray-500 py-4">Artikel tidak ditemukan. Coba ubah kriteria filter Anda atau <a href="#" onclick="resetFilters('article'); return false;" class="text-food-primary underline">reset filter</a>.</p>`;
+                return;
+            }
+
+            filteredArticles.forEach(article => {
+                const item = `
+                    <div class="flex items-start sm:items-center justify-between p-4 border border-gray-200 rounded-lg flex-col sm:flex-row gap-3">
+                        <div class="flex items-center gap-4">
+                            <img src="${article.image}" alt="${article.title}" class="w-16 h-12 rounded object-cover bg-gray-100">
+                            <div>
+                                <span class="text-xs font-semibold py-0.5 px-2 rounded-full ${article.status === 'Publish' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                                    ${article.status || 'Publish'}
+                                </span>
+                                <h4 class="font-semibold text-gray-900">${article.title}</h4>
+                                <p class="text-sm text-gray-600">Kategori: ${article.category} | Penulis: ${article.author} | Tanggal: ${new Date(article.date).toLocaleDateString('id-ID')}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="detail-artikel.html?id=${article.id}" target="_blank" class="text-gray-500 hover:text-gray-800" title="Lihat Artikel">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button onclick="openArticleModal('${article.id}')" class="text-blue-600 hover:text-blue-800" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteArticle('${article.id}')" class="text-red-600 hover:text-red-800" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += item;
+            });
+        }
+        
+        function openArticleModal(articleId = null) {
+            editingArticleId = articleId;
+            const modal = document.getElementById('articleModal');
+            const form = document.getElementById('articleForm');
+            const title = document.getElementById('articleModalTitle');
+
+            form.reset();
+
+            const categorySelect = document.getElementById('articleCategory');
+            categorySelect.innerHTML = '<option value="">Pilih Kategori</option>';
+            PREDEFINED_CATEGORIES.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            });
+
+            document.getElementById('articleTitle').addEventListener('input', () => checkSeo('article'));
+            document.getElementById('articleExcerpt').addEventListener('input', () => checkSeo('article'));
+            document.getElementById('articleKeyword').addEventListener('input', () => checkSeo('article'));
+            tinymce.get('articleContent').on('input', () => checkSeo('article'));
+
+
+            if (articleId) {
+                title.textContent = 'Edit Artikel';
+                const article = articleStorage.find(a => a.id.toString() === articleId.toString());
+                if (article) {
+                    document.getElementById('articleTitle').value = article.title;
+                    const preview = document.getElementById('articleImagePreview');
+                     if (article.image) {
+                        preview.src = article.image;
+                        preview.style.display = 'block';
+                        document.getElementById('articleImageUrl').value = article.image;
+                    }
+                    document.getElementById('articleCategory').value = article.category;
+                    document.getElementById('articleAuthor').value = article.author;
+                    document.getElementById('articleExcerpt').value = article.excerpt;
+                    document.getElementById('articleStatus').value = article.status || 'Publish';
+                    document.getElementById('articlePublishDate').value = article.publishDate ? article.publishDate.slice(0, 16) : '';
+                    document.getElementById('articleImageUrl').value = article.image;
+                    checkSeo('article');
+                    tinymce.get('articleContent').setContent(article.content || '');
+                }
+            } else {
+                title.textContent = 'Tambah Artikel Baru';
+                if(tinymce.get('articleContent')) {
+                    tinymce.get('articleContent').setContent('');
+                    document.getElementById('articleStatus').value = 'Draft';
+                    document.getElementById('articlePublishDate').value = '';
+                    checkSeo('article');
+                }
+            }
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticleModal() {
+            document.getElementById('articleModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            editingArticleId = null;
+            document.getElementById('articleImagePreview').style.display = 'none';
+        }
+
+        document.getElementById('articleForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const imageInput = document.getElementById('articleImage');
+            const file = imageInput.files[0];
+            const selectedAssetUrl = document.getElementById('articleImageUrl').value;
+
+            if (file && !validateImage(file, 'articleImage')) {
+                return;
+            }
+
+            const processAndSave = (imageData) => {
+                const articleData = {
+                    id: editingArticleId || Date.now(),
+                    title: document.getElementById('articleTitle').value,
+                    image: imageData,
+                    category: document.getElementById('articleCategory').value,
+                    author: document.getElementById('articleAuthor').value,
+                    excerpt: document.getElementById('articleExcerpt').value,
+                    content: tinymce.get('articleContent').getContent(),
+                    date: new Date().toISOString().split('T')[0],
+                    status: document.getElementById('articleStatus').value,
+                    publishDate: document.getElementById('articlePublishDate').value || null
+                };
+
+                if (editingArticleId) {
+                    const index = articleStorage.findIndex(a => a.id.toString() === editingArticleId.toString());
+                    if (index !== -1) {
+                        articleData.id = articleStorage[index].id;
+                        articleData.date = articleStorage[index].date;
+                        articleStorage[index] = articleData;
+                    }
+                } else {
+                    articleStorage.unshift(articleData);
+                }
+
+                saveDataToServer(DATA_TYPES.ARTICLES, articleStorage);
+                closeArticleModal();
+                renderArticles();
+                showNotification('Artikel berhasil disimpan!');
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processAndSave(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else if (selectedAssetUrl) {
+                processAndSave(selectedAssetUrl);
+            } else {
+                const existingImage = editingArticleId ? articleStorage.find(a => a.id.toString() === editingArticleId.toString())?.image : null;
+                processAndSave(existingImage || 'https://placehold.co/700x400/cccccc/ffffff?text=No+Image');
+            }
+            document.getElementById('articleImageUrl').value = '';
+        });
+
+        function deleteArticle(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
+                articleStorage = articleStorage.filter(article => article.id.toString() !== id.toString());
+                saveDataToServer(DATA_TYPES.ARTICLES, articleStorage);
+                renderArticles();
+                showNotification('Artikel berhasil dihapus.');
+            }
+        }
+
+
+
+        // === SEO CHECKER FUNCTION ===
+        function checkSeo(type) {
+            const title = document.getElementById(`${type}Title`).value;
+            const excerpt = document.getElementById(`${type}Excerpt`).value;
+            const keyword = document.getElementById(`${type}Keyword`).value.toLowerCase();
+            const content = tinymce.get(`${type}Content`).getContent({ format: 'text' }).toLowerCase();
+
+            // Title Length
+            const titleLengthEl = document.getElementById(`${type}TitleLength`);
+            const titleStatusEl = document.getElementById(`${type}TitleStatus`);
+            titleLengthEl.textContent = title.length;
+            if (title.length < 30) {
+                titleStatusEl.textContent = 'Terlalu pendek';
+                titleStatusEl.className = 'text-red-600';
+            } else if (title.length > 65) {
+                titleStatusEl.textContent = 'Terlalu panjang';
+                titleStatusEl.className = 'text-red-600';
+            } else {
+                titleStatusEl.textContent = 'Baik';
+                titleStatusEl.className = 'text-green-600';
+            }
+
+            // Excerpt Length
+            const excerptLengthEl = document.getElementById(`${type}ExcerptLength`);
+            const excerptStatusEl = document.getElementById(`${type}ExcerptStatus`);
+            excerptLengthEl.textContent = excerpt.length;
+            if (excerpt.length < 120) {
+                excerptStatusEl.textContent = 'Cukup';
+                excerptStatusEl.className = 'text-yellow-600';
+            } else if (excerpt.length > 160) {
+                excerptStatusEl.textContent = 'Terlalu panjang';
+                excerptStatusEl.className = 'text-red-600';
+            } else {
+                excerptStatusEl.textContent = 'Baik';
+                excerptStatusEl.className = 'text-green-600';
+            }
+
+            // Keyword Check
+            const keywordTitleEl = document.getElementById(`${type}KeywordTitle`);
+            const keywordContentEl = document.getElementById(`${type}KeywordContent`);
+            if (keyword) {
+                if (title.toLowerCase().includes(keyword)) {
+                    keywordTitleEl.textContent = 'Ditemukan';
+                    keywordTitleEl.className = 'text-green-600 font-semibold';
+                } else {
+                    keywordTitleEl.textContent = 'Tidak ditemukan';
+                    keywordTitleEl.className = 'text-red-600 font-semibold';
+                }
+                if (content.includes(keyword)) {
+                    keywordContentEl.textContent = 'Ditemukan';
+                    keywordContentEl.className = 'text-green-600 font-semibold';
+                } else {
+                    keywordContentEl.textContent = 'Tidak ditemukan';
+                    keywordContentEl.className = 'text-red-600 font-semibold';
+                }
+            } else {
+                keywordTitleEl.textContent = 'Masukkan keyword';
+                keywordContentEl.textContent = 'Masukkan keyword';
+            }
+        }
+
+        // === ASSET PICKER MODAL FUNCTIONS ===
+        let assetPickerTargetId = null;
+        let assetPickerUrlInputId = null;
+
+        function openAssetPicker(targetPreviewId, targetUrlInputId) {
+            assetPickerTargetId = targetPreviewId;
+            assetPickerUrlInputId = targetUrlInputId;
+            const modal = document.getElementById('assetPickerModal');
+            const listContainer = document.getElementById('assetPickerList');
+            const assets = assetStorage || [];
+
+            listContainer.innerHTML = '';
+
+            if (assets.length === 0) {
+                listContainer.innerHTML = `<p class="text-center text-gray-500 col-span-full">Tidak ada asset yang tersedia.</p>`;
+            } else {
+                assets.forEach(asset => {
+                    // Hanya tampilkan gambar
+                    if (asset.type.startsWith('image/')) {
+                        const item = document.createElement('div');
+                        item.className = 'cursor-pointer border-2 border-transparent hover:border-food-primary rounded-lg p-1 transition-all';
+                        item.onclick = () => selectAsset(asset.url, asset.url); // Both are the same Data URL now
+                        // Ganti ikon dengan gambar asli untuk pratinjau
+                        item.innerHTML = `
+                            <div class="aspect-square bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
+                                <img src="${asset.url}" alt="${asset.name}" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-xs text-center truncate mt-1" title="${asset.name}">${asset.name}</p>
+                        `;
+                        listContainer.appendChild(item);
+                    }
+                });
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeAssetPicker() {
+            document.getElementById('assetPickerModal').classList.add('hidden');
+            assetPickerTargetId = null;
+            assetPickerUrlInputId = null;
+        }
+
+        function selectAsset(assetUrl, assetPath) {
+            const urlInput = document.getElementById(assetPickerUrlInputId);
+            if (assetPickerTargetId) {
+                const preview = document.getElementById(assetPickerTargetId);
+                preview.src = assetUrl; // Gunakan Data URL
+                preview.style.display = 'block';
+            }
+            if (urlInput) urlInput.value = assetUrl; // Simpan URL ke input tersembunyi yang sesuai
+
+            closeAssetPicker();
+        }
+
+        async function init() {
+            // Fetch all data from server on initial load
+            [videoStorage, pptStorage, blogStorage, articleStorage, assetStorage, settingsStorage] = await Promise.all([
+                fetchDataFromServer(DATA_TYPES.VIDEOS),
+                fetchDataFromServer(DATA_TYPES.PPTS),
+                fetchDataFromServer(DATA_TYPES.BLOGS),
+                fetchDataFromServer(DATA_TYPES.ARTICLES),
+                fetchDataFromServer(DATA_TYPES.ASSETS),
+                fetchDataFromServer(DATA_TYPES.SETTINGS)
+            ]);
+
+            // Initial render
+            switchTab(currentTab);
+            initAssetManager();
+            initSettings();
+            initTinyMCE();
+            
+            // Add event listeners for filters
+            document.getElementById('blogSearchInput').addEventListener('input', renderBlogPosts);
+            document.getElementById('blogCategoryFilter').addEventListener('change', renderBlogPosts);
+            document.getElementById('blogDateFrom').addEventListener('input', renderBlogPosts);
+            document.getElementById('blogDateTo').addEventListener('input', renderBlogPosts);
+            document.getElementById('resetBlogFilters').addEventListener('click', () => resetFilters('blog'));
+
+            document.getElementById('articleSearchInput').addEventListener('input', renderArticles);
+            document.getElementById('articleCategoryFilter').addEventListener('change', renderArticles);
+            document.getElementById('articleDateFrom').addEventListener('input', renderArticles);
+            document.getElementById('articleDateTo').addEventListener('input', renderArticles);
+            document.getElementById('resetArticleFilters').addEventListener('click', () => resetFilters('article'));
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+
+        function deleteAsset(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus asset ini?')) {
+                let assets = JSON.parse(localStorage.getItem(ASSET_STORAGE_KEY) || '[]');
+                assets = assets.filter(asset => asset.id !== id);
+                localStorage.setItem(ASSET_STORAGE_KEY, JSON.stringify(assets));
+                saveDataToServer('asset', assets);
+                loadAssets(); // Refresh the list
+                showNotification('Asset berhasil dihapus.');
+            }
+        }
+
+        // Edit functions
+        function editVideo(id) {
+            openVideoModal(id);
+        }
+
+        function editPpt(id) {
+            openPptModal(id);
+        }
+
+        function editBlogPost(id) {
+            openBlogModal(id);
+        }
+
+        function editArticle(id) {
+            openArticleModal(id);
+        }
+
+        // Helper function to auto-format Google Drive URL
+        function handlePptUrlFormat(e) {
+            const input = e.target;
+            // Use a timeout to let the paste action complete
+            setTimeout(() => {
+                const url = input.value;
+                // Check if it's a view/edit URL and not already an export URL
+                if (url.includes('docs.google.com/presentation/d/') && !url.endsWith('/export/pptx')) {
+                    const match = url.match(/presentation\/d\/([a-zA-Z0-9_-]+)/);
+                    if (match && match[1]) {
+                        input.value = `https://docs.google.com/presentation/d/${match[1]}/export/pptx`;
+                    }
+                }
+            }, 100);
+        }
+
+        // Reset filters function
+        function resetFilters(type) {
+            document.getElementById(`${type}SearchInput`).value = '';
+            document.getElementById(`${type}CategoryFilter`).value = '';
+            document.getElementById(`${type}DateFrom`).value = '';
+            document.getElementById(`${type}DateTo`).value = '';
+
+            if (type === 'blog') {
+                loadBlogPosts();
+            } else if (type === 'article') {
+                loadArticles();
+            }
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadDefaults();
+
+            // Initialize TinyMCE
+            tinymce.init({
+                selector: '#blogContent,#articleContent',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                height: 400,
+                menubar: false,
+                content_style: 'body { font-family:Inter,sans-serif; font-size:14px }',
+                images_upload_url: 'postAcceptor.php', // Placeholder for image upload handler
+            });
+
+            // Initialize asset manager
+            initAssetManager();
+
+            // Populate article categories on initial load
+            populateArticleCategoryFilter();
+
+            // Initialize Blog Filters
+            document.getElementById('blogSearchInput').addEventListener('input', loadBlogPosts);
+            document.getElementById('blogCategoryFilter').addEventListener('change', loadBlogPosts);
+            document.getElementById('blogDateFrom').addEventListener('input', loadBlogPosts);
+            document.getElementById('blogDateTo').addEventListener('input', loadBlogPosts);
+            document.getElementById('resetBlogFilters').addEventListener('click', () => resetFilters('blog'));
+
+            // Initialize Article Filters
+            document.getElementById('articleSearchInput').addEventListener('input', loadArticles);
+            document.getElementById('articleCategoryFilter').addEventListener('change', loadArticles);
+            document.getElementById('articleDateFrom').addEventListener('input', loadArticles);
+            document.getElementById('articleDateTo').addEventListener('input', loadArticles);
+            document.getElementById('resetArticleFilters').addEventListener('click', () => resetFilters('article'));
+
+            // Initialize settings manager
+            initSettings();
+
+            // Initial tab load
+            switchTab('videos');
+        });
+
+        // Image preview function is now a generic utility function at the top
+        // function previewImage(input, previewId) { ... }
+
+        // Validate image file
+        function validateImage(file, inputId) {
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+            const maxSize = 500 * 1024 * 1024; // 500MB
+
+            if (!allowedTypes.includes(file.type)) {
+                showNotification('File harus berupa gambar (JPG, JPEG, PNG, WEBP)', true);
+                document.getElementById(inputId).value = ''; // Reset input
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                showNotification('Ukuran file maksimal 500MB', true);
+                document.getElementById(inputId).value = ''; // Reset input
+                return false;
+            }
+
+            return true;
+        }
+
+        // Add a helper class for form inputs
+        const style = document.createElement('style');
+        style.innerHTML = `.input-field { border-radius: 0.5rem; border: 1px solid #D1D5DB; padding: 0.5rem 0.75rem; } .input-field:focus { outline: 2px solid transparent; outline-offset: 2px; --tw-ring-color: #FE0000; box-shadow: 0 0 0 2px var(--tw-ring-color); }`;
+        // Styles for the toggle switch
+        style.innerHTML += `
+            .toggle-checkbox:checked { right: 0; border-color: #FE0000; }
+            .toggle-checkbox:checked + .toggle-label { background-color: #FE0000; }
+        `;
+        document.head.appendChild(style);
+
+    </script>
+</body>
+</html>

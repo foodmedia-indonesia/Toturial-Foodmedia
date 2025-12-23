@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675"
+    preserveAspectRatio="xMidYMid slice">
+    <defs>
+        <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#FE0000" />
+            <stop offset="100%" stop-color="#DC0000" />
+        </linearGradient>
+    </defs>
+    <rect width="1200" height="675" fill="url(#g)" />
+    <g fill="#fff" font-family="'Plus Jakarta Sans', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial"
+        text-anchor="middle">
+        <text x="600" y="330" font-size="44" font-weight="800" opacity="0.95">foodmedia</text>
+        <text x="600" y="372" font-size="20" opacity="0.8">image placeholder</text>
+    </g>
+</svg>

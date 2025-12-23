@@ -1,0 +1,43 @@
+<script>
+// Function to load default Articles into localStorage
+function loadDefaultArticles() {
+    if (!confirm('Apakah Anda yakin ingin memuat ulang artikel default? Ini akan menimpa daftar artikel yang ada saat ini.')) {
+        return;
+    }
+    const defaultArticles = [
+        {
+            id: 1,
+            title: 'Panduan Lengkap Menggunakan Aplikasi foodmedia',
+            category: 'Panduan',
+            image: 'https://placehold.co/700x400/10B981/FFFFFF?text=Article+1',
+            excerpt: 'Pelajari cara menggunakan aplikasi foodmedia dari awal hingga akhir. Dari registrasi hingga melakukan pesanan pertama Anda.',
+            author: 'Tim Support',
+            date: '2024-05-15',
+            content: `<p>Selamat datang di panduan lengkap aplikasi foodmedia! Artikel ini akan memandu Anda melalui setiap fitur yang tersedia di aplikasi kami.</p><h3>1. Registrasi Akun</h3><p>Pertama, unduh aplikasi foodmedia dari Google Play Store atau App Store. Buka aplikasi dan pilih "Daftar" untuk membuat akun baru.</p><h3>2. Verifikasi Akun</h3><p>Setelah registrasi, verifikasi email atau nomor telepon Anda untuk mengaktifkan akun.</p><h3>3. Melakukan Pesanan</h3><p>Cari restoran favorit, pilih menu, dan lakukan checkout. Pilih metode pembayaran dan tunggu driver mengantar pesanan Anda.</p>`
+        },
+        {
+            id: 2,
+            title: 'Tips Hemat Saat Pesan Makan Online',
+            category: 'Tips',
+            image: 'https://placehold.co/700x400/F59E0B/FFFFFF?text=Article+2',
+            excerpt: 'Ingin pesan makan online tapi tetap hemat? Simak tips-tips berikut untuk mendapatkan promo dan diskon terbaik.',
+            author: 'Editor FoodMedia',
+            date: '2024-05-18',
+            content: `<p>Pesan makan online bisa jadi mahal jika tidak bijak. Berikut tips untuk tetap hemat:</p><ol><li><strong>Manfaatkan Promo</strong>: Selalu cek bagian promo di aplikasi untuk diskon dan voucher.</li><li><strong>Pilih Waktu Tepat</strong>: Pesan di luar jam sibuk untuk menghindari biaya tambahan.</li><li><strong>Gabung Program Loyalty</strong>: Dapatkan poin dari setiap pesanan untuk ditukar diskon.</li><li><strong>Bandrol dengan Teman</strong>: Bagikan biaya delivery dengan teman untuk lebih hemat.</li></ol>`
+        },
+        {
+            id: 3,
+            title: 'Mengenal Layanan foodmedia: Pesan Antar, Pick Up, dan Reservasi',
+            category: 'Informasi',
+            image: 'https://placehold.co/700x400/8B5CF6/FFFFFF?text=Article+3',
+            excerpt: 'foodmedia menawarkan tiga layanan utama: Pesan Antar, Pick Up, dan Reservasi. Ketahui perbedaannya dan kapan menggunakan masing-masing.',
+            author: 'Tim Marketing',
+            date: '2024-05-20',
+            content: `<p>foodmedia hadir dengan tiga layanan utama untuk memenuhi kebutuhan kuliner Anda:</p><h3>Pesan Antar (Delivery)</h3><p>Driver kami akan mengantar makanan langsung ke rumah Anda. Cocok untuk saat malas keluar rumah.</p><h3>Pick Up</h3><p>Ambil sendiri makanan di restoran untuk hemat biaya delivery. Pilih saat Anda sedang di sekitar resto.</p><h3>Reservasi</h3><p>Pesan meja di restoran untuk menghindari antrean. Ideal untuk acara spesial atau makan bersama keluarga.</p>`
+        }
+    ];
+    localStorage.setItem(ARTICLE_STORAGE_KEY, JSON.stringify(defaultArticles));
+    loadArticles();
+    showNotification('Artikel default berhasil dimuat!');
+}
+</script>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Mitra foodmedia</title>
+    <meta name="description" content="Formulir pendaftaran mitra foodmedia untuk bergabung dalam ekosistem kuliner digital.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:site_name" content="foodmedia">
+    <meta property="og:title" content="Daftar Mitra foodmedia">
+    <meta property="og:description" content="Form pendaftaran mitra foodmedia.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://foodmedia.co.id/daftar-mitra.html">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans (Lebih modern untuk bisnis) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WDQ8HHFP48"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-WDQ8HHFP48');
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        // Updated to FE0000 brand red palette
+                        brand: {
+                            400: '#FE0000', // Brand red for hover/accent
+                            500: '#FE0000', // Brand red for accents (Warna utama)
+                            600: '#FE0000', // Brand red (Warna operasional primer)
+                            700: '#DC0000',
+                        },
+                        dark: {
+                            900: '#0f172a', // Slate 900
+                            800: '#1e293b',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(220, 38, 38, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Gaya khusus untuk memastikan iframe menutupi seluruh area tanpa letterbox (Solusi Full Cover) */
+        .video-cover-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Penting untuk menyembunyikan bagian video yang diperbesar */
+        }
+
+        .video-cover-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%; 
+            min-height: 100%; 
+            /* Perbesar iframe agar selalu menutupi container, meniru object-fit: cover */
+            /* Rasio 16:9 adalah 1.777. Dengan scale 1.777, kita pastikan video menutupi hampir semua rasio layar */
+            transform: translate(-50%, -50%) scale(1.777); 
+        }
+
+        /* Pada rasio potret (misalnya, ponsel), video mungkin tidak cukup besar, kita perbesar lagi */
+        @media (orientation: portrait) {
+            .video-cover-container iframe {
+                transform: translate(-50%, -50%) scale(2.5); 
+            }
+        }
+        /* Custom Utilities */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Scroll Animation Classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Video Play Button Pulse */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+        }
+        .play-pulse {
+            animation: pulse-ring 2s infinite;
+        }
+
+    /* —— Variabel & Scope khusus komponen —— */
+    #fm-mitra {
+      --fm-red: #FE0000;
+      --fm-red-dark: #c70000;
+      --fm-black: #0e0e0e;
+      --fm-gray-1: #1a1a1a;
+      --fm-gray-2: #2a2a2a;
+      --fm-white: #ffffff;
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 6px 20px rgba(0,0,0,.10);
+      --shadow-md: 0 12px 30px rgba(0,0,0,.16);
+      --maxw: 1100px;
+      --transition: 240ms cubic-bezier(.2,.7,.2,1);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color: var(--fm-white);
+      position: relative; 
+      isolation: isolate;
+      overflow: clip;
+    }
+
+    /* —— Latar dinamis —— */
+    #fm-mitra .fm-wrap {
+      margin: 0 auto;
+      max-width: var(--maxw); 
+      padding: 56px 20px 72px;
+    }
+
+    #fm-mitra .fm-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1200px 500px at 80% -10%, rgba(255,255,255,.18) 0%, transparent 60%), 
+        radial-gradient(600px 300px at 10% 110%, rgba(255,255,255,.12) 0%, transparent 60%),
+        linear-gradient(135deg, var(--fm-white));
+      z-index: -2;
+    }
+    #fm-mitra .fm-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(100% 100% at 50% 20%, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* —— Header —— */
+    #fm-mitra .fm-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    #fm-mitra .fm-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #FE0000;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+    #fm-mitra .fm-kicker i { font-size: 14px; }
+
+    #fm-mitra .fm-title {
+      margin: 16px auto 10px;
+      color: #000000; /* ✅ Judul utama jadi hitam */
+      line-height: 1.1;
+      font-weight: 800;
+      font-size: clamp(28px, 4.2vw, 42px);
+    }
+
+    #fm-mitra .fm-sub {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #000000; /* ✅ Deskripsi di bawah judul jadi hitam */
+      font-size: clamp(14px, 2.4vw, 16px);
+    }
+
+    /* —— Kartu daftar —— */
+    #fm-mitra .fm-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 30px;
+    }
+    @media (min-width: 720px) {
+      #fm-mitra .fm-cards { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    }
+
+    /* ✅ Perubahan di sini — Box kartu merah */
+    #fm-mitra .fm-card {
+      background: var(--fm-red) !important;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      transform: translateY(14px) scale(.98);
+      opacity: 0;
+      transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition), border-color var(--transition), background var(--transition);
+      backdrop-filter: blur(8px);
+      will-change: transform, opacity;
+    }
+
+    #fm-mitra .fm-card.is-visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    #fm-mitra .fm-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    #fm-mitra .fm-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      background: var(--fm-white);
+      color: var(--fm-red); /* ✅ Warna ikon diset di sini */
+      box-shadow: 0 8px 18px rgba(0,0,0,.10);
+    }
+    #fm-mitra .fm-icon i { font-size: 26px; }
+
+    #fm-mitra .fm-card h3 {
+      margin: 6px 0 6px;
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    #fm-mitra .fm-desc {
+      color: #ffffff; /* ✅ Paragraf dalam card jadi putih */
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* —— Badge fitur kecil —— */
+    #fm-mitra .fm-badges {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 6px;
+    }
+    #fm-mitra .fm-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    #fm-mitra .fm-badge i { font-size: 12px; opacity: .9; }
+
+    /* —— Tombol —— */
+    #fm-mitra .fm-cta {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      text-decoration: none;
+      background: var(--fm-white);
+      color: var(--fm-red);
+      border: 2px solid transparent;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    #fm-mitra .fm-cta i { font-size: 14px; }
+    #fm-mitra .fm-cta:hover {
+      transform: translateY(-2px);
+      background: var(--fm-red);
+      color: var(--fm-white);
+      box-shadow: 0 14px 30px rgba(0,0,0,.22);
+    }
+    #fm-mitra .fm-cta:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.35), 0 0 0 2px var(--fm-white) inset;
+    }
+
+/* —— Footer mini —— */
+    /* —— Footer mini —— */
+    #fm-mitra .fm-foot {
+      margin-top: 34px;
+      display: grid; gap: 8px;
+      justify-items: center; 
+      color: #ffffff;
+      font-size: 13px;
+    } 
+    #fm-mitra .fm-foot .fm-safe {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 12px;
+      background: #FE0000;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    
+    /* —— Preferensi aksesibilitas —— */
+    @media (prefers-reduced-motion: reduce) {
+      #fm-mitra .fm-card { transition: none; transform: none !important; opacity: 1 !important; }
+      #fm-mitra .fm-cta { transition: none; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
+
+    <!-- Header Section with Navbar -->
+    <header class="fixed w-full z-50">
+        <nav class="transition-all duration-300 glass-nav border-b border-gray-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-20 items-center">
+                    <!-- Logo -->
+                    <a href="index.html" class="flex items-center gap-2.5 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-700 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-glow transition-all duration-300">
+                            <!-- Logo diganti dengan gambar, tambahkan class 'website-logo' -->
+                            <img src="assets/logo-placeholder.png" alt="Logo" class="website-logo w-6 h-6">
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="font-bold text-xl leading-none tracking-tight text-slate-900">food<span class="text-brand-600">media</span></span>
+                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Sesuai Harga Resto</span>
+                        </div>
+                    </a>
+ 
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex space-x-1 items-center">
+                        <a href="index.html" class="px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-50 rounded-lg transition-colors">Beranda</a>
+    
+                        <!-- DROPDOWN MENU FOR TUTORIAL (FIXED) -->
+                        <div class="relative group pt-2"> <!-- Added pt-2 to create space for the dropdown without a gap -->
+                            <div>
+                                <!-- Dropdown Trigger Button -->
+                                <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
+                                    Tutorial
+                                    <!-- Dropdown Icon (Chevron Down) -->
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+        
+                                <!-- Dropdown Content (Appears on hover) -->
+                                <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <!-- Dropdown Items -->
+                                    <a href="ppt-tutorial.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Tutorial PPT</a>
+                                    <a href="tutorials.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Tutorial Video</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DROPDOWN MENU -->
+    
+                        <!-- DROPDOWN MENU FOR BLOG -->
+                        <div class="relative group pt-2">
+                            <div>
+                                <!-- Dropdown Trigger Button -->
+                                <button class="flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none" aria-haspopup="true">
+                                    Blog & Artikel
+                                    <!-- Dropdown Icon (Chevron Down) -->
+                                    <svg class="ml-1 w-4 h-4 transition-transform duration-300 transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+        
+                                <!-- Dropdown Content (Appears on hover) -->
+                                <div class="absolute z-10 hidden group-hover:block w-52 top-full left-0 origin-top-left bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ease-out scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <!-- Dropdown Items -->
+                                    <a href="blog.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Blog</a>
+                                    <a href="artikel.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Artikel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DROPDOWN MENU -->
+                        <a href="faq.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">FAQ</a>
+                        <a href="kantor-wilayah.html" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-lg transition-colors">Kantor Wilayah</a>
+                        
+                        <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                        
+                        <a href="linktree.html" class="px-5 py-2.5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
+                            Tentang Kami
+                        </a>
+                    </div>
+    
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-button" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg transition-colors" aria-expanded="false" aria-controls="mobile-menu">
+                        <i id="menu-open-icon" class="fas fa-bars text-2xl"></i>
+                        <i id="menu-close-icon" class="fas fa-times text-2xl hidden"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl" id="mobile-menu">
+                <div class="px-4 pt-4 pb-6 space-y-2">
+                    <a href="index.html" class="block px-4 py-3 rounded-lg bg-brand-50 text-brand-700 font-semibold">Beranda</a>
+                    
+                    <!-- MOBILE DROPDOWN FOR VIDEO TUTORIAL (NEW) -->
+                    <div>
+                        <button id="mobile-tutorials-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
+                            Tutorial
+                            <i id="mobile-chevron" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <!-- Submenu Content: Dihapus class 'hidden', diganti dengan 'max-h-0' dan 'opacity-0' untuk transisi halus -->
+                        <div id="tutorial-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                            <a href="ppt-tutorial.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Tutorial PPT</a>
+                            <a href="tutorials.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Tutorial Video</a>
+                        </div>
+                    </div>
+                    <!-- END MOBILE DROPDOWN -->
+                    
+                    <!-- MOBILE DROPDOWN FOR BLOG -->
+                    <div>
+                        <button id="mobile-blog-trigger" class="flex justify-between items-center w-full px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium transition-colors">
+                            Blog & Artikel
+                            <i id="mobile-blog-chevron" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div id="blog-sub-menu" class="pl-4 pt-1 pb-2 space-y-1 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                            <a href="blog.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Blog</a>
+                            <a href="artikel.html" class="block px-4 py-2 text-sm text-slate-600 hover:bg-brand-50 hover:text-brand-600 rounded-lg transition-colors ml-4">Artikel</a>
+                        </div>
+                    </div>
+                    <!-- END MOBILE DROPDOWN -->
+    
+                    <a href="faq.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">FAQ</a>
+                    <a href="kantor-wilayah.html" class="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-brand-600 font-medium">Kantor Wilayah</a>
+                    <a href="linktree.html" class="block px-4 py-3 mt-4 text-center rounded-lg bg-brand-600 text-white font-bold shadow-md hover:bg-brand-700 transition-colors">Tentang Kami</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+<section id="fm-mitra" aria-labelledby="fm-heading" class="pt-20">
+  <div class="fm-bg" aria-hidden="true"></div>
+  <div class="fm-grid-bg" aria-hidden="true"></div>
+
+  <div class="fm-wrap">
+    <header class="fm-header">
+      <div class="fm-kicker"><i class="fa-solid fa-bolt"></i> Daftar Mitra foodmedia</div>
+      <h1 id="fm-heading" class="fm-title">Bergabung sebagai Mitra—<span style="opacity:.92">Merchant, Driver, atau Tim Sales</span></h1>
+      <p class="fm-sub">Ekosistem foodmedia membantu bisnis berkembang dengan teknologi, jaringan pelanggan, dan dukungan operasional. Pilih peranmu dan mulai sekarang.</p>
+    </header>
+
+    <div class="fm-cards" role="list">
+      <!-- Merchant • food-ON -->
+      <article class="fm-card" role="listitem">
+        <div class="fm-icon" aria-hidden="true"><i class="fa-solid fa-store"></i></div>
+        <div>
+          <h3>Daftar Mitra <strong>food-ON (Merchant)</strong></h3>
+          <p class="fm-desc">Dapatkan pesanan online, kelola menu & promo, pantau performa penjualan secara real-time.</p>
+          <div class="fm-badges">
+            <span class="fm-badge"><i class="fa-solid fa-chart-line"></i> Analitik</span>
+            <span class="fm-badge"><i class="fa-solid fa-robot"></i> Otomasi</span>
+            <span class="fm-badge"><i class="fa-solid fa-shield-halved"></i> Aman</span>
+          </div>
+        </div>
+        <a class="fm-cta" href="regristrasi-merchant.html" rel="noopener noreferrer">
+          Mulai Daftar Merchant <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+      <!-- Driver • food-D -->
+      <article class="fm-card" role="listitem">
+        <div class="fm-icon" aria-hidden="true"><i class="fa-solid fa-motorcycle"></i></div>
+        <div>
+          <h3>Daftar Mitra <strong>food-D (Driver)</strong></h3>
+          <p class="fm-desc">Pendapatan fleksibel, insentif menarik, navigasi & order real-time langsung dari aplikasi.</p>
+          <div class="fm-badges">
+            <span class="fm-badge"><i class="fa-solid fa-location-arrow"></i> Navigasi</span>
+            <span class="fm-badge"><i class="fa-solid fa-bell"></i> Notifikasi</span>
+            <span class="fm-badge"><i class="fa-solid fa-clock"></i> Fleksibel</span>
+          </div>
+        </div>
+        <a class="fm-cta" href="regristrasi-driver.html" rel="noopener noreferrer">
+          Mulai Daftar Driver <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+      <!-- Sales • Salesmedia -->
+      <article class="fm-card" role="listitem">
+        <div class="fm-icon" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></div>
+        <div>
+          <h3>Daftar Mitra <strong>Salesmedia (Tim Sales)</strong></h3>
+          <p class="fm-desc">Kembangkan jaringan merchant, raih komisi kompetitif, dan dukungan materi penjualan.</p>
+          <div class="fm-badges">
+            <span class="fm-badge"><i class="fa-solid fa-handshake"></i> Kemitraan</span>
+            <span class="fm-badge"><i class="fa-solid fa-bullseye"></i> Target</span>
+            <span class="fm-badge"><i class="fa-solid fa-file-lines"></i> Materi</span>
+          </div>
+        </div>
+        <a class="fm-cta" href="regristrasi-sales.html" rel="noopener noreferrer">
+          Mulai Daftar Sales <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+    </div>
+
+    <div class="fm-foot">
+      <div class="fm-safe"><i class="fa-solid fa-shield-halved"></i> <strong>foodmedia</strong>Sesuai Harga Resto</div>
+    </div>
+  </div></section>
+
+
+    <!-- Footer -->
+    <footer class="bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+                <!-- Brand Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white tracking-tight">Food<span class="text-brand-500">Media</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Platform teknologi pangan yang memberdayakan UMKM dan mempermudah konsumen melalui integrasi digital yang mulus.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/foodmediaindonesia/" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61576844306347" aria-label="Facebook" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@foodmediaindonesia" aria-label="Tik Tok" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all text-slate-400 shadow-md">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Navigasi</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="index.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Beranda</a></li>
+                        <li><a href="tutorials.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Tutorial &amp; Bantuan</a></li>
+                        <li><a href="blog.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Blog &amp; Insight</a></li>
+                        <li><a href="faq.html" class="text-slate-400 hover:text-brand-400 transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2 opacity-50"></i>Pertanyaan Umum</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-brand-500 shrink-0"></i>
+                            <span class="text-white">Saphire Estate Blok A No 14,<br>Tegal, Jawa Tengah, Indonesia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-brand-500 shrink-0"></i>
+                            <span class="font-mono text-white hover:text-slate-300 transition-colors">0817 7686 8188</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-brand-500 shrink-0"></i>
+                            <span class="text-white hover:text-slate-300 transition-colors">team@foodmedia.id</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Office Hours -->
+                <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50 shadow-xl">
+                    <h3 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-4">Jam Operasional</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
+                            <span class="text-white">Senin - Jumat</span>
+                            <span class="text-white font-semibold">10:00 - 16:00 WIB</span>
+                        </div>
+                        <div class="flex justify-between text-slate-500 pt-2">
+                            <span class="text-white">Sabtu - Minggu</span>
+                            <span class="font-medium text-slate-500 italic">Tutup</span>
+                        </div>
+                    </div>
+
+                    <a href="linktree.html" class="block w-full mt-8 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold text-center rounded-lg transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ease-in-out duration-150">
+                        <i class="fas fa-comment-dots mr-2"></i> Chat Customer Service
+                    </a>
+
+                    <!-- Download Buttons ADDED here -->
+                    <div class="pt-6 space-y-3">
+                        <a href="https://bit.ly/play-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-google-play text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Dapatkan di</p>
+                                <p class="text-sm font-bold text-white leading-none">Google Play</p>
+                            </div>
+                        </a>
+                        <a href="https://bit.ly/app-foodmedia" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-slate-700 rounded-xl hover:bg-brand-600 transition-colors shadow-lg group">
+                            <i class="fab fa-apple text-2xl text-white mr-3 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-400 group-hover:text-white transition-colors">Unduh di</p>
+                                <p class="text-sm font-bold text-white leading-none">App Store</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+                <p class="text-center md:text-left">© 2025 PT Asia Kreasi Mandiri. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Mobile Menu Logic ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
+
+        const tutorialsTrigger = document.getElementById('mobile-tutorials-trigger');
+        const tutorialSubMenu = document.getElementById('tutorial-sub-menu');
+        const mobileChevron = document.getElementById('mobile-chevron');
+
+        const blogTrigger = document.getElementById('mobile-blog-trigger');
+        const blogSubMenu = document.getElementById('blog-sub-menu');
+        const blogChevron = document.getElementById('mobile-blog-chevron');
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', function() {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                menuOpenIcon.classList.toggle('hidden');
+                menuCloseIcon.classList.toggle('hidden');
+            });
+        }
+
+        if (tutorialsTrigger) {
+            tutorialsTrigger.addEventListener('click', function() {
+                const isOpened = tutorialSubMenu.classList.contains('max-h-screen');
+                if (isOpened) {
+                    tutorialSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                    tutorialSubMenu.classList.add('max-h-0', 'opacity-0');
+                } else {
+                    tutorialSubMenu.classList.remove('max-h-0', 'opacity-0');
+                    tutorialSubMenu.classList.add('max-h-screen', 'opacity-100');
+                }
+                mobileChevron.classList.toggle('rotate-180');
+            });
+        }
+
+        if (blogTrigger) {
+            blogTrigger.addEventListener('click', function() {
+                const isOpened = blogSubMenu.classList.contains('max-h-screen');
+                if (isOpened) {
+                    blogSubMenu.classList.remove('max-h-screen', 'opacity-100');
+                    blogSubMenu.classList.add('max-h-0', 'opacity-0');
+                } else {
+                    blogSubMenu.classList.remove('max-h-0', 'opacity-0');
+                    blogSubMenu.classList.add('max-h-screen', 'opacity-100');
+                }
+                blogChevron.classList.toggle('rotate-180');
+            });
+        }
+
+        // —— Animasi masuk kartu dengan IntersectionObserver (halus & profesional) —— //
+    (function () {
+      var root = document.querySelector('#fm-mitra');
+      if (!root) return;
+
+      var cards = root.querySelectorAll('.fm-card');
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReduced) {
+        cards.forEach(function (c) { c.classList.add('is-visible'); });
+        return;
+      }
+
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+      cards.forEach(function (c, i) {
+        c.style.transitionDelay = (80 * i) + 'ms';
+        obs.observe(c);
+      });
+    })();
+    });
+    </script>
+</section>
+</body>
+</html>

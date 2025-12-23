@@ -1,0 +1,5 @@
+# robots.txt for FoodMedia
+User-agent: *
+Allow: /
+
+Sitemap: https://foodmedia.co.id/sitemap.xml
